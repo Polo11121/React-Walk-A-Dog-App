@@ -1,0 +1,23 @@
+.header {
+  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  font-weight: 500;
+  font-size: 1.3rem;
+
+  &__back-button {
+    position: absolute !important;
+  }
+
+  &__main {
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  &__logo {
+    width: 2rem;
+    margin-right: 5px;
+  }
+}
