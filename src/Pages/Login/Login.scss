@@ -1,0 +1,24 @@
+.login {
+  height: calc(100vh - 64px);
+  display: grid;
+  place-content: center;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80vw;
+    margin: 0 auto;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__forgot-password {
+    margin-top: 0.5rem;
+    font-size: 18px;
+  }
+}

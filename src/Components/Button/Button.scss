@@ -1,0 +1,53 @@
+.button {
+  font-family: "Roboto", sans-serif;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  &__primary {
+    background-color: #8fe388;
+  }
+
+  &__secondary {
+    background-color: #ececec;
+  }
+
+  &__default {
+    background-color: #c4c4c4;
+  }
+
+  &--L {
+    width: 293px;
+    height: 50px;
+    border-radius: 20px;
+    font-size: 24px;
+    font-weight: 400;
+  }
+
+  &--XL {
+    width: 265px;
+    height: 64px;
+    border-radius: 20px;
+    font-size: 36px;
+    font-weight: 500;
+  }
+
+  &--M {
+    width: 175px;
+    height: 33px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  &--S {
+    width: 104px;
+    height: 33px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
