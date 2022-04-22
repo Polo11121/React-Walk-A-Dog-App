@@ -1,11 +1,11 @@
-.dog-profile {
+.user-profile {
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   &__image {
-    margin: 20px 0;
+    margin-top: 20px;
     height: 220px;
     width: 220px;
     border: 1px solid #a7ecae;
@@ -13,20 +13,17 @@
     border-radius: 114px;
   }
 
-  &__name {
+  &__title {
+    margin-top: 20px;
     font-weight: 500;
     font-size: 36px;
   }
 
-  &__section {
-    margin: 10px;
-    width: 100%;
-  }
-
   &__section-title {
-    margin-bottom: 10px;
+    margin: 10px 0;
     display: flex;
     align-items: center;
+    width: 100%;
   }
 
   &__line {
@@ -36,26 +33,28 @@
     margin: 0 10px;
   }
 
-  &__section-infos {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
-
-  &__section-info {
+  &__information {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 50px;
-    text-align: center;
+    justify-content: center;
   }
 
-  &__section-info-title {
+  &__info-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+
+  &__info-title {
+    margin-right: 5px;
     font-weight: 700;
+    font-size: 18px;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
   &__buttons {
-    flex: 1;
     margin-bottom: 40px;
     width: 100%;
     display: flex;

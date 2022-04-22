@@ -1,0 +1,36 @@
+.edit-user-profile {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__image {
+    margin-top: 20px;
+    height: 220px;
+    width: 220px;
+    border: 1px solid #a7ecae;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 114px;
+  }
+
+  &__title {
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 36px;
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+  }
+
+  &__buttons {
+    margin-bottom: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+  }
+}

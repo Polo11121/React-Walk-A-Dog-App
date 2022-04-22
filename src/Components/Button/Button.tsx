@@ -4,7 +4,7 @@ import "./Button.scss";
 type ButtonProps = {
   title: string;
   Icon?: ReactNode;
-  type: "primary" | "secondary" | "default";
+  type: "primary" | "secondary" | "default" | "green" | "red";
   size: "XL" | "M" | "S" | "L";
   styles?: CSSProperties;
   onClick?: (

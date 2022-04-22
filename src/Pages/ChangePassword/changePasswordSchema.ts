@@ -12,5 +12,5 @@ export const changePasswordSchema = yup.object({
   repeatNewPassword: yup
     .string()
     .required("Powtórz nowe hasło")
-    .oneOf([yup.ref("password"), null], "Hasła muszą być jednakowe"),
+    .oneOf([yup.ref("newPassword"), null], "Hasła muszą być jednakowe"),
 });
