@@ -1,8 +1,15 @@
 import { Button } from "../../Components/Button/Button";
+import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import "./DogProfile.scss";
 
 export const DogProfile = () => {
+  const navigate = useNavigate();
+
+  const switchToManageDogProfile = () => navigate("/edit-dog");
+  const switchToManageDogRecommendations = () =>
+    navigate("/dog-recommendations");
+
   return (
     <div className="dog-profile">
       <img
@@ -60,14 +67,16 @@ export const DogProfile = () => {
       <div className="dog-profile__buttons">
         <Button
           styles={{ width: "140px" }}
-          size="S"
+          size="M"
+          onClick={switchToManageDogRecommendations}
           title="Zalecenia"
           type="default"
         />
         <Button
           styles={{ width: "140px" }}
           Icon={<EditIcon />}
-          size="S"
+          size="M"
+          onClick={switchToManageDogProfile}
           title="Edytuj profil"
           type="default"
         />

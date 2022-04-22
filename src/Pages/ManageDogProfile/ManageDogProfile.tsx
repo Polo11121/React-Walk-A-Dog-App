@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Formik } from "formik";
 import ImageUploading, {
   ImageListType,
@@ -11,16 +12,20 @@ import { manageDogProfileSchema } from "./manageDogProfilSchema";
 import "./ManageDogProfile.scss";
 
 export const ManageDogProfile = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const titlePrefix = pathname.split("-")[0];
   const [error, setError] = useState(false);
   const [image, setImage] = useState<ImageType[]>([]);
+  const avatar = image[0]?.data_url;
+
+  const goBack = () => navigate(-1);
 
   const onChange = (imageList: ImageListType) => {
     if (imageList) {
       setImage(imageList);
     }
   };
-
-  const avatar = image[0]?.data_url;
 
   return (
     <div className="manage-dog-profile">
@@ -39,7 +44,9 @@ export const ManageDogProfile = () => {
       >
         {(props) => (
           <>
-            <div className="manage-dog-profile__title">Stwórz profil psa</div>
+            <div className="manage-dog-profile__title">
+              {titlePrefix === "/edit" ? "Edytuj" : "Stwórz"} profil psa
+            </div>
             <div className="manage-dog-profile__choose-photo">
               <ImageUploading
                 value={image}
@@ -102,13 +109,7 @@ export const ManageDogProfile = () => {
                 placeholder="Waga (kg)"
               />
             </div>
-            <div className="dog-profile__buttons">
-              <Button
-                styles={{ width: "140px" }}
-                size="S"
-                title="Dodaj zalecenia"
-                type="default"
-              />
+            <div className="manage-dog-profile__buttons">
               <Button
                 styles={{ width: "140px" }}
                 onClick={() => {
@@ -122,8 +123,15 @@ export const ManageDogProfile = () => {
                   );
                   props.handleSubmit();
                 }}
-                size="S"
+                size="M"
                 title="Zapisz"
+                type="default"
+              />
+              <Button
+                styles={{ width: "140px" }}
+                onClick={goBack}
+                size="M"
+                title="Anuluj"
                 type="default"
               />
             </div>

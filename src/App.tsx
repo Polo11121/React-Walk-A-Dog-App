@@ -9,6 +9,10 @@ import { DogProfile } from "./Pages/DogProfile/DogProfile";
 import { ManageDogProfile } from "./Pages/ManageDogProfile/ManageDogProfile";
 import { ForgotPassword } from "./Pages/ForgotPassword/ForgotPassword";
 import { NewPassword } from "./Pages/ForgotPassword/NewPassword/NewPassword";
+import { UserProfile } from "./Pages/UserProfile/UserProfile";
+import { DogRecommendations } from "./Pages/DogRecommendations/DogRecommendations";
+import { EditDogRecommendations } from "./Pages/DogRecommendations/EditDogRecommendations/EditDogRecommendations";
+import { EditUserProfile } from "./Pages/UserProfile/EditUserProfile/EditUserProfile";
 import "./App.scss";
 
 function App() {
@@ -18,7 +22,19 @@ function App() {
         <Route path="/" element={<Main />} />
         <Route path="/dog-profiles" element={<DogProfiles />} />
         <Route path="/dog-profile" element={<DogProfile />} />
-        <Route path="/manage-dog-profile" element={<ManageDogProfile />} />
+        <Route path="/dog-recommendations" element={<DogRecommendations />} />
+        <Route
+          path="/edit-dog-recommendations"
+          element={<EditDogRecommendations />}
+        />
+        <Route
+          path="/edit-dog-contraindications"
+          element={<EditDogRecommendations />}
+        />
+        <Route path="/add-dog" element={<ManageDogProfile />} />
+        <Route path="/edit-dog" element={<ManageDogProfile />} />
+        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/edit-user-profile" element={<EditUserProfile />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route
           path="/login"

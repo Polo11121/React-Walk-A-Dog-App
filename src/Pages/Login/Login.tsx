@@ -11,6 +11,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const switchToRegisterPageHandler = () => navigate("/register");
+
   const switchToForgotPassword = () => navigate("/forgot-password");
 
   return (

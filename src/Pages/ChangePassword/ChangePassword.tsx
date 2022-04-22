@@ -4,10 +4,14 @@ import { Button } from "../../Components/Button/Button";
 import { Input } from "../../Components/Input/Input";
 import { changePasswordSchema } from "./changePasswordSchema";
 import "./ChangePassword.scss";
+import { useNavigate } from "react-router-dom";
 
 export const ChangePassword = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(false);
+
+  const goBack = () => navigate(-1);
 
   return (
     <div className="change-password">
@@ -27,30 +31,32 @@ export const ChangePassword = () => {
           {(props) => (
             <>
               <div className="change-password__title">Zmiana hasła</div>
-              <Input
-                type="password"
-                isError={error}
-                formikProps={props}
-                inputName="oldPassword"
-                styles={{ marginBottom: "1.5rem" }}
-                placeholder="Stare hasło"
-              />
-              <Input
-                isError={error}
-                type="password"
-                inputName="newPassword"
-                formikProps={props}
-                styles={{ marginBottom: "1.5rem" }}
-                placeholder="Nowe hasło"
-              />
-              <Input
-                type="password"
-                isError={error}
-                formikProps={props}
-                inputName="repeatNewPassword"
-                styles={{ marginBottom: "1.5rem" }}
-                placeholder="Powtórz nowe hasło"
-              />
+              <div className="change-password__inputs">
+                <Input
+                  type="password"
+                  isError={error}
+                  formikProps={props}
+                  inputName="oldPassword"
+                  styles={{ marginBottom: "1.5rem" }}
+                  placeholder="Stare hasło"
+                />
+                <Input
+                  isError={error}
+                  type="password"
+                  inputName="newPassword"
+                  formikProps={props}
+                  styles={{ marginBottom: "1.5rem" }}
+                  placeholder="Nowe hasło"
+                />
+                <Input
+                  type="password"
+                  isError={error}
+                  formikProps={props}
+                  inputName="repeatNewPassword"
+                  styles={{ marginBottom: "1.5rem" }}
+                  placeholder="Powtórz nowe hasło"
+                />
+              </div>
               <div className="change-password__buttons">
                 <Button
                   onClick={() => {
@@ -64,13 +70,14 @@ export const ChangePassword = () => {
                     props.handleSubmit();
                   }}
                   styles={{ width: "140px" }}
-                  title="zmień hasło"
+                  title="Zmień"
                   type="primary"
                   size="M"
                 />
                 <Button
+                  onClick={goBack}
                   styles={{ width: "140px" }}
-                  title="anuluj"
+                  title="Anuluj"
                   type="primary"
                   size="M"
                 />
@@ -85,7 +92,7 @@ export const ChangePassword = () => {
             Pomyślnie zmieniono hasło
             <Button
               styles={{ margin: "20px auto 0", width: "80%" }}
-              onClick={() => {}}
+              onClick={goBack}
               title="Powrót"
               type="primary"
               size="L"

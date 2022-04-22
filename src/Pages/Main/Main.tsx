@@ -7,6 +7,7 @@ export const Main = () => {
   const navigate = useNavigate();
 
   const switchToLoginPageHandler = () => navigate("login");
+
   const switchToRegisterPageHandler = () => navigate("register");
 
   return (

@@ -1,0 +1,41 @@
+.edit-dog-recommendations {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    text-align: center;
+    margin: 20px 0;
+    flex: 0.1;
+    font-weight: 700;
+    font-size: 36px;
+  }
+
+  &__text-area {
+    margin: 0 auto;
+    width: calc(80% - 30px);
+    outline: none;
+    border: none;
+    background: #f1f1f1;
+    border-radius: 5px;
+    padding: 15px 30px;
+    flex: 0.7;
+    resize: none;
+    font-size: 20px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+
+    &::placeholder {
+      color: #a3a3a3;
+    }
+  }
+  &__buttons {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    justify-content: space-around;
+    flex: 0.2;
+    align-items: flex-end;
+    margin-bottom: 40px;
+  }
+}
