@@ -4,9 +4,11 @@ import { Button } from "../../Components/Button/Button";
 import { Input } from "../../Components/Input/Input";
 import { useNavigate } from "react-router-dom";
 import { registerSchema } from "./registerSchema";
+import { useRegister } from "../../api/useRegister";
 import "./Register.scss";
 
 export const Register = () => {
+  const { mutateAsync, isLoading } = useRegister();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
@@ -17,8 +19,10 @@ export const Register = () => {
     <div className="register">
       <div className="register__container">
         <Formik
-          onSubmit={(values) => {
-            setIsOpen(true);
+          onSubmit={({ password, userName, email }) => {
+            mutateAsync({ email, userName, password }).then(() =>
+              setIsOpen(true)
+            );
           }}
           validationSchema={registerSchema}
           validateOnMount
@@ -74,6 +78,7 @@ export const Register = () => {
                     );
                     props.handleSubmit();
                   }}
+                  disabled={isLoading}
                   styles={{ marginBottom: "1.5rem" }}
                   title="ZAREJESTRUJ"
                   type="primary"

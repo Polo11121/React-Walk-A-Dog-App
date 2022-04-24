@@ -3,8 +3,8 @@ import { Formik } from "formik";
 import { Button } from "../../Components/Button/Button";
 import { Input } from "../../Components/Input/Input";
 import { changePasswordSchema } from "./changePasswordSchema";
-import "./ChangePassword.scss";
 import { useNavigate } from "react-router-dom";
+import "./ChangePassword.scss";
 
 export const ChangePassword = () => {
   const navigate = useNavigate();

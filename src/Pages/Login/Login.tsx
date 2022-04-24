@@ -4,9 +4,19 @@ import { Button } from "../../Components/Button/Button";
 import { Input } from "../../Components/Input/Input";
 import { useNavigate } from "react-router-dom";
 import ErrorText from "../../Components/ErrorText/ErrorText";
+import { useLogin } from "../../api/useLogin";
+import { userInfoType } from "../../types/User.type";
 import "./Login.scss";
 
-export const Login = () => {
+export const Login = ({
+  loginUser,
+}: {
+  loginUser: ({ token, userId }: userInfoType) => void;
+}) => {
+  const onSuccess = ({ data }: { data: any }) =>
+    loginUser({ token: data.access, userId: data.user.id });
+
+  const { mutate, isLoading } = useLogin(onSuccess);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
@@ -19,7 +29,11 @@ export const Login = () => {
       <div className="login__container">
         <Formik
           onSubmit={({ password, userName }) => {
-            setError(!password || !userName);
+            if (!password || !userName) {
+              setError(true);
+              return;
+            }
+            mutate({ userName, password });
           }}
           initialValues={{ userName: "", password: "" }}
         >
@@ -45,6 +59,7 @@ export const Login = () => {
               />
               <div className="login__buttons">
                 <Button
+                  disabled={isLoading}
                   onClick={props.handleSubmit}
                   styles={{
                     marginBottom: "1.5rem",
