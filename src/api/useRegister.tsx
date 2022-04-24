@@ -1,7 +1,7 @@
 import { useMutation } from "react-query";
 import axios from "axios";
 
-export const useRegister = () => {
+export const useRegister = (onError: () => void) => {
   const register = ({
     email,
     userName,
@@ -17,7 +17,7 @@ export const useRegister = () => {
       password,
     });
 
-  const { mutateAsync, isLoading } = useMutation(register);
+  const { mutateAsync, isLoading } = useMutation(register, { onError });
 
   return { mutateAsync, isLoading };
 };

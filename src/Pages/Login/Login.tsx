@@ -13,16 +13,17 @@ export const Login = ({
 }: {
   loginUser: ({ token, userId }: userInfoType) => void;
 }) => {
-  const onSuccess = ({ data }: { data: any }) =>
-    loginUser({ token: data.access, userId: data.user.id });
-
-  const { mutate, isLoading } = useLogin(onSuccess);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
   const switchToRegisterPageHandler = () => navigate("/register");
 
   const switchToForgotPassword = () => navigate("/forgot-password");
+
+  const onSuccess = ({ data }: { data: any }) =>
+    loginUser({ token: data.access, userId: data.user.id });
+
+  const { mutate, isLoading } = useLogin(onSuccess);
 
   return (
     <div className="login">
