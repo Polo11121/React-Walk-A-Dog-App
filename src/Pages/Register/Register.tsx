@@ -6,12 +6,17 @@ import { useNavigate } from "react-router-dom";
 import { registerSchema } from "./registerSchema";
 import { useRegister } from "../../api/useRegister";
 import "./Register.scss";
+import ErrorText from "../../Components/ErrorText/ErrorText";
 
 export const Register = () => {
-  const { mutateAsync, isLoading } = useRegister();
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState(false);
+  const [inputError, setInputError] = useState(false);
+  const [registerError, setRegisterError] = useState(false);
   const navigate = useNavigate();
+
+  const onEror = () => setRegisterError(true);
+
+  const { mutateAsync, isLoading } = useRegister(onEror);
 
   const switchToLoginPageHandler = () => navigate("/login");
 
@@ -36,14 +41,14 @@ export const Register = () => {
           {(props) => (
             <>
               <Input
-                isError={error}
+                isError={inputError}
                 formikProps={props}
                 inputName="userName"
                 styles={{ marginBottom: "1.5rem" }}
                 placeholder="Nazwa użytkownika"
               />
               <Input
-                isError={error}
+                isError={inputError}
                 type="password"
                 inputName="password"
                 formikProps={props}
@@ -52,23 +57,28 @@ export const Register = () => {
               />
               <Input
                 type="password"
-                isError={error}
+                isError={inputError}
                 formikProps={props}
                 inputName="repeatPassword"
                 styles={{ marginBottom: "1.5rem" }}
                 placeholder="Powtórz Hasło"
               />
               <Input
-                isError={error}
+                isError={inputError}
                 formikProps={props}
                 inputName="email"
                 styles={{ marginBottom: "1.5rem" }}
                 placeholder="Email"
               />
+              <ErrorText
+                styles={{ marginBottom: "0.5rem", textAlign: "center" }}
+                isError={registerError}
+                text="Zajęty email lub nazwa użytkownika"
+              />
               <div className="register__buttons">
                 <Button
                   onClick={() => {
-                    setError(
+                    setInputError(
                       Boolean(
                         props.errors.email ||
                           props.errors.password ||
