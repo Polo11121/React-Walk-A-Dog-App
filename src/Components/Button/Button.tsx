@@ -10,10 +10,12 @@ type ButtonProps = {
   onClick?: (
     e?: FormEvent<HTMLFormElement>
   ) => void | MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
 };
 
 export const Button = ({
   title,
+  disabled = false,
   type,
   size,
   styles,
@@ -22,9 +24,12 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <button
+      disabled={disabled}
       onClick={onClick as unknown as MouseEventHandler<HTMLButtonElement>}
       style={styles}
-      className={`button button__${type} button--${size}`}
+      className={`button button__${type} button--${size}${
+        disabled ? " button--disabled" : ""
+      }`}
     >
       <>
         {Icon}
