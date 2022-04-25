@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.0.0",
     "axios": "^0.26.1",
     "formik": "^2.2.9",
+    "jwt-decode": "^3.1.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-images-uploading": "^3.1.3",

@@ -1,17 +1,20 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetDog } from "../../api/useGetDog";
 import { Button } from "../../Components/Button/Button";
 import "./DogRecommendations.scss";
 
 export const DogRecommendations = () => {
+  const { id } = useParams();
+  const { dog } = useGetDog(id);
   const navigate = useNavigate();
 
   const goBack = () => navigate(-1);
 
   const goToEditDogRecommendations = () =>
-    navigate("/edit-dog-recommendations");
+    navigate(`/edit-dog-recommendations/${id}`);
 
   const goToEditDogContraindications = () =>
-    navigate("/edit-dog-contraindications");
+    navigate(`/edit-dog-contraindications/${id}`);
 
   return (
     <div className="dog-recommendations">
@@ -20,7 +23,9 @@ export const DogRecommendations = () => {
         zalecenia i przeciwwskazania
       </div>
       <div className="dog-recommendations__box dog-recommendations__box--red">
-        <div className="dog-recommendations__box-content"></div>
+        <div className="dog-recommendations__box-content">
+          {dog.contraindications}
+        </div>
         <div className="dog-recommendations__box-button">
           <Button
             onClick={goToEditDogContraindications}
@@ -35,7 +40,9 @@ export const DogRecommendations = () => {
         </div>
       </div>
       <div className="dog-recommendations__box dog-recommendations__box--green">
-        <div className="dog-recommendations__box-content"></div>
+        <div className="dog-recommendations__box-content">
+          {dog.recommendation}
+        </div>
         <div className="dog-recommendations__box-button">
           <Button
             onClick={goToEditDogRecommendations}

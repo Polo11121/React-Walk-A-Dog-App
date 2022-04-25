@@ -1,4 +1,4 @@
-import { Navigate, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { Header } from "../Components/Header/Header";
 import { ChangePassword } from "../Pages/ChangePassword/ChangePassword";
 import { DogProfile } from "../Pages/DogProfile/DogProfile";
@@ -14,27 +14,27 @@ import { v4 as uuid } from "uuid";
 export const userRoutes = (userId: string) => [
   <Route key={uuid()} path="/user-profile/:id" element={<UserProfile />} />,
   <Route key={uuid()} path="/dog-profiles" element={<DogProfiles />} />,
-  <Route key={uuid()} path="/dog-profile" element={<DogProfile />} />,
+  <Route key={uuid()} path="/dog-profile/:id" element={<DogProfile />} />,
   <Route
     key={uuid()}
-    path="/dog-recommendations"
+    path="/dog-recommendations/:id"
     element={<DogRecommendations />}
   />,
   <Route
     key={uuid()}
-    path="/edit-dog-recommendations"
+    path="/edit-dog-recommendations/:id"
     element={<EditDogRecommendations />}
   />,
   <Route
     key={uuid()}
-    path="/edit-dog-contraindications"
+    path="/edit-dog-contraindications/:id"
     element={<EditDogRecommendations />}
   />,
   <Route key={uuid()} path="/add-dog" element={<ManageDogProfile />} />,
-  <Route key={uuid()} path="/edit-dog" element={<ManageDogProfile />} />,
+  <Route key={uuid()} path="/edit-dog/:id" element={<ManageDogProfile />} />,
   <Route
     key={uuid()}
-    path="/edit-user-profile"
+    path="/edit-user-profile/:id"
     element={<EditUserProfile />}
   />,
   <Route key={uuid()} path="/change-password" element={<ChangePassword />} />,
@@ -47,10 +47,5 @@ export const userRoutes = (userId: string) => [
         <NewPassword />
       </>
     }
-  />,
-  <Route
-    key={uuid()}
-    path="*"
-    element={<Navigate to={`user-profile/${userId}`} replace />}
   />,
 ];

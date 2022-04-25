@@ -1,81 +1,138 @@
 import { Formik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import ImageUploading, {
+  ImageListType,
+  ImageType,
+} from "react-images-uploading";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEditUser } from "../../../api/useEditUser";
+import { useGetUser } from "../../../api/useGetUser";
 import { Button } from "../../../Components/Button/Button";
 import { Input } from "../../../Components/Input/Input";
+import { editProfileSchema } from "./editProfileSchema";
+import { useQueryClient } from "react-query";
 import "./EditUserProfile.scss";
 
 export const EditUserProfile = () => {
-  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const { id } = useParams();
+  const { user } = useGetUser(id);
+  const [image, setImage] = useState<ImageType>({ data_url: user.avatar_url });
 
-  const switchToChangePassword = () => navigate("/change-password");
+  const onChange = (imageList: ImageListType) => {
+    if (imageList) {
+      setImage(imageList[0]);
+    }
+  };
+
+  const onSuccess = () => queryClient.invalidateQueries(["user", id]);
+
+  const { mutate, isLoading } = useEditUser(onSuccess);
+
+  const navigate = useNavigate();
 
   const goBack = () => navigate(-1);
 
   return (
     <div className="edit-user-profile">
       <div className="edit-user-profile__title">Edycja profilu</div>
-      <img
-        className="edit-user-profile__image"
-        src="https://media.discordapp.net/attachments/781826798282735637/966748146443108362/womanPlaceholder.jpg?width=530&height=530"
-        alt=""
-      />
+      <img className="edit-user-profile__image" src={image.data_url} alt="" />
       <Formik
-        onSubmit={(values) => {}}
+        onSubmit={({ email, phoneNumber, userName }) => {
+          if (id && image.data_url) {
+            mutate({
+              id,
+              avatar_url: image.data_url,
+              email,
+              phone_number: phoneNumber,
+              username: userName,
+            });
+          }
+        }}
         validateOnMount
+        validationSchema={editProfileSchema}
         initialValues={{
-          userName: "",
-          email: "",
-          phoneNumber: "",
+          userName: user.username,
+          email: user.email,
+          phoneNumber: user.phone_number,
         }}
       >
-        {(props) => (
-          <div className="edit-user-profile__inputs">
-            <Button
-              styles={{ margin: "1.5rem 0", width: "250px" }}
-              size="M"
-              title="Zmień zdjęcie profilowe"
-              type="primary"
-            />
-            <Input
-              isError={false}
-              inputName="userName"
-              formikProps={props}
-              styles={{ marginBottom: "1.5rem" }}
-              placeholder="Nazwa użytkownika"
-            />
-            <Input
-              isError={false}
-              formikProps={props}
-              inputName="email"
-              styles={{ marginBottom: "1.5rem" }}
-              placeholder="Email"
-            />
-            <Input
-              isError={false}
-              formikProps={props}
-              inputName="phoneNumber"
-              styles={{ marginBottom: "1.5rem" }}
-              placeholder="Numer telefonu"
-            />
-          </div>
-        )}
+        {(props) => {
+          const haveValuesChanged =
+            JSON.stringify(props.initialValues) !==
+              JSON.stringify(props.values) ||
+            image.data_url !== user.avatar_url;
+
+          const isButtonDisabled =
+            isLoading ||
+            !haveValuesChanged ||
+            !!(
+              props.errors.email ||
+              props.errors.phoneNumber ||
+              props.errors.userName
+            );
+
+          return (
+            <>
+              <div className="edit-user-profile__inputs">
+                <ImageUploading
+                  value={[image]}
+                  onChange={onChange}
+                  dataURLKey="data_url"
+                >
+                  {({ onImageUpload }) => (
+                    <Button
+                      onClick={onImageUpload}
+                      styles={{ margin: "1.5rem 0", width: "250px" }}
+                      size="M"
+                      title="Zmień zdjęcie profilowe"
+                      type="primary"
+                    />
+                  )}
+                </ImageUploading>
+                <Input
+                  isError
+                  inputName="userName"
+                  formikProps={props}
+                  styles={{ marginBottom: "1.5rem" }}
+                  placeholder="Nazwa użytkownika"
+                />
+                <Input
+                  isError
+                  formikProps={props}
+                  inputName="email"
+                  styles={{ marginBottom: "1.5rem" }}
+                  placeholder="Email"
+                />
+                <Input
+                  isError
+                  formikProps={props}
+                  inputName="phoneNumber"
+                  styles={{ marginBottom: "1.5rem" }}
+                  placeholder="Numer telefonu"
+                />
+              </div>
+              <div className="edit-user-profile__buttons">
+                <Button
+                  styles={{ width: "140px" }}
+                  size="M"
+                  disabled={isButtonDisabled}
+                  onClick={props.handleSubmit}
+                  title="Zapisz"
+                  type="primary"
+                />
+                <Button
+                  styles={{ width: "140px" }}
+                  size="M"
+                  onClick={goBack}
+                  title="Anuluj"
+                  type="primary"
+                />
+              </div>
+            </>
+          );
+        }}
       </Formik>
-      <div className="edit-user-profile__buttons">
-        <Button
-          styles={{ width: "140px" }}
-          size="M"
-          onClick={switchToChangePassword}
-          title="Zapisz"
-          type="primary"
-        />
-        <Button
-          styles={{ width: "140px" }}
-          size="M"
-          onClick={goBack}
-          title="Anuluj"
-          type="primary"
-        />
-      </div>
     </div>
   );
 };

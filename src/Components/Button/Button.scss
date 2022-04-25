@@ -19,6 +19,10 @@
     background-color: #c4c4c4;
   }
 
+  &--disabled {
+    pointer-events: none;
+  }
+
   &__green {
     background-color: rgba(24, 149, 29, 0.7);
     border: 1px solid #18951d;

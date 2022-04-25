@@ -1,23 +1,22 @@
 import { Button } from "../../Components/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import "./DogProfile.scss";
+import { useGetDog } from "../../api/useGetDog";
 
 export const DogProfile = () => {
+  const { id } = useParams();
+  const { dog } = useGetDog(id);
   const navigate = useNavigate();
 
-  const switchToManageDogProfile = () => navigate("/edit-dog");
+  const switchToManageDogProfile = () => navigate(`/edit-dog/${id}`);
   const switchToManageDogRecommendations = () =>
-    navigate("/dog-recommendations");
+    navigate(`/dog-recommendations/${id}`);
 
   return (
     <div className="dog-profile">
-      <img
-        className="dog-profile__image"
-        src="https://bi.im-g.pl/im/d0/a9/e1/z14789072Q,Prawdopodobnie-najslawniejsze-zdjecie-Piesela.jpg"
-        alt=""
-      />
-      <div className="dog-profile__name">Pimpek</div>
+      <img className="dog-profile__image" src={dog?.avatar_url} alt="" />
+      <div className="dog-profile__name">{dog?.name}</div>
       <div className="dog-profile__section">
         <div className="dog-profile__section-title">
           <div className="dog-profile__line"></div>
@@ -27,15 +26,15 @@ export const DogProfile = () => {
         <div className="dog-profile__section-infos">
           <div className="dog-profile__section-info">
             <div className="dog-profile__section-info-title">Wiek:</div>
-            <div>2 lata</div>
+            <div>{dog?.age} lata</div>
           </div>
           <div className="dog-profile__section-info">
             <div className="dog-profile__section-info-title">Rasa:</div>
-            <div>gigaczad</div>
+            <div>{dog?.breed}</div>
           </div>
           <div className="dog-profile__section-info">
             <div className="dog-profile__section-info-title">Waga:</div>
-            <div>69kg</div>
+            <div>{dog?.weight}kg</div>
           </div>
         </div>
       </div>

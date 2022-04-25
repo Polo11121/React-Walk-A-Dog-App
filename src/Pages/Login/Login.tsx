@@ -5,23 +5,20 @@ import { Input } from "../../Components/Input/Input";
 import { useNavigate } from "react-router-dom";
 import ErrorText from "../../Components/ErrorText/ErrorText";
 import { useLogin } from "../../api/useLogin";
-import { userInfoType } from "../../types/User.type";
+import useAuthContext from "../../hooks/AuthContext";
 import "./Login.scss";
 
-export const Login = ({
-  loginUser,
-}: {
-  loginUser: ({ token, userId }: userInfoType) => void;
-}) => {
+export const Login = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
+  const { loginUser } = useAuthContext();
 
   const switchToRegisterPageHandler = () => navigate("/register");
 
   const switchToForgotPassword = () => navigate("/forgot-password");
 
   const onSuccess = ({ data }: { data: any }) =>
-    loginUser({ token: data.access, userId: data.user.id });
+    loginUser({ access: data.access, refresh: data.refresh });
 
   const { mutate, isLoading } = useLogin(onSuccess);
 

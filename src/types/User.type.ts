@@ -1,4 +1,4 @@
-export type userInfoType = {
-  token: string;
-  userId: string;
+export type AuthTokensType = {
+  access: string;
+  refresh: string;
 };
