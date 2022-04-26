@@ -1,7 +1,7 @@
-import { Button } from "../../Components/Button/Button";
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetUser } from "../../api/useGetUser";
 import EditIcon from "@mui/icons-material/Edit";
+import { Button } from "Components";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetUser } from "api/useGetUser";
 import "./UserProfile.scss";
 
 export const UserProfile = () => {
@@ -10,6 +10,7 @@ export const UserProfile = () => {
   const navigate = useNavigate();
 
   const switchToChangePassword = () => navigate("/change-password");
+
   const switchToEditUserProfile = () => navigate(`/edit-user-profile/${id}`);
 
   return (
@@ -17,7 +18,11 @@ export const UserProfile = () => {
       <div className="user-profile__title">
         Profil {user?.is_trainer ? "trenera" : "użytkownika"}
       </div>
-      <img className="user-profile__image" src={user?.avatar_url} alt="" />
+      <img
+        className="user-profile__image"
+        src={`http://127.0.0.1:8000${user?.avatar_url}`}
+        alt={user?.username}
+      />
       <div className="user-profile__title">{user?.username}</div>
       <div className="user-profile__section-title">
         <div className="user-profile__line"></div>

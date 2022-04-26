@@ -1,7 +1,10 @@
-import { useMutation } from "react-query";
 import axios from "axios";
+import { useMutation } from "react-query";
 
-export const useLogin = (onSuccess: (data: any) => void) => {
+export const useLogin = (
+  onSuccess: (data: any) => void,
+  onError: () => void
+) => {
   const login = ({
     userName,
     password,
@@ -16,6 +19,7 @@ export const useLogin = (onSuccess: (data: any) => void) => {
 
   const { mutate, isLoading } = useMutation(login, {
     onSuccess,
+    onError,
   });
 
   return { mutate, isLoading };

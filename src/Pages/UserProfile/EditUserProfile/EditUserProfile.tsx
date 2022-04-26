@@ -1,23 +1,25 @@
-import { Formik } from "formik";
 import { useState } from "react";
+import { Formik } from "formik";
 import ImageUploading, {
   ImageListType,
   ImageType,
 } from "react-images-uploading";
-import { useNavigate, useParams } from "react-router-dom";
-import { useEditUser } from "../../../api/useEditUser";
-import { useGetUser } from "../../../api/useGetUser";
-import { Button } from "../../../Components/Button/Button";
-import { Input } from "../../../Components/Input/Input";
-import { editProfileSchema } from "./editProfileSchema";
+import { useParams } from "react-router-dom";
+import { useEditUser } from "api/useEditUser";
+import { useGetUser } from "api/useGetUser";
+import { Input, Button } from "Components";
+import { editProfileSchema } from "Pages/UserProfile/EditUserProfile/editProfileSchema";
 import { useQueryClient } from "react-query";
+import { useCustomToast } from "hooks/context/useCustomToast";
+import { useGoBack } from "hooks/useGoBack";
 import "./EditUserProfile.scss";
 
 export const EditUserProfile = () => {
   const queryClient = useQueryClient();
+  const [image, setImage] = useState<ImageType>({ data_url: "" });
+  const goBack = useGoBack();
   const { id } = useParams();
   const { user } = useGetUser(id);
-  const [image, setImage] = useState<ImageType>({ data_url: user.avatar_url });
 
   const onChange = (imageList: ImageListType) => {
     if (imageList) {
@@ -25,18 +27,23 @@ export const EditUserProfile = () => {
     }
   };
 
-  const onSuccess = () => queryClient.invalidateQueries(["user", id]);
+  const onSuccess = () => {
+    goBack();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useCustomToast(`Pomyślnie zedytowano profil!`);
+    queryClient.invalidateQueries(["user", id]);
+  };
 
   const { mutate, isLoading } = useEditUser(onSuccess);
-
-  const navigate = useNavigate();
-
-  const goBack = () => navigate(-1);
 
   return (
     <div className="edit-user-profile">
       <div className="edit-user-profile__title">Edycja profilu</div>
-      <img className="edit-user-profile__image" src={image.data_url} alt="" />
+      <img
+        className="edit-user-profile__image"
+        src={image?.data_url || `http://127.0.0.1:8000${user?.avatar_url}`}
+        alt={user?.username}
+      />
       <Formik
         onSubmit={({ email, phoneNumber, userName }) => {
           if (id && image.data_url) {

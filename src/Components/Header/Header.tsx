@@ -1,8 +1,8 @@
-import { IconButton } from "@mui/material";
-import logo from "../../assets/logo.png";
+import logo from "assets/logo.png";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import "./Header.scss";
+import { IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import "./Header.scss";
 
 export const Header = ({ hideButton }: { hideButton?: boolean }) => {
   const navigate = useNavigate();

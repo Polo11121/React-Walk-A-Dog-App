@@ -1,6 +1,6 @@
+import logo from "assets/logo.png";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../Components/Button/Button";
-import logo from "../../assets/logo.png";
+import { Button } from "Components";
 import "./Main.scss";
 
 export const Main = () => {

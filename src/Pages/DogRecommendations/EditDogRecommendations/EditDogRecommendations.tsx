@@ -1,16 +1,18 @@
 import { ChangeEvent, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useEditDogRecommendations } from "../../../api/useEditDogRecommendations";
-import { useGetDog } from "../../../api/useGetDog";
-import { Button } from "../../../Components/Button/Button";
+import { useLocation, useParams } from "react-router-dom";
+import { useEditDogRecommendations } from "api/useEditDogRecommendations";
+import { useGetDog } from "api/useGetDog";
+import { Button } from "Components";
 import { useQueryClient } from "react-query";
+import { useCustomToast } from "hooks/context/useCustomToast";
+import { useGoBack } from "hooks/useGoBack";
 import "./EditDogRecommendations.scss";
 
 export const EditDogRecommendations = () => {
   const queryClient = useQueryClient();
+  const goBack = useGoBack();
   const { id } = useParams();
   const { dog } = useGetDog(id);
-  const navigate = useNavigate();
   const { pathname } = useLocation();
   const titlePrefix = pathname.split("/")[1];
   const isRecommendations = titlePrefix === "edit-dog-recommendations";
@@ -18,7 +20,15 @@ export const EditDogRecommendations = () => {
     isRecommendations ? dog?.recommendation : dog?.contraindications
   );
 
-  const onSuccess = () => queryClient.invalidateQueries(["dog", id]);
+  const onSuccess = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useCustomToast(
+      isRecommendations
+        ? `Pomyślnie zedytowano zalecenia!`
+        : `Pomyślnie zedytowano przeciwwskazania!`
+    );
+    queryClient.invalidateQueries(["dog", id]);
+  };
 
   const { mutate } = useEditDogRecommendations(onSuccess);
 
@@ -35,8 +45,6 @@ export const EditDogRecommendations = () => {
   const changeRecommendationsHandler = (
     event: ChangeEvent<HTMLTextAreaElement>
   ) => setInputValue(event?.target.value);
-
-  const goBack = () => navigate(-1);
 
   const isButtonDisabled = () =>
     isRecommendations

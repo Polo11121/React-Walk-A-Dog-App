@@ -6,8 +6,9 @@ import {
   useState,
 } from "react";
 import jwt_decode from "jwt-decode";
-import { AuthTokensType } from "../types/User.type";
-import { useGetUser } from "../api/useGetUser";
+import { AuthTokensType } from "types/User.types";
+import { useGetUser } from "api/useGetUser";
+import { useNavigate } from "react-router-dom";
 
 type AuthContextType = {
   authTokens: null | AuthTokensType;
@@ -22,6 +23,7 @@ type AuthContextType = {
   };
   loginUser: ({ access, refresh }: AuthTokensType) => void;
   logoutUser: () => void;
+  isAppLoading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -37,6 +39,7 @@ const AuthContext = createContext<AuthContextType>({
   },
   loginUser: () => null,
   logoutUser: () => null,
+  isAppLoading: true,
 });
 
 const useAuthContext = () => useContext(AuthContext);
@@ -44,7 +47,9 @@ const useAuthContext = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authTokens, setAuthTokens] = useState<AuthTokensType | null>(null);
   const [userId, setUserId] = useState<null | string>(null);
+  const [isAppLoading, setIsAppLoading] = useState(true);
   const { user } = useGetUser(userId);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (sessionStorage.authTokens) {
@@ -52,6 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAuthTokens(sessionData);
       setUserId(jwt_decode<{ user_id: string }>(sessionData.access).user_id);
     }
+    setIsAppLoading(false);
   }, []);
 
   const loginUser = ({ access, refresh }: AuthTokensType) => {
@@ -63,11 +69,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUserId(null);
     setAuthTokens(null);
     sessionStorage.clear();
+    navigate("/");
   };
 
   return (
     <AuthContext.Provider
-      value={{ authTokens, userId, loginUser, logoutUser, userInfo: user }}
+      value={{
+        authTokens,
+        userId,
+        loginUser,
+        logoutUser,
+        userInfo: user,
+        isAppLoading,
+      }}
     >
       {children}
     </AuthContext.Provider>

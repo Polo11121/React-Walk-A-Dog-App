@@ -1,14 +1,14 @@
+import { useGoBack } from "hooks/useGoBack";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetDog } from "../../api/useGetDog";
-import { Button } from "../../Components/Button/Button";
+import { useGetDog } from "api/useGetDog";
+import { Button } from "Components";
 import "./DogRecommendations.scss";
 
 export const DogRecommendations = () => {
   const { id } = useParams();
   const { dog } = useGetDog(id);
   const navigate = useNavigate();
-
-  const goBack = () => navigate(-1);
+  const goBack = useGoBack();
 
   const goToEditDogRecommendations = () =>
     navigate(`/edit-dog-recommendations/${id}`);

@@ -1,17 +1,14 @@
 import { useState } from "react";
 import { Formik } from "formik";
-import { Button } from "../../Components/Button/Button";
-import { Input } from "../../Components/Input/Input";
-import { changePasswordSchema } from "./changePasswordSchema";
-import { useNavigate } from "react-router-dom";
+import { Button, Input, Modal } from "Components";
+import { useGoBack } from "hooks/useGoBack";
+import { changePasswordSchema } from "Pages/ChangePassword/changePasswordSchema";
 import "./ChangePassword.scss";
 
 export const ChangePassword = () => {
-  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(false);
-
-  const goBack = () => navigate(-1);
+  const goBack = useGoBack();
 
   return (
     <div className="change-password">
@@ -87,7 +84,7 @@ export const ChangePassword = () => {
         </Formik>
       </div>
       {isOpen && (
-        <div className="change-password__modal">
+        <Modal>
           <div className="change-password__modal-content">
             Pomyślnie zmieniono hasło
             <Button
@@ -98,7 +95,7 @@ export const ChangePassword = () => {
               size="L"
             />
           </div>
-        </div>
+        </Modal>
       )}
     </div>
   );

@@ -1,7 +1,7 @@
-import { useMutation } from "react-query";
 import axios from "axios";
+import { useMutation } from "react-query";
 
-type EditUserPayload = {
+type UseEditUserPayload = {
   id: string;
   username: string;
   email: string;
@@ -16,7 +16,7 @@ export const useEditUser = (onSuccess: () => void) => {
     email,
     avatar_url,
     phone_number,
-  }: EditUserPayload) =>
+  }: UseEditUserPayload) =>
     axios.patch(`http://127.0.0.1:8000/api/user/${id}/`, {
       username,
       email,

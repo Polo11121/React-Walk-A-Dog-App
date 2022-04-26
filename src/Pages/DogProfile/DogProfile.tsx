@@ -1,8 +1,8 @@
-import { Button } from "../../Components/Button/Button";
-import { useNavigate, useParams } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
+import { Button } from "Components";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetDog } from "api/useGetDog";
 import "./DogProfile.scss";
-import { useGetDog } from "../../api/useGetDog";
 
 export const DogProfile = () => {
   const { id } = useParams();
@@ -10,6 +10,7 @@ export const DogProfile = () => {
   const navigate = useNavigate();
 
   const switchToManageDogProfile = () => navigate(`/edit-dog/${id}`);
+
   const switchToManageDogRecommendations = () =>
     navigate(`/dog-recommendations/${id}`);
 

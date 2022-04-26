@@ -1,62 +1,35 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
-import { Formik } from "formik";
-import ImageUploading, {
-  ImageListType,
-  ImageType,
-} from "react-images-uploading";
-import { Button } from "../../Components/Button/Button";
+import ImageUploading from "react-images-uploading";
 import AddIcon from "@mui/icons-material/Add";
-import { Input } from "../../Components/Input/Input";
-import { manageDogProfileSchema } from "./manageDogProfilSchema";
-import { useAddDog } from "../../api/useAddDog";
-import { useQueryClient } from "react-query";
-import useAuthContext from "../../hooks/AuthContext";
-import { useGetDog } from "../../api/useGetDog";
-import { useEditDog } from "../../api/useEditDog";
+import { Button, Modal, Input } from "Components";
+import { Formik } from "formik";
+import { manageDogProfileSchema } from "Pages/ManageDogProfile/manageDogProfilSchema";
+import { useManageDogProfile } from "Pages/ManageDogProfile/useManageDogProfile";
+import { useGoBack } from "hooks/useGoBack";
 import "./ManageDogProfile.scss";
 
 export const ManageDogProfile = () => {
-  const queryClient = useQueryClient();
-  const { id } = useParams();
-  const [error, setError] = useState(false);
-  const [image, setImage] = useState<ImageType>({
-    data_url: "",
-  });
-  const { dog, isLoading: isDogInfoLoading } = useGetDog(id);
-  const { userId } = useAuthContext();
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const titlePrefix = pathname.split("-")[0];
-  const isEdit = titlePrefix === "/edit";
+  const {
+    userId,
+    isEdit,
+    mutateEditDog,
+    mutateAddDog,
+    dog,
+    image,
+    isAddDogLoading,
+    error,
+    isEditDogLoading,
+    isDeleteDogLoading,
+    changeImageHandler,
+    setError,
+    openDeleteModalHandler,
+    deleteDogHandler,
+    closeDeleteModalHandler,
+    isOpen,
+  } = useManageDogProfile();
 
-  const onSuccess = () => {
-    queryClient.invalidateQueries(["dog", id]);
-    queryClient.invalidateQueries("dogs");
+  const goBack = useGoBack();
 
-    navigate(isEdit ? `/dog-profile/${id}` : "/dog-profiles");
-  };
-
-  const { mutate: mutateAddDog, isLoading: isAddDogLoading } =
-    useAddDog(onSuccess);
-  const { mutate: mutateEditDog, isLoading: isEditDogLoading } =
-    useEditDog(onSuccess);
-
-  const goBack = () => navigate(-1);
-
-  const onChange = (imageList: ImageListType) => {
-    if (imageList) {
-      setImage(imageList[0]);
-    }
-  };
-
-  useEffect(() => {
-    if (dog?.avatar_url) {
-      setImage({ data_url: dog?.avatar_url });
-    }
-  }, [dog]);
-
-  return !isDogInfoLoading ? (
+  return (
     <div className="manage-dog-profile">
       <Formik
         validationSchema={manageDogProfileSchema}
@@ -92,7 +65,8 @@ export const ManageDogProfile = () => {
         {(props) => {
           const haveValuesChanged =
             JSON.stringify(props.initialValues) !==
-              JSON.stringify(props.values) || image.data_url !== dog.avatar_url;
+              JSON.stringify(props.values) ||
+            image.data_url !== dog?.avatar_url;
 
           const isButtonDisabledAdd =
             isAddDogLoading ||
@@ -112,7 +86,8 @@ export const ManageDogProfile = () => {
                 props.errors.age ||
                 props.errors.race
             ) ||
-            !haveValuesChanged;
+            !haveValuesChanged ||
+            isDeleteDogLoading;
 
           return (
             <>
@@ -122,7 +97,7 @@ export const ManageDogProfile = () => {
               <div className="manage-dog-profile__choose-photo">
                 <ImageUploading
                   value={[image]}
-                  onChange={onChange}
+                  onChange={changeImageHandler}
                   dataURLKey="data_url"
                 >
                   {({ onImageUpload }) => (
@@ -134,7 +109,10 @@ export const ManageDogProfile = () => {
                         {image.data_url ? (
                           <img
                             className="manage-dog-profile__choose-photo-container"
-                            src={image.data_url}
+                            src={
+                              image.data_url ||
+                              `http://127.0.0.1:8000${dog?.avatar_url}`
+                            }
                             alt="avatar"
                           />
                         ) : (
@@ -212,6 +190,38 @@ export const ManageDogProfile = () => {
           );
         }}
       </Formik>
+      {isEdit && (
+        <div className="manage-dog-profile__delete-button">
+          <Button
+            styles={{ width: "140px" }}
+            onClick={openDeleteModalHandler}
+            size="M"
+            title="Usuń"
+            type="red"
+          />
+        </div>
+      )}
+      {isOpen && (
+        <Modal>
+          <div className="manage-dog-profile__modal-content">
+            Na pewno chcesz usunąć profil psa "{dog.name}"?
+            <Button
+              onClick={deleteDogHandler}
+              styles={{ margin: "20px auto 0", width: "80%" }}
+              title="Usuń"
+              type="red"
+              size="L"
+            />
+            <Button
+              onClick={closeDeleteModalHandler}
+              styles={{ margin: "20px auto 0", width: "80%" }}
+              title="Anuluj"
+              type="green"
+              size="L"
+            />
+          </div>
+        </Modal>
+      )}
     </div>
-  ) : null;
+  );
 };

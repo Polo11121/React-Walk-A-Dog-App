@@ -1,5 +1,5 @@
 .edit-dog-recommendations {
-  height: 100vh;
+  height: calc(100vh - 55px);
   display: flex;
   flex-direction: column;
 
@@ -29,6 +29,7 @@
       color: #a3a3a3;
     }
   }
+
   &__buttons {
     display: flex;
     width: 100%;

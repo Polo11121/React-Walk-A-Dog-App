@@ -1,22 +1,13 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import { DogType } from "types/Dog.types";
 
-type UseGetUserType = {
-  dog: {
-    id: number;
-    name: string;
-    owner: number;
-    age: number;
-    breed: string;
-    weight: number;
-    recommendation: string;
-    contraindications: string;
-    avatar_url: string;
-  };
+type UseGetDogType = {
+  dog: DogType;
   isLoading: boolean;
 };
 
-export const useGetDog = (dogId?: string | null): UseGetUserType => {
+export const useGetDog = (dogId?: string | null): UseGetDogType => {
   const getDog = () =>
     axios
       .get(`http://127.0.0.1:8000/api/dog/${dogId}/`)

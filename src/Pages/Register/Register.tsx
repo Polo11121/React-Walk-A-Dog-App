@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { Formik } from "formik";
-import { Button } from "../../Components/Button/Button";
-import { Input } from "../../Components/Input/Input";
+import { Button, Input, ErrorText, Modal } from "Components";
 import { useNavigate } from "react-router-dom";
-import { registerSchema } from "./registerSchema";
-import { useRegister } from "../../api/useRegister";
+import { registerSchema } from "Pages/Register/registerSchema";
+import { useRegister } from "api/useRegister";
 import "./Register.scss";
-import ErrorText from "../../Components/ErrorText/ErrorText";
 
 export const Register = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,9 +12,9 @@ export const Register = () => {
   const [registerError, setRegisterError] = useState(false);
   const navigate = useNavigate();
 
-  const onEror = () => setRegisterError(true);
+  const onError = () => setRegisterError(true);
 
-  const { mutateAsync, isLoading } = useRegister(onEror);
+  const { mutateAsync, isLoading } = useRegister(onError);
 
   const switchToLoginPageHandler = () => navigate("/login");
 
@@ -106,7 +104,7 @@ export const Register = () => {
         </Formik>
       </div>
       {isOpen && (
-        <div className="register__modal">
+        <Modal>
           <div className="register__modal-content">
             Zarejestrowano pomyślenie. Teraz możesz się zalogować i zacząć
             przygodę z Walk A Dog
@@ -118,7 +116,7 @@ export const Register = () => {
               size="L"
             />
           </div>
-        </div>
+        </Modal>
       )}
     </div>
   );

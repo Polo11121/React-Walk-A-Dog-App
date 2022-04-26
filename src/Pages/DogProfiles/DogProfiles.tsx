@@ -1,10 +1,12 @@
-import { Button } from "../../Components/Button/Button";
-import { DogCard } from "../../Components/DogCard/DogCard";
 import EditIcon from "@mui/icons-material/Edit";
+import { DogCard, Button } from "Components";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetUserDogs } from "api/useGetUserDogs";
 import "./DogProfiles.scss";
-import { useNavigate } from "react-router-dom";
 
 export const DogProfiles = () => {
+  const { id } = useParams();
+  const { dogs } = useGetUserDogs(id);
   const navigate = useNavigate();
 
   const switchToAddDog = () => navigate("/add-dog");
@@ -13,36 +15,15 @@ export const DogProfiles = () => {
     <div className="dog-profiles">
       <div className="dog-profiles__title">Psie profile</div>
       <div className="dog-profiles__list">
-        <DogCard
-          name="Pimpek"
-          race="gigaczad"
-          imageSrc="https://static.fajnyzwierzak.pl/media/uploads/media_image/original/wpis/472/piesel-shiba-inu.jpg"
-        />
-        <DogCard
-          name="Pimpek"
-          race="gigaczad"
-          imageSrc="https://static.fajnyzwierzak.pl/media/uploads/media_image/original/wpis/472/piesel-shiba-inu.jpg"
-        />
-        <DogCard
-          name="Pimpek"
-          race="gigaczad"
-          imageSrc="https://static.fajnyzwierzak.pl/media/uploads/media_image/original/wpis/472/piesel-shiba-inu.jpg"
-        />
-        <DogCard
-          name="Pimpek"
-          race="gigaczad"
-          imageSrc="https://static.fajnyzwierzak.pl/media/uploads/media_image/original/wpis/472/piesel-shiba-inu.jpg"
-        />
-        <DogCard
-          name="Pimpek"
-          race="gigaczad"
-          imageSrc="https://static.fajnyzwierzak.pl/media/uploads/media_image/original/wpis/472/piesel-shiba-inu.jpg"
-        />
-        <DogCard
-          name="Pimpek"
-          race="gigaczad"
-          imageSrc="https://static.fajnyzwierzak.pl/media/uploads/media_image/original/wpis/472/piesel-shiba-inu.jpg"
-        />
+        {dogs?.map(({ name, breed, avatar_url, id }) => (
+          <DogCard
+            id={id}
+            key={id}
+            name={name}
+            race={breed}
+            imageSrc={avatar_url}
+          />
+        ))}
       </div>
       <div className="dog-profiles__add-button">
         <Button
