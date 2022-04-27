@@ -1,0 +1,44 @@
+.walk {
+  display: flex;
+  height: 75px;
+  padding: 10px 0;
+
+  &__dog-photo {
+    height: 100%;
+    flex-basis: 75px;
+  }
+
+  &__info {
+    margin-top: 10px;
+    flex-grow: 1;
+    padding: 0px 10px;
+    border-bottom: 1px solid black;
+    position: relative;
+  }
+
+  &__trainer-name {
+    font-size: 12px;
+  }
+
+  &__dog-name {
+    font-size: 18px;
+    font-weight: 800;
+    margin-top: -10px;
+  }
+
+  &__date {
+    position: absolute;
+    font-size: 14px;
+    right: 10px;
+    top: 10px;
+  }
+
+  &__calendar {
+    flex-basis: 75px;
+    text-align: center;
+    & > svg {
+      font-size: 60px;
+      height: 100%;
+    }
+  }
+}
