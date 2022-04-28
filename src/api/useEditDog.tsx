@@ -7,7 +7,7 @@ type UseAddDogPayloadType = {
   age: number;
   breed: string;
   weight: number;
-  avatar_url: string;
+  avatar: File;
 };
 
 export const useEditDog = (onSuccess?: () => void) => {
@@ -17,15 +17,17 @@ export const useEditDog = (onSuccess?: () => void) => {
     age,
     breed,
     weight,
-    avatar_url,
-  }: UseAddDogPayloadType) =>
-    axios.patch(`http://127.0.0.1:8000/api/dog/${id}/`, {
-      name,
-      age,
-      breed,
-      weight,
-      avatar_url,
-    });
+    avatar,
+  }: UseAddDogPayloadType) => {
+    const formData = new FormData();
+    avatar && formData.append("avatar", avatar);
+    formData.append("name", name);
+    formData.append("age", `${age}`);
+    formData.append("weight", `${weight}`);
+    formData.append("breed", `${breed}`);
+
+    return axios.patch(`http://127.0.0.1:8000/api/dog/${id}/`, formData);
+  };
 
   const { mutate, isLoading } = useMutation(editDog, { onSuccess });
 

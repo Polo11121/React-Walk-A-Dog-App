@@ -7,7 +7,7 @@ type UseAddDogPayloadType = {
   age: number;
   breed: string;
   weight: number;
-  avatar_url: string;
+  avatar: File;
 };
 
 export const useAddDog = (onSuccess?: () => void) => {
@@ -17,18 +17,20 @@ export const useAddDog = (onSuccess?: () => void) => {
     age,
     breed,
     weight,
-    avatar_url,
-  }: UseAddDogPayloadType) =>
-    axios.post(`http://127.0.0.1:8000/api/dog/`, {
-      name,
-      owner,
-      age,
-      breed,
-      weight,
-      recommendation: "dasdas",
-      contraindications: "dasda",
-      avatar_url,
-    });
+    avatar,
+  }: UseAddDogPayloadType) => {
+    const formData = new FormData();
+    avatar && formData.append("avatar", avatar);
+    formData.append("name", name);
+    formData.append("owner", `${owner}`);
+    formData.append("age", `${age}`);
+    formData.append("weight", `${weight}`);
+    formData.append("breed", `${breed}`);
+    formData.append("contraindications", "");
+    formData.append("recommendation", "");
+
+    return axios.post(`http://127.0.0.1:8000/api/dog/`, formData);
+  };
 
   const { mutate, isLoading } = useMutation(addDog, { onSuccess });
 

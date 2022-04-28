@@ -1,4 +1,4 @@
-export { DogCard } from "./DogCard/DogCard";
+export { Card } from "./Card/Card";
 export { Button } from "./Button/Button";
 export { ErrorText } from "./ErrorText/ErrorText";
 export { Footer } from "./Footer/Footer";

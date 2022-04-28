@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import userAvatar from "assets/user-avatar.png";
 import { Formik } from "formik";
 import ImageUploading, {
   ImageListType,
@@ -16,7 +17,7 @@ import "./EditUserProfile.scss";
 
 export const EditUserProfile = () => {
   const queryClient = useQueryClient();
-  const [image, setImage] = useState<ImageType>({ data_url: "" });
+  const [image, setImage] = useState<ImageType>();
   const goBack = useGoBack();
   const { id } = useParams();
   const { user } = useGetUser(id);
@@ -28,47 +29,52 @@ export const EditUserProfile = () => {
   };
 
   const onSuccess = () => {
-    goBack();
+    queryClient.invalidateQueries(["user", id]).then(() => goBack());
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useCustomToast(`Pomyślnie zedytowano profil!`);
-    queryClient.invalidateQueries(["user", id]);
   };
 
   const { mutate, isLoading } = useEditUser(onSuccess);
+
+  useEffect(() => {
+    if (user?.avatar) {
+      setImage({ data_url: user.avatar });
+    } else {
+      setImage({ data_url: userAvatar });
+    }
+  }, [user]);
 
   return (
     <div className="edit-user-profile">
       <div className="edit-user-profile__title">Edycja profilu</div>
       <img
         className="edit-user-profile__image"
-        src={image?.data_url || `http://127.0.0.1:8000${user?.avatar_url}`}
+        src={image?.data_url}
         alt={user?.username}
       />
       <Formik
         onSubmit={({ email, phoneNumber, userName }) => {
-          if (id && image.data_url) {
+          if (id && image) {
             mutate({
               id,
-              avatar_url: image.data_url,
+              avatar: image.file as File,
               email,
               phone_number: phoneNumber,
               username: userName,
             });
           }
         }}
-        validateOnMount
         validationSchema={editProfileSchema}
         initialValues={{
-          userName: user.username,
-          email: user.email,
-          phoneNumber: user.phone_number,
+          userName: user?.username,
+          email: user?.email,
+          phoneNumber: user?.phone_number,
         }}
       >
         {(props) => {
           const haveValuesChanged =
             JSON.stringify(props.initialValues) !==
-              JSON.stringify(props.values) ||
-            image.data_url !== user.avatar_url;
+              JSON.stringify(props.values) || image?.data_url !== user?.avatar;
 
           const isButtonDisabled =
             isLoading ||
@@ -83,7 +89,7 @@ export const EditUserProfile = () => {
             <>
               <div className="edit-user-profile__inputs">
                 <ImageUploading
-                  value={[image]}
+                  value={[image as ImageType]}
                   onChange={onChange}
                   dataURLKey="data_url"
                 >

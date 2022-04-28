@@ -7,5 +7,5 @@ export type DogType = {
   weight: number;
   recommendation: string;
   contraindications: string;
-  avatar_url: string;
+  avatar: string;
 };

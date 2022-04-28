@@ -1,5 +1,5 @@
-import ImageUploading from "react-images-uploading";
 import AddIcon from "@mui/icons-material/Add";
+import ImageUploading, { ImageType } from "react-images-uploading";
 import { Button, Modal, Input } from "Components";
 import { Formik } from "formik";
 import { manageDogProfileSchema } from "Pages/ManageDogProfile/manageDogProfilSchema";
@@ -34,19 +34,19 @@ export const ManageDogProfile = () => {
       <Formik
         validationSchema={manageDogProfileSchema}
         onSubmit={({ dogName, race, age, weight }) => {
-          if (userId) {
+          if (userId && image) {
             isEdit
               ? mutateEditDog({
-                  id: "1",
+                  id: `${dog.id}`,
                   age: +age,
-                  avatar_url: image.data_url,
+                  avatar: image.file as File,
                   breed: race,
                   name: dogName,
                   weight: +weight,
                 })
               : mutateAddDog({
                   age: +age,
-                  avatar_url: image.data_url,
+                  avatar: image.file as File,
                   breed: race,
                   name: dogName,
                   weight: +weight,
@@ -65,8 +65,7 @@ export const ManageDogProfile = () => {
         {(props) => {
           const haveValuesChanged =
             JSON.stringify(props.initialValues) !==
-              JSON.stringify(props.values) ||
-            image.data_url !== dog?.avatar_url;
+              JSON.stringify(props.values) || image?.data_url !== dog?.avatar;
 
           const isButtonDisabledAdd =
             isAddDogLoading ||
@@ -96,7 +95,7 @@ export const ManageDogProfile = () => {
               </div>
               <div className="manage-dog-profile__choose-photo">
                 <ImageUploading
-                  value={[image]}
+                  value={[image as ImageType]}
                   onChange={changeImageHandler}
                   dataURLKey="data_url"
                 >
@@ -106,13 +105,10 @@ export const ManageDogProfile = () => {
                         onClick={onImageUpload}
                         className="manage-dog-profile__choose-photo-container"
                       >
-                        {image.data_url ? (
+                        {image?.data_url ? (
                           <img
                             className="manage-dog-profile__choose-photo-container"
-                            src={
-                              image.data_url ||
-                              `http://127.0.0.1:8000${dog?.avatar_url}`
-                            }
+                            src={image?.data_url}
                             alt="avatar"
                           />
                         ) : (

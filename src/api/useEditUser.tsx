@@ -5,7 +5,7 @@ type UseEditUserPayload = {
   id: string;
   username: string;
   email: string;
-  avatar_url: string;
+  avatar: File;
   phone_number: number;
 };
 
@@ -14,15 +14,17 @@ export const useEditUser = (onSuccess: () => void) => {
     id,
     username,
     email,
-    avatar_url,
+    avatar,
     phone_number,
-  }: UseEditUserPayload) =>
-    axios.patch(`http://127.0.0.1:8000/api/user/${id}/`, {
-      username,
-      email,
-      avatar_url,
-      phone_number,
-    });
+  }: UseEditUserPayload) => {
+    const formData = new FormData();
+    avatar && formData.append("avatar", avatar);
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("phone_number", `${phone_number}`);
+
+    return axios.patch(`http://127.0.0.1:8000/api/user/${id}/`, formData);
+  };
 
   const { mutate, isLoading } = useMutation(editUser, { onSuccess });
 

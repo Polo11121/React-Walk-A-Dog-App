@@ -11,7 +11,7 @@ import "./EditDogRecommendations.scss";
 export const EditDogRecommendations = () => {
   const queryClient = useQueryClient();
   const goBack = useGoBack();
-  const { id } = useParams();
+  const { subId: id } = useParams();
   const { dog } = useGetDog(id);
   const { pathname } = useLocation();
   const titlePrefix = pathname.split("/")[1];

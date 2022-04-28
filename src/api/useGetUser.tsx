@@ -1,15 +1,9 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import { UserType } from "types/User.types";
 
 type UseGetUserType = {
-  user: {
-    id: number;
-    username: string;
-    email: string;
-    avatar_url: string;
-    phone_number: number;
-    is_trainer: boolean;
-  };
+  user: UserType;
   isLoading: boolean;
 };
 

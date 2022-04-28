@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { ImageListType, ImageType } from "react-images-uploading";
 import { useAddDog } from "api/useAddDog";
@@ -12,12 +12,10 @@ import "./ManageDogProfile.scss";
 
 export const useManageDogProfile = () => {
   const queryClient = useQueryClient();
-  const { id } = useParams();
+  const { subId: id } = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [error, setError] = useState(false);
-  const [image, setImage] = useState<ImageType>({
-    data_url: "",
-  });
+  const [image, setImage] = useState<ImageType>();
   const { dog } = useGetDog(id);
   const { userId } = useAuthContext();
   const { pathname } = useLocation();
@@ -35,7 +33,7 @@ export const useManageDogProfile = () => {
     queryClient.invalidateQueries(["dog", id]);
     queryClient.invalidateQueries("dogs");
 
-    navigate(isEdit ? `/dog-profile/${id}` : "/dog-profiles");
+    navigate(`/dog-profiles/${userId}`);
   };
 
   const onSuccessDeleteDog = () => {
@@ -68,6 +66,8 @@ export const useManageDogProfile = () => {
       setImage(imageList[0]);
     }
   };
+
+  useEffect(() => setImage({ data_url: dog?.avatar }), [dog]);
 
   return {
     userId,

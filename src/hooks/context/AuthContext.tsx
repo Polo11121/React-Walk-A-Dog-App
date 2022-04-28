@@ -14,7 +14,7 @@ type AuthContextType = {
   authTokens: null | AuthTokensType;
   userId: null | string;
   userInfo: {
-    avatar_url: string;
+    avatar: string;
     email: string;
     id: number;
     is_trainer: boolean;
@@ -30,7 +30,7 @@ const AuthContext = createContext<AuthContextType>({
   authTokens: null,
   userId: null,
   userInfo: {
-    avatar_url: "",
+    avatar: "",
     email: "",
     id: 0,
     is_trainer: false,

@@ -1,22 +1,30 @@
 import EditIcon from "@mui/icons-material/Edit";
+import dogAvatar from "assets/logo.png";
 import { Button } from "Components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetDog } from "api/useGetDog";
+import { useOwner } from "hooks/useOwner";
 import "./DogProfile.scss";
 
 export const DogProfile = () => {
-  const { id } = useParams();
+  const { subId: id } = useParams();
   const { dog } = useGetDog(id);
+  const isOwner = useOwner();
   const navigate = useNavigate();
 
-  const switchToManageDogProfile = () => navigate(`/edit-dog/${id}`);
+  const switchToManageDogProfile = () =>
+    navigate(`/edit-dog/${dog.owner}/${dog.id}`);
 
   const switchToManageDogRecommendations = () =>
-    navigate(`/dog-recommendations/${id}`);
+    navigate(`/dog-recommendations/${dog.owner}/${dog.id}`);
 
   return (
     <div className="dog-profile">
-      <img className="dog-profile__image" src={dog?.avatar_url} alt="" />
+      <img
+        className="dog-profile__image"
+        src={dog?.avatar || dogAvatar}
+        alt=""
+      />
       <div className="dog-profile__name">{dog?.name}</div>
       <div className="dog-profile__section">
         <div className="dog-profile__section-title">
@@ -72,14 +80,16 @@ export const DogProfile = () => {
           title="Zalecenia"
           type="default"
         />
-        <Button
-          styles={{ width: "140px" }}
-          Icon={<EditIcon />}
-          size="M"
-          onClick={switchToManageDogProfile}
-          title="Edytuj profil"
-          type="default"
-        />
+        {isOwner && (
+          <Button
+            styles={{ width: "140px" }}
+            Icon={<EditIcon />}
+            size="M"
+            onClick={switchToManageDogProfile}
+            title="Edytuj profil"
+            type="default"
+          />
+        )}
       </div>
     </div>
   );

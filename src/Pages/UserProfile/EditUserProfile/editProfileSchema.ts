@@ -8,7 +8,6 @@ export const editProfileSchema = yup.object({
     .email("Nieprawidłowy adres email"),
   phoneNumber: yup
     .string()
-    .required("Podaj numer telefonu")
     .matches(
       /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
       "Nieprawiłowy numer telefonu"
