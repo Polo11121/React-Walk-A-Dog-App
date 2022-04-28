@@ -1,12 +1,16 @@
 import { CSSProperties } from "react";
 
-type ErrorTextType = {
+type ErrorTextProps = {
   text?: string;
   isError?: boolean;
   styles?: CSSProperties;
 };
 
-const ErrorText = ({ text, isError = false, styles }: ErrorTextType) => {
+export const ErrorText = ({
+  text,
+  isError = false,
+  styles,
+}: ErrorTextProps) => {
   return isError ? (
     <span
       style={{
@@ -21,5 +25,3 @@ const ErrorText = ({ text, isError = false, styles }: ErrorTextType) => {
     </span>
   ) : null;
 };
-
-export default ErrorText;

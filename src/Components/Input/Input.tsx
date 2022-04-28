@@ -1,11 +1,11 @@
-import { CSSProperties } from "@mui/styled-engine";
-import { FormikProps } from "formik";
 import {
   DetailedHTMLProps,
   HTMLInputTypeAttribute,
   InputHTMLAttributes,
 } from "react";
-import ErrorText from "../ErrorText/ErrorText";
+import { ErrorText } from "Components";
+import { CSSProperties } from "@mui/styled-engine";
+import { FormikProps } from "formik";
 import "./Input.scss";
 
 type InputProps = {

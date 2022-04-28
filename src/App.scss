@@ -1,5 +1,11 @@
 .App {
   height: 100vh;
+
+  &--spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 a {

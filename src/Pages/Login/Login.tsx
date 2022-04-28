@@ -1,29 +1,31 @@
 import { useState } from "react";
+import useAuthContext from "hooks/context/AuthContext";
 import { Formik } from "formik";
-import { Button } from "../../Components/Button/Button";
-import { Input } from "../../Components/Input/Input";
 import { useNavigate } from "react-router-dom";
-import ErrorText from "../../Components/ErrorText/ErrorText";
-import { useLogin } from "../../api/useLogin";
-import { userInfoType } from "../../types/User.type";
+import { ErrorText, Button, Input } from "Components";
+import { useLogin } from "api/useLogin";
+import { useCustomToast } from "hooks/context/useCustomToast";
 import "./Login.scss";
 
-export const Login = ({
-  loginUser,
-}: {
-  loginUser: ({ token, userId }: userInfoType) => void;
-}) => {
+export const Login = () => {
   const [error, setError] = useState(false);
+  const { loginUser } = useAuthContext();
   const navigate = useNavigate();
 
   const switchToRegisterPageHandler = () => navigate("/register");
 
   const switchToForgotPassword = () => navigate("/forgot-password");
 
-  const onSuccess = ({ data }: { data: any }) =>
-    loginUser({ token: data.access, userId: data.user.id });
+  const onError = () => setError(true);
 
-  const { mutate, isLoading } = useLogin(onSuccess);
+  const onSuccess = ({ data }: { data: any }) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useCustomToast(`Witaj ${data.user.username}!`);
+    loginUser({ access: data.access, refresh: data.refresh });
+    navigate(`/user-profile/${data.user.id}`);
+  };
+
+  const { mutate, isLoading } = useLogin(onSuccess, onError);
 
   return (
     <div className="login">

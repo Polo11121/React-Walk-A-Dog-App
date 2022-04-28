@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../Components/Button/Button";
-import { Input } from "../../Components/Input/Input";
-import ErrorText from "../../Components/ErrorText/ErrorText";
+import { Input, Button, ErrorText, Modal } from "Components";
 import "./ForgotPassword.scss";
 
 export const ForgotPassword = () => {
   const [error, setError] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
   const navigate = useNavigate();
 
   const switchToNewPassword = () => navigate("/new-password");
@@ -56,7 +53,7 @@ export const ForgotPassword = () => {
         </Formik>
       </div>
       {isOpen && (
-        <div className="forgot-password__modal">
+        <Modal>
           <div className="forgot-password__modal-content">
             Link do zresetowania hasła został wysłany na twojego maila
             <Button
@@ -67,7 +64,7 @@ export const ForgotPassword = () => {
               size="L"
             />
           </div>
-        </div>
+        </Modal>
       )}
     </div>
   );

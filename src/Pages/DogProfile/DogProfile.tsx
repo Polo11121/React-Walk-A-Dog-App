@@ -1,23 +1,31 @@
-import { Button } from "../../Components/Button/Button";
-import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
+import dogAvatar from "assets/logo.png";
+import { Button } from "Components";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetDog } from "api/useGetDog";
+import { useOwner } from "hooks/useOwner";
 import "./DogProfile.scss";
 
 export const DogProfile = () => {
+  const { subId: id } = useParams();
+  const { dog } = useGetDog(id);
+  const isOwner = useOwner();
   const navigate = useNavigate();
 
-  const switchToManageDogProfile = () => navigate("/edit-dog");
+  const switchToManageDogProfile = () =>
+    navigate(`/edit-dog/${dog.owner}/${dog.id}`);
+
   const switchToManageDogRecommendations = () =>
-    navigate("/dog-recommendations");
+    navigate(`/dog-recommendations/${dog.owner}/${dog.id}`);
 
   return (
     <div className="dog-profile">
       <img
         className="dog-profile__image"
-        src="https://bi.im-g.pl/im/d0/a9/e1/z14789072Q,Prawdopodobnie-najslawniejsze-zdjecie-Piesela.jpg"
+        src={dog?.avatar || dogAvatar}
         alt=""
       />
-      <div className="dog-profile__name">Pimpek</div>
+      <div className="dog-profile__name">{dog?.name}</div>
       <div className="dog-profile__section">
         <div className="dog-profile__section-title">
           <div className="dog-profile__line"></div>
@@ -27,15 +35,15 @@ export const DogProfile = () => {
         <div className="dog-profile__section-infos">
           <div className="dog-profile__section-info">
             <div className="dog-profile__section-info-title">Wiek:</div>
-            <div>2 lata</div>
+            <div>{dog?.age} lata</div>
           </div>
           <div className="dog-profile__section-info">
             <div className="dog-profile__section-info-title">Rasa:</div>
-            <div>gigaczad</div>
+            <div>{dog?.breed}</div>
           </div>
           <div className="dog-profile__section-info">
             <div className="dog-profile__section-info-title">Waga:</div>
-            <div>69kg</div>
+            <div>{dog?.weight}kg</div>
           </div>
         </div>
       </div>
@@ -72,14 +80,16 @@ export const DogProfile = () => {
           title="Zalecenia"
           type="default"
         />
-        <Button
-          styles={{ width: "140px" }}
-          Icon={<EditIcon />}
-          size="M"
-          onClick={switchToManageDogProfile}
-          title="Edytuj profil"
-          type="default"
-        />
+        {isOwner && (
+          <Button
+            styles={{ width: "140px" }}
+            Icon={<EditIcon />}
+            size="M"
+            onClick={switchToManageDogProfile}
+            title="Edytuj profil"
+            type="default"
+          />
+        )}
       </div>
     </div>
   );

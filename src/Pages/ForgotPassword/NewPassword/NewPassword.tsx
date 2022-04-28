@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { Formik } from "formik";
-import { Input } from "../../../Components/Input/Input";
-import { Button } from "../../../Components/Button/Button";
-import { newPasswordSchema } from "./newPasswordSchema";
-import "./NewPassword.scss";
+import { Input, Button, Modal } from "Components";
+import { newPasswordSchema } from "Pages/ForgotPassword/NewPassword/newPasswordSchema";
 import { useNavigate } from "react-router-dom";
+import "./NewPassword.scss";
 
 export const NewPassword = () => {
   const [error, setError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
   const navigate = useNavigate();
 
   const switchToLogin = () => navigate("/login");
@@ -76,7 +74,7 @@ export const NewPassword = () => {
         </Formik>
       </div>
       {isOpen && (
-        <div className="new-password__modal">
+        <Modal>
           <div className="new-password__modal-content">
             Pomyślnie zmieniono hasło
             <Button
@@ -87,7 +85,7 @@ export const NewPassword = () => {
               size="L"
             />
           </div>
-        </div>
+        </Modal>
       )}
     </div>
   );
