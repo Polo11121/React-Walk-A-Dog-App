@@ -1,19 +1,25 @@
 import EditIcon from "@mui/icons-material/Edit";
 import dogAvatar from "assets/logo.png";
+import userAvatar from "assets/user-avatar.png";
+import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import { Button } from "Components";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useGetDog } from "api/useGetDog";
 import { useOwner } from "hooks/useOwner";
+import { useGetUser } from "api/useGetUser";
 import "./DogProfile.scss";
 
 export const DogProfile = () => {
-  const { subId: id } = useParams();
+  const { id: ownerId, subId: id } = useParams();
   const { dog } = useGetDog(id);
+  const { user } = useGetUser(ownerId);
   const isOwner = useOwner();
   const navigate = useNavigate();
 
   const switchToManageDogProfile = () =>
     navigate(`/edit-dog/${dog.owner}/${dog.id}`);
+
+  const switchToDogWalks = () => navigate(`/dog-walks/${dog.id}`);
 
   const switchToManageDogRecommendations = () =>
     navigate(`/dog-recommendations/${dog.owner}/${dog.id}`);
@@ -26,6 +32,29 @@ export const DogProfile = () => {
         alt=""
       />
       <div className="dog-profile__name">{dog?.name}</div>
+      <div className="dog-profile__section">
+        <div className="dog-profile__section-title">
+          <div className="dog-profile__line"></div>
+          <div>Właściciel</div>
+          <div className="dog-profile__line"></div>
+        </div>
+        <Link
+          to={`/user-profile/${ownerId}`}
+          className="dog-profile__section-infos"
+          style={{ width: "100%" }}
+        >
+          <div className="dog-profile__owner-info">
+            <img
+              className="dog-profile__owner-image"
+              src={user?.avatar || userAvatar}
+              alt={user?.username}
+            />
+            <div className="dog-profile__section-info-title">
+              {user?.username}
+            </div>
+          </div>
+        </Link>
+      </div>
       <div className="dog-profile__section">
         <div className="dog-profile__section-title">
           <div className="dog-profile__line"></div>
@@ -80,7 +109,7 @@ export const DogProfile = () => {
           title="Zalecenia"
           type="default"
         />
-        {isOwner && (
+        {isOwner ? (
           <Button
             styles={{ width: "140px" }}
             Icon={<EditIcon />}
@@ -89,8 +118,27 @@ export const DogProfile = () => {
             title="Edytuj profil"
             type="default"
           />
+        ) : (
+          <Button
+            styles={{ width: "140px" }}
+            size="M"
+            Icon={<DirectionsWalkIcon />}
+            onClick={switchToDogWalks}
+            title="Spacery"
+            type="default"
+          />
         )}
       </div>
+      {isOwner && (
+        <Button
+          styles={{ width: "140px", marginBottom: "40px" }}
+          size="M"
+          Icon={<DirectionsWalkIcon />}
+          onClick={switchToDogWalks}
+          title="Spacery"
+          type="default"
+        />
+      )}
     </div>
   );
 };

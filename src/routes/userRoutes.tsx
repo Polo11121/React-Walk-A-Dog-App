@@ -10,6 +10,8 @@ import { UserProfile } from "Pages/UserProfile/UserProfile";
 import { v4 as uuid } from "uuid";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { UserProfiles } from "Pages/UserProfiles/UserProfiles";
+import { DogWalks } from "Pages/DogWalks/DogWalks";
+import { TrainerInfo } from "Pages/TrainerInfo/TrainerInfo";
 
 export const userRoutes = (userId: string | null) => [
   <Route key={uuid()} path="/user-profile/:id" element={<UserProfile />} />,
@@ -54,6 +56,8 @@ export const userRoutes = (userId: string | null) => [
       </ProtectedRoute>
     }
   />,
+  <Route key={uuid()} path="/dog-walks/:id" element={<DogWalks />} />,
+  <Route key={uuid()} path="/trainer-info/:id/*" element={<TrainerInfo />} />,
   <Route key={uuid()} path="/change-password" element={<ChangePassword />} />,
   <Route
     key={uuid()}

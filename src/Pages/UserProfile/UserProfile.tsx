@@ -1,5 +1,6 @@
 import EditIcon from "@mui/icons-material/Edit";
 import userAvatar from "assets/user-avatar.png";
+import StarIcon from "@mui/icons-material/Star";
 import { Button } from "Components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "api/useGetUser";
@@ -18,10 +19,12 @@ export const UserProfile = () => {
 
   const switchToUserDogs = () => navigate(`/dog-profiles/${id}`);
 
+  const switchToTrainerInfo = () => navigate(`/trainer-info/${id}/opinions`);
+
   const getProfilesButtons = () => {
     if (isOwner) {
       return (
-        <div className="user-profile__buttons">
+        <>
           <Button
             styles={{ width: "140px" }}
             size="M"
@@ -37,7 +40,7 @@ export const UserProfile = () => {
             title="Edytuj profil"
             type="primary"
           />
-        </div>
+        </>
       );
     }
     if (!user?.is_trainer) {
@@ -46,6 +49,18 @@ export const UserProfile = () => {
           size="M"
           onClick={switchToUserDogs}
           title={`Psy ${user?.username}`}
+          type="primary"
+        />
+      );
+    }
+
+    if (user?.is_trainer) {
+      return (
+        <Button
+          size="L"
+          Icon={<StarIcon />}
+          onClick={switchToTrainerInfo}
+          title={`Opinie i spacery`}
           type="primary"
         />
       );
@@ -87,7 +102,10 @@ export const UserProfile = () => {
           </div>
         </div>
       </div>
-      <div className="user-profile__buttons">{getProfilesButtons()}</div>
+      <div className="user-profile__buttons">
+        {" "}
+        <div className="user-profile__buttons">{getProfilesButtons()} </div>
+      </div>
     </div>
   );
 };
