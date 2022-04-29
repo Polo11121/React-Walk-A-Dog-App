@@ -14,7 +14,7 @@ export const Footer = ({ logoutUser }: { logoutUser: () => void }) => {
 
   const switchToMyProfile = () => navigate(`/user-profile/${userId}`);
 
-  const switchToUserProfiles = () => navigate("/user-profiles");
+  const switchToUserProfiles = () => navigate("/user-profiles/trainers");
 
   return (
     <div className="footer">
