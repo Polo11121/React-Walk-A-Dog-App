@@ -21,7 +21,7 @@ export const useEditUser = (onSuccess: () => void) => {
     avatar && formData.append("avatar", avatar);
     formData.append("username", username);
     formData.append("email", email);
-    formData.append("phone_number", `${phone_number}`);
+    phone_number && formData.append("phone_number", `${phone_number}`);
 
     return axios.patch(`http://127.0.0.1:8000/api/user/${id}/`, formData);
   };

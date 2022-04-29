@@ -15,7 +15,7 @@ import { TrainerInfo } from "Pages/TrainerInfo/TrainerInfo";
 
 export const userRoutes = (userId: string | null) => [
   <Route key={uuid()} path="/user-profile/:id" element={<UserProfile />} />,
-  <Route key={uuid()} path="/user-profiles" element={<UserProfiles />} />,
+  <Route key={uuid()} path="/user-profiles/*" element={<UserProfiles />} />,
   <Route key={uuid()} path="/dog-profiles/:id" element={<DogProfiles />} />,
   <Route
     key={uuid()}
