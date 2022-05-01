@@ -74,7 +74,9 @@ export const EditUserProfile = () => {
         {(props) => {
           const haveValuesChanged =
             JSON.stringify(props.initialValues) !==
-              JSON.stringify(props.values) || image?.data_url !== user?.avatar;
+              JSON.stringify(props.values) ||
+            (image?.data_url !== userAvatar &&
+              image?.data_url !== user?.avatar);
 
           const isButtonDisabled =
             isLoading ||

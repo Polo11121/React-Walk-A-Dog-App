@@ -64,6 +64,14 @@ export const EditDogRecommendations = () => {
       />
       <div className="edit-dog-recommendations__buttons">
         <Button
+          styles={{ width: "160px", fontWeight: "500", borderRadius: "15px" }}
+          disabled={isButtonDisabled()}
+          size="L"
+          onClick={submitDogRecommendationsHandler}
+          title="Zatwierdź"
+          type="green"
+        />
+        <Button
           styles={{
             fontWeight: "500",
             width: "160px",
@@ -73,14 +81,6 @@ export const EditDogRecommendations = () => {
           onClick={goBack}
           title="Anuluj"
           type="red"
-        />
-        <Button
-          styles={{ width: "160px", fontWeight: "500", borderRadius: "15px" }}
-          disabled={isButtonDisabled()}
-          size="L"
-          onClick={submitDogRecommendationsHandler}
-          title="Zatwierdź"
-          type="green"
         />
       </div>
     </div>

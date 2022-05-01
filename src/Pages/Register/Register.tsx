@@ -71,7 +71,7 @@ export const Register = () => {
               <ErrorText
                 styles={{ marginBottom: "0.5rem", textAlign: "center" }}
                 isError={registerError}
-                text="Zajęty email lub nazwa użytkownika"
+                text="Podany adres email jest już zajęty"
               />
               <div className="register__buttons">
                 <Button

@@ -1,5 +1,5 @@
 import LogoutIcon from "@mui/icons-material/Logout";
-import PetsIcon from "@mui/icons-material/Pets";
+import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import GroupIcon from "@mui/icons-material/Group";
 import useAuthContext from "hooks/context/AuthContext";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -10,7 +10,7 @@ export const Footer = ({ logoutUser }: { logoutUser: () => void }) => {
   const { userId } = useAuthContext();
   const navigate = useNavigate();
 
-  const switchToMyDogs = () => navigate(`/dog-profiles/${userId}`);
+  const switchToWalks = () => navigate(`/walks`);
 
   const switchToMyProfile = () => navigate(`/user-profile/${userId}`);
 
@@ -18,9 +18,9 @@ export const Footer = ({ logoutUser }: { logoutUser: () => void }) => {
 
   return (
     <div className="footer">
-      <div onClick={switchToMyDogs} className="footer__icon">
-        <PetsIcon />
-        <div>Moje Psy</div>
+      <div onClick={switchToWalks} className="footer__icon">
+        <DirectionsWalkIcon />
+        <div>Spacery</div>
       </div>
       <div onClick={switchToUserProfiles} className="footer__icon">
         <GroupIcon />

@@ -5,11 +5,13 @@ import { useGetUserDogs } from "api/useGetUserDogs";
 import { useOwner } from "hooks/useOwner";
 import { useGetUser } from "api/useGetUser";
 import "./DogProfiles.scss";
+import { useGoBack } from "hooks/useGoBack";
 
 export const DogProfiles = () => {
   const { id } = useParams();
   const { user } = useGetUser(id);
   const { dogs } = useGetUserDogs(id);
+  const goBack = useGoBack();
   const isOwner = useOwner();
   const navigate = useNavigate();
 
@@ -32,8 +34,8 @@ export const DogProfiles = () => {
           />
         ))}
       </div>
-      {isOwner && (
-        <div className="dog-profiles__add-button">
+      <div className="dog-profiles__add-button">
+        {isOwner ? (
           <Button
             styles={{
               marginLeft: "auto",
@@ -45,8 +47,19 @@ export const DogProfiles = () => {
             title="Dodaj profil"
             type="default"
           />
-        </div>
-      )}
+        ) : (
+          <Button
+            styles={{
+              marginLeft: "auto",
+              marginBottom: "40px",
+            }}
+            onClick={goBack}
+            size="M"
+            title="Powrót"
+            type="default"
+          />
+        )}
+      </div>
     </div>
   );
 };
