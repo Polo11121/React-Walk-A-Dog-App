@@ -1,0 +1,49 @@
+.recommendations{
+    border: 2px solid black;
+    border-radius: 5px;
+    width: 90%;
+    margin: 20px auto;
+    padding: 0px 15px;
+    padding-bottom: 45px;
+    position: relative;
+    
+
+    &.red{
+        border-color: #C11B1B;
+        background-color: rgba(255,0,0,.1);
+    }
+    
+    &.green{
+        border-color: rgb(24,149,29);
+        background-color: rgba(24,149,29,.1);
+    }
+    
+    
+    &__text{
+        font-size: 20px
+    }
+    
+    &__btn{    
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        font-size: 20px;
+        font-weight: 700;
+        padding: 10px 20px;
+        border: 2px solid black;
+        border-radius: 15px;
+        
+        
+        &.red{
+            border-color: #C11B1B;
+            background-color: rgba(255,0,0,.7);
+        }
+        
+        &.green{
+            border-color: rgba(24,149,29,1);
+            background-color: rgba(24,149,29,.7)
+        }
+        
+    }
+    
+}
