@@ -3,6 +3,8 @@ import { Formik } from "formik";
 import { Button, Input, Modal } from "Components";
 import { useGoBack } from "hooks/useGoBack";
 import { changePasswordSchema } from "Pages/ChangePassword/changePasswordSchema";
+import { useChangePassword } from "api/useChangePassword";
+import { useCustomToast } from "hooks/context/useCustomToast";
 import "./ChangePassword.scss";
 
 export const ChangePassword = () => {
@@ -10,12 +12,22 @@ export const ChangePassword = () => {
   const [error, setError] = useState(false);
   const goBack = useGoBack();
 
+  const onSuccess = () => setIsOpen(true);
+
+  const onError = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useCustomToast("Nieprawiłowe stare hasło !", true);
+    setError(true);
+  };
+
+  const { mutate, isLoading } = useChangePassword(onSuccess, onError);
+
   return (
     <div className="change-password">
       <div className="change-password__container">
         <Formik
-          onSubmit={(values) => {
-            setIsOpen(true);
+          onSubmit={({ oldPassword, newPassword }) => {
+            mutate({ oldPassword, newPassword });
           }}
           validationSchema={changePasswordSchema}
           validateOnMount
@@ -66,6 +78,15 @@ export const ChangePassword = () => {
                     );
                     props.handleSubmit();
                   }}
+                  disabled={
+                    (Boolean(
+                      props.errors.oldPassword ||
+                        props.errors.repeatNewPassword ||
+                        props.errors.newPassword
+                    ) &&
+                      error) ||
+                    isLoading
+                  }
                   styles={{ width: "140px" }}
                   title="Zmień"
                   type="primary"

@@ -62,6 +62,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const loginUser = ({ access, refresh }: AuthTokensType) => {
     setUserId(jwt_decode<{ user_id: string }>(access).user_id);
+    setAuthTokens({ access, refresh });
     sessionStorage.setItem("authTokens", JSON.stringify({ access, refresh }));
   };
 

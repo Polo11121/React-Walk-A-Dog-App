@@ -1,0 +1,54 @@
+.walks-list {
+  font-size: 18px;
+
+  &__top-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  &__date {
+    font-weight: 600;
+  }
+
+  &__content {
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
+  &__add-button {
+    margin-top: -25px;
+    margin-left: auto;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #39acff;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__subtitle {
+    margin: 1rem 0;
+    font-weight: 600;
+  }
+
+  &__bold-text {
+    font-weight: 600;
+  }
+
+  &__modal-content {
+    margin: 20px auto 0;
+    width: 90%;
+    font-size: 36px;
+    font-weight: 500;
+  }
+}

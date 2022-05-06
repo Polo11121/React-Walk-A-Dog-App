@@ -24,9 +24,7 @@ function App() {
     <div className="App">
       <Routes>{!userId ? authRoutes() : userRoutes(userId)}</Routes>
       {userId && <Footer logoutUser={logoutUser} />}
-      <ToastContainer
-        toastStyle={{ backgroundColor: "#8fe388", color: "black" }}
-      />
+      <ToastContainer />
     </div>
   );
 }

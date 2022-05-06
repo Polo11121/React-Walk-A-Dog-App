@@ -21,52 +21,6 @@ export const UserProfile = () => {
 
   const switchToTrainerInfo = () => navigate(`/trainer-info/${id}/opinions`);
 
-  const getProfilesButtons = () => {
-    if (isOwner) {
-      return (
-        <>
-          <Button
-            styles={{ width: "140px" }}
-            size="M"
-            onClick={switchToChangePassword}
-            title="Zmień hasło"
-            type="primary"
-          />
-          <Button
-            styles={{ width: "140px" }}
-            size="M"
-            onClick={switchToEditUserProfile}
-            Icon={<EditIcon />}
-            title="Edytuj profil"
-            type="primary"
-          />
-        </>
-      );
-    }
-    if (!user?.is_trainer) {
-      return (
-        <Button
-          size="M"
-          onClick={switchToUserDogs}
-          title={`Psy ${user?.username}`}
-          type="primary"
-        />
-      );
-    }
-
-    if (user?.is_trainer) {
-      return (
-        <Button
-          size="L"
-          Icon={<StarIcon />}
-          onClick={switchToTrainerInfo}
-          title={`Opinie i spacery`}
-          type="primary"
-        />
-      );
-    }
-  };
-
   const getProfileTitle = () =>
     isOwner
       ? "Twój profil"
@@ -103,9 +57,44 @@ export const UserProfile = () => {
         </div>
       </div>
       <div className="user-profile__buttons">
-        {" "}
-        <div className="user-profile__buttons">{getProfilesButtons()} </div>
+        {isOwner && (
+          <div className="user-profile__buttons">
+            <Button
+              styles={{ width: "140px" }}
+              size="M"
+              onClick={switchToChangePassword}
+              title="Zmień hasło"
+              type="primary"
+            />
+            <Button
+              styles={{ width: "140px" }}
+              size="M"
+              onClick={switchToEditUserProfile}
+              Icon={<EditIcon />}
+              title="Edytuj profil"
+              type="primary"
+            />
+          </div>
+        )}
       </div>
+      {user?.is_trainer ? (
+        <Button
+          styles={{ marginBottom: "40px" }}
+          size="L"
+          Icon={<StarIcon />}
+          onClick={switchToTrainerInfo}
+          title={`Opinie i spacery`}
+          type="primary"
+        />
+      ) : (
+        <Button
+          size="M"
+          styles={{ marginBottom: "40px" }}
+          onClick={switchToUserDogs}
+          title={isOwner ? "Twoje psy" : `Psy ${user?.username}`}
+          type="primary"
+        />
+      )}
     </div>
   );
 };

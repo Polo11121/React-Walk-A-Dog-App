@@ -5,6 +5,10 @@
   margin: 0 auto;
   width: 90%;
 
+  &__list {
+    flex: 1;
+  }
+
   &__title {
     font-weight: 700;
     font-size: 40px;

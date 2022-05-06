@@ -63,13 +63,7 @@ export const DogRecommendations = () => {
         )}
       </div>
       <div className="dog-recommendations__button">
-        <Button
-          styles={{ width: "140px" }}
-          size="M"
-          onClick={goBack}
-          title="Powrót"
-          type="default"
-        />
+        <Button size="M" onClick={goBack} title="Powrót" type="default" />
       </div>
     </div>
   );

@@ -12,11 +12,21 @@ import { ProtectedRoute } from "./ProtectedRoute";
 import { UserProfiles } from "Pages/UserProfiles/UserProfiles";
 import { DogWalks } from "Pages/DogWalks/DogWalks";
 import { TrainerInfo } from "Pages/TrainerInfo/TrainerInfo";
+import { Walks } from "Pages/Walks/Walks";
+import { WalkInfo } from "Pages/WalkInfo/WalkInfo";
 
 export const userRoutes = (userId: string | null) => [
   <Route key={uuid()} path="/user-profile/:id" element={<UserProfile />} />,
   <Route key={uuid()} path="/user-profiles/*" element={<UserProfiles />} />,
-  <Route key={uuid()} path="/dog-profiles/:id" element={<DogProfiles />} />,
+  <Route
+    key={uuid()}
+    path="/dog-profiles/:id"
+    element={
+      <ProtectedRoute trainerBlock>
+        <DogProfiles />
+      </ProtectedRoute>
+    }
+  />,
   <Route
     key={uuid()}
     path="/dog-profile/:id/:subId"
@@ -56,6 +66,8 @@ export const userRoutes = (userId: string | null) => [
       </ProtectedRoute>
     }
   />,
+  <Route key={uuid()} path="/walks" element={<Walks />} />,
+  <Route key={uuid()} path="/walk-info/:id" element={<WalkInfo />} />,
   <Route key={uuid()} path="/dog-walks/:id" element={<DogWalks />} />,
   <Route key={uuid()} path="/trainer-info/:id/*" element={<TrainerInfo />} />,
   <Route key={uuid()} path="/change-password" element={<ChangePassword />} />,
