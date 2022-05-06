@@ -58,11 +58,13 @@ export const ManageDogProfile = () => {
         initialValues={{
           dogName: dog?.name || "",
           race: dog?.breed || "",
-          age: dog?.age || "",
-          weight: dog?.weight || "",
+          age: dog?.age ? `${dog?.age}` : "",
+          weight: dog?.weight ? `${dog?.weight}` : "",
         }}
       >
         {(props) => {
+          console.log(JSON.stringify(props.initialValues));
+          console.log(JSON.stringify(props.values));
           const haveValuesChanged =
             JSON.stringify(props.initialValues) !==
               JSON.stringify(props.values) || image?.data_url !== dog?.avatar;

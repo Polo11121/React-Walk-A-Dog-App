@@ -4,8 +4,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useGetUserDogs } from "api/useGetUserDogs";
 import { useOwner } from "hooks/useOwner";
 import { useGetUser } from "api/useGetUser";
-import "./DogProfiles.scss";
 import { useGoBack } from "hooks/useGoBack";
+import "./DogProfiles.scss";
 
 export const DogProfiles = () => {
   const { id } = useParams();

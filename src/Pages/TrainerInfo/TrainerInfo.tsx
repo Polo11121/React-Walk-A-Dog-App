@@ -1,6 +1,7 @@
 import StarIcon from "@mui/icons-material/Star";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import { Breadcrumbs } from "@mui/material";
+import { TrainerWalks } from "Pages/TrainerInfo/TrainerWalks/TrainerWalks";
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "api/useGetUser";
 import { Button } from "Components";
@@ -35,8 +36,8 @@ export const TrainerInfo = () => {
       </Breadcrumbs>
       <div className="trainer-info__content">
         <Routes>
-          <Route path="opinions" element={<div>options</div>} />
-          <Route path="walks" element={<div>walks</div>} />
+          <Route path="opinions" element={<div>opinions</div>} />
+          <Route path="walks" element={<TrainerWalks />} />
         </Routes>
       </div>
       <Button

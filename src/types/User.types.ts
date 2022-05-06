@@ -11,3 +11,14 @@ export type UserType = {
   phone_number: number;
   is_trainer: boolean;
 };
+
+export type SlotType = {
+  id: number;
+  trainer: number;
+  date: string;
+  time_from: string;
+  time_to: string;
+  dog1: number;
+  dog2: number;
+  dog3: number;
+};

@@ -59,7 +59,7 @@ export const EditUserProfile = () => {
               id,
               avatar: image.file as File,
               email,
-              phone_number: phoneNumber,
+              phone_number: +phoneNumber,
               username: userName,
             });
           }
@@ -68,7 +68,7 @@ export const EditUserProfile = () => {
         initialValues={{
           userName: user?.username,
           email: user?.email,
-          phoneNumber: user?.phone_number,
+          phoneNumber: user?.phone_number ? `${user?.phone_number}` : "",
         }}
       >
         {(props) => {

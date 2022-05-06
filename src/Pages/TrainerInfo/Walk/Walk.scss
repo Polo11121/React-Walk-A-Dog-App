@@ -1,0 +1,38 @@
+.walk {
+  border: 1px solid #000000;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 15px;
+  position: relative;
+
+  &__content {
+    display: flex;
+    align-items: center;
+  }
+
+  &__delete-icon {
+    position: absolute;
+    overflow: inherit;
+    right: 0;
+    top: 0;
+    color: red !important;
+  }
+
+  &__avatars {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    justify-content: space-around;
+  }
+
+  &__avatar {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #c4c4c4;
+  }
+}
