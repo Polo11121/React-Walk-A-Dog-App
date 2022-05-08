@@ -11,7 +11,7 @@ import { useGetUser } from "api/useGetUser";
 import { Input, Button } from "Components";
 import { editProfileSchema } from "Pages/UserProfile/EditUserProfile/editProfileSchema";
 import { useQueryClient } from "react-query";
-import { useCustomToast } from "hooks/context/useCustomToast";
+import { useCustomToast } from "hooks/useCustomToast";
 import { useGoBack } from "hooks/useGoBack";
 import "./EditUserProfile.scss";
 

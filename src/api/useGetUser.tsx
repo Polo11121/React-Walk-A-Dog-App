@@ -14,7 +14,7 @@ export const useGetUser = (userId?: string | null): UseGetUserType => {
       .then((resp) => resp.data);
 
   const { data, isLoading } = useQuery(["user", `${userId}`], getUser, {
-    enabled: Boolean(userId),
+    enabled: Boolean(userId) && userId !== "undefined",
   });
 
   return { user: data, isLoading };

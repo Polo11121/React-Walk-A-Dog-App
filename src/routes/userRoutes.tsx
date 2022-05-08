@@ -66,7 +66,15 @@ export const userRoutes = (userId: string | null) => [
       </ProtectedRoute>
     }
   />,
-  <Route key={uuid()} path="/walks" element={<Walks />} />,
+  <Route
+    key={uuid()}
+    path="/walks"
+    element={
+      <ProtectedRoute trainerBlock>
+        <Walks />
+      </ProtectedRoute>
+    }
+  />,
   <Route key={uuid()} path="/walk-info/:id" element={<WalkInfo />} />,
   <Route key={uuid()} path="/dog-walks/:id" element={<DogWalks />} />,
   <Route key={uuid()} path="/trainer-info/:id/*" element={<TrainerInfo />} />,

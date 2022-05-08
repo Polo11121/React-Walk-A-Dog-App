@@ -6,7 +6,7 @@ import { useQueryClient } from "react-query";
 import useAuthContext from "hooks/context/AuthContext";
 import { useGetDog } from "api/useGetDog";
 import { useEditDog } from "api/useEditDog";
-import { useCustomToast } from "hooks/context/useCustomToast";
+import { useCustomToast } from "hooks/useCustomToast";
 import { useDeleteDog } from "api/useDeleteDog";
 import "./ManageDogProfile.scss";
 

@@ -9,12 +9,14 @@ import { DogType } from "types/Dog.types";
 import { useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAddDogToSlot } from "api/useAddDogToSlot";
-import { useCustomToast } from "hooks/context/useCustomToast";
+import { useCustomToast } from "hooks/useCustomToast";
+import { isInThePast } from "helpers/helpers";
 import "./WalkInfoDog.scss";
 
 type WalkInfoDogType = {
   index: number;
   openRemoveDogHandler: (index: number, dogName: string) => void;
+  date: Date;
   isOwner: boolean;
   dogInfo: {
     id: string;
@@ -50,6 +52,7 @@ const WalkInfoDog = ({
   dogInfo,
   dogs,
   isOwner,
+  date,
   openRemoveDogHandler,
   setDogsInfo,
   isAddingBlocked,
@@ -76,9 +79,9 @@ const WalkInfoDog = ({
   const handleDogClick = (event: MouseEvent<HTMLDivElement>) => {
     if (dogInfo.isAdded) {
       return goToDogProfile();
-    } else if (dogInfo.id) {
+    } else if (dogInfo.id && !isInThePast(date)) {
       return handleClose();
-    } else if (isAddingBlocked) {
+    } else if (isAddingBlocked || isInThePast(date)) {
       return null;
     }
     return handleClick(event);
@@ -108,15 +111,20 @@ const WalkInfoDog = ({
         ) : (
           <button
             className={
-              isAddingBlocked
+              isAddingBlocked || isInThePast(date)
                 ? "walk-info-dog__empty-slot"
                 : "walk-info-dog__add-button"
             }
           >
-            {isAddingBlocked ? "Wolne miejsce" : <AddIcon />}
+            {isAddingBlocked || isInThePast(date) ? (
+              "Wolne miejsce"
+            ) : (
+              <AddIcon />
+            )}
           </button>
         )}
-        {isAddingBlocked && !dogInfo.isAdded ? (
+        {(isAddingBlocked && !dogInfo.isAdded) ||
+        (isInThePast(date) && !dogInfo.id) ? (
           "Wolne miejsce"
         ) : dogInfo.id ? (
           <>

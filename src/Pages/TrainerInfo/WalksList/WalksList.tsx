@@ -7,8 +7,10 @@ import { useGetUser } from "api/useGetUser";
 import {
   addOneHourToTime,
   formatter,
+  getActualTime,
   getFormattedDate,
   getFormattedHour,
+  isInThePast,
   isWeekend,
 } from "helpers/helpers";
 import { useAddSlot } from "api/userAddSlot";
@@ -18,7 +20,7 @@ import { Walk } from "Pages/TrainerInfo/Walk/Walk";
 import { useQueryClient } from "react-query";
 import { Button, ErrorText, Modal } from "Components";
 import { SlotType } from "types/User.types";
-import { useCustomToast } from "hooks/context/useCustomToast";
+import { useCustomToast } from "hooks/useCustomToast";
 import { useDeleteSlot } from "api/useDeleteSlot";
 import { useGetDogs } from "api/useGetDogs";
 import "./WalksList.scss";
@@ -124,7 +126,9 @@ export const WalksList = ({ goBackHandler, date, slots }: WalksListType) => {
             Godzina rozpoczęcia spaceru
           </span>
           <TimePicker
-            minTime={isWeekend(date) ? "09:00:00" : "08:00:00"}
+            minTime={
+              getActualTime(date) || (isWeekend(date) ? "09:00:00" : "08:00:00")
+            }
             maxTime={isWeekend(date) ? "16:00:00" : "18:00:00"}
             onChange={setStartWalk}
             value={startWalk}
@@ -172,13 +176,13 @@ export const WalksList = ({ goBackHandler, date, slots }: WalksListType) => {
                   dogAvatar2={dogs?.find(({ id }) => id === dog2)?.avatar}
                   dogAvatar3={dogs?.find(({ id }) => id === dog3)?.avatar}
                   openRemoveSlotHandler={openRemoveSlotHandler}
-                  isOwner={isOwner}
+                  isOwner={isOwner && !isInThePast(date)}
                   dateStart={time_from}
                   dateEnd={time_to}
                 />
               ))}
           </div>
-          {isOwner && slots.length < 5 && (
+          {isOwner && slots.length < 5 && !isInThePast(date) && (
             <div
               onClick={openAddSlotHandler}
               style={!slots.length ? { margin: "0 auto" } : {}}

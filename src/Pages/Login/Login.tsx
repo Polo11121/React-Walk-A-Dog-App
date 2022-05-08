@@ -4,7 +4,7 @@ import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { ErrorText, Button, Input } from "Components";
 import { useLogin } from "api/useLogin";
-import { useCustomToast } from "hooks/context/useCustomToast";
+import { useCustomToast } from "hooks/useCustomToast";
 import "./Login.scss";
 
 export const Login = () => {

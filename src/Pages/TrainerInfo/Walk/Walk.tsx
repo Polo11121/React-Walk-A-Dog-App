@@ -7,11 +7,11 @@ type WalkType = {
   id: number;
   dateStart: string;
   dateEnd: string;
-  isOwner: boolean;
+  isOwner?: boolean;
   dogAvatar1?: string;
   dogAvatar2?: string;
   dogAvatar3?: string;
-  openRemoveSlotHandler: (
+  openRemoveSlotHandler?: (
     startWalk: string,
     endWalk: string,
     id: number
@@ -31,7 +31,8 @@ export const Walk = ({
 
   const goToWalkInfo = () => navigate(`/walk-info/${id}`);
 
-  const removeSlotHandler = () => openRemoveSlotHandler(dateStart, dateEnd, id);
+  const removeSlotHandler = () =>
+    openRemoveSlotHandler && openRemoveSlotHandler(dateStart, dateEnd, id);
 
   return (
     <div className="walk">

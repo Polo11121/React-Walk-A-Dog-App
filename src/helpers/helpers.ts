@@ -23,3 +23,26 @@ export const getFormattedDate = (date: Date) =>
   padTo2Digits(date.getDate());
 
 export const getFormattedHour = (time: string) => time.slice(0, 5);
+
+export const getActualTime = (date: Date) => {
+  const today = new Date();
+
+  return date > today ? false : today.getHours() + ":" + today.getMinutes();
+};
+
+export const isToday = (someDate: Date) => {
+  const today = new Date();
+  return (
+    someDate.getDate() === today.getDate() &&
+    someDate.getMonth() === today.getMonth() &&
+    someDate.getFullYear() === today.getFullYear()
+  );
+};
+
+export const isInThePast = (date: Date) => {
+  const today = new Date();
+
+  today.setHours(0, 0, 0, 0);
+
+  return date < today;
+};

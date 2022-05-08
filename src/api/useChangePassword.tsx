@@ -7,7 +7,6 @@ export const useChangePassword = (
   onError: () => void
 ) => {
   const { authTokens } = useAuthContext();
-  console.log(authTokens);
   const changePassword = ({
     oldPassword,
     newPassword,
