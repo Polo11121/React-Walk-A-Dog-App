@@ -7,10 +7,13 @@ import { useNavigate } from "react-router-dom";
 import "./Footer.scss";
 
 export const Footer = ({ logoutUser }: { logoutUser: () => void }) => {
-  const { userId } = useAuthContext();
+  const { userId, userInfo } = useAuthContext();
   const navigate = useNavigate();
 
-  const switchToWalks = () => navigate(`/walks`);
+  const switchToWalks = () =>
+    userInfo.is_trainer
+      ? navigate(`trainer-info/${userId}/walks`)
+      : navigate(`/walks`);
 
   const switchToMyProfile = () => navigate(`/user-profile/${userId}`);
 

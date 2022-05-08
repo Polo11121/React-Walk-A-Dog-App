@@ -4,11 +4,11 @@ import { Button, Modal } from "Components";
 import { useGoBack } from "hooks/useGoBack";
 import { useGetSlot } from "api/useGetSlot";
 import { useNavigate, useParams } from "react-router-dom";
-import { getFormattedHour } from "helpers/helpers";
+import { getFormattedHour, isInThePast } from "helpers/helpers";
 import { useGetUser } from "api/useGetUser";
 import { useGetDogs } from "api/useGetDogs";
 import { useRemoveDogFromSlot } from "api/useRemoveDogFromSlot";
-import { useCustomToast } from "hooks/context/useCustomToast";
+import { useCustomToast } from "hooks/useCustomToast";
 import { useQueryClient } from "react-query";
 import useAuthContext from "hooks/context/AuthContext";
 import WalkInfoDog from "Pages/WalkInfo/WalkInfoDog/WalkInfoDog";
@@ -37,7 +37,7 @@ export const WalkInfo = () => {
       owner: string;
     }[]
   >();
-  
+
   const goBack = useGoBack();
 
   const getFilteredDog = (filteredDog: DogType | undefined) =>
@@ -127,18 +127,22 @@ export const WalkInfo = () => {
         </div>
         {dogsInfo?.map((dogInfo, index) => (
           <WalkInfoDog
+            date={new Date(slot?.date)}
             openRemoveDogHandler={openRemoveDogHandler}
             isAddingBlocked={
-              userInfo.is_trainer || userInfo.id === slot.trainer
+              userInfo?.is_trainer || userInfo?.id === slot?.trainer
             }
             index={index}
-            isOwner={dogInfo.owner === `${userInfo.id}`}
+            isOwner={
+              dogInfo.owner === `${userInfo?.id}` &&
+              !isInThePast(new Date(slot?.date))
+            }
             dogsInfo={dogsInfo}
             key={index}
             dogInfo={dogInfo}
             dogs={dogs.filter(
               ({ owner, id: dogId }) =>
-                owner === userInfo.id &&
+                owner === userInfo?.id &&
                 id &&
                 !dogsInfo.map(({ id }) => id).includes(`${dogId}`)
             )}

@@ -11,7 +11,6 @@ export const ProtectedRoute = ({
   const { userId, userInfo } = useAuthContext();
   const { id } = useParams();
 
-  console.log(`${userId}` === id);
   if (trainerBlock) {
     return userInfo?.is_trainer && `${userId}` === id ? (
       <Navigate to={`/user-profile/${userId}`} replace />

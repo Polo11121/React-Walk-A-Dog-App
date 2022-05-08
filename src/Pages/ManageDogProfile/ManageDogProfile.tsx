@@ -63,8 +63,6 @@ export const ManageDogProfile = () => {
         }}
       >
         {(props) => {
-          console.log(JSON.stringify(props.initialValues));
-          console.log(JSON.stringify(props.values));
           const haveValuesChanged =
             JSON.stringify(props.initialValues) !==
               JSON.stringify(props.values) || image?.data_url !== dog?.avatar;

@@ -12,3 +12,12 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+.react-calendar__tile--slots {
+  background-color: rgb(143, 227, 136);
+}
+
+.react-calendar__tile--active {
+  background: #006edc !important;
+  color: white;
+}

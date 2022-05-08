@@ -5,9 +5,11 @@ import { TrainerWalks } from "Pages/TrainerInfo/TrainerWalks/TrainerWalks";
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "api/useGetUser";
 import { Button } from "Components";
+import useWalksContext from "hooks/context/WalksContext";
 import "./TrainerInfo.scss";
 
 export const TrainerInfo = () => {
+  const { resetWalkList } = useWalksContext();
   const params = useParams();
   const navigate = useNavigate();
   const { user } = useGetUser(params.id);
@@ -26,6 +28,7 @@ export const TrainerInfo = () => {
           OPINIE
         </Link>
         <Link
+          onClick={resetWalkList}
           style={params["*"] === "walks" ? { color: "#8fe388" } : {}}
           to={`/trainer-info/${params.id}/walks`}
           className="trainer-info__link trainer-info__link--active"

@@ -4,7 +4,7 @@ import { useEditDogRecommendations } from "api/useEditDogRecommendations";
 import { useGetDog } from "api/useGetDog";
 import { Button } from "Components";
 import { useQueryClient } from "react-query";
-import { useCustomToast } from "hooks/context/useCustomToast";
+import { useCustomToast } from "hooks/useCustomToast";
 import { useGoBack } from "hooks/useGoBack";
 import "./EditDogRecommendations.scss";
 

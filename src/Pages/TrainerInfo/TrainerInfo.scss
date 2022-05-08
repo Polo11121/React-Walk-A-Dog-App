@@ -1,4 +1,8 @@
 .trainer-info {
+  & .react-time-picker {
+    width: fit-content !important;
+  }
+
   display: flex;
   flex-direction: column;
   height: calc(100vh - 55px);

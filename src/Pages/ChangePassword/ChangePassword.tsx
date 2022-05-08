@@ -4,7 +4,7 @@ import { Button, Input, Modal } from "Components";
 import { useGoBack } from "hooks/useGoBack";
 import { changePasswordSchema } from "Pages/ChangePassword/changePasswordSchema";
 import { useChangePassword } from "api/useChangePassword";
-import { useCustomToast } from "hooks/context/useCustomToast";
+import { useCustomToast } from "hooks/useCustomToast";
 import "./ChangePassword.scss";
 
 export const ChangePassword = () => {
