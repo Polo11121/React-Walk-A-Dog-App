@@ -18,7 +18,7 @@ import { useOwner } from "hooks/useOwner";
 import { useParams } from "react-router-dom";
 import { Walk } from "Pages/TrainerInfo/Walk/Walk";
 import { useQueryClient } from "react-query";
-import { Button, ErrorText, Modal } from "Components";
+import { Button, EmptyList, ErrorText, Modal } from "Components";
 import { SlotType } from "types/User.types";
 import { useCustomToast } from "hooks/useCustomToast";
 import { useDeleteSlot } from "api/useDeleteSlot";
@@ -162,25 +162,27 @@ export const WalksList = ({ goBackHandler, date, slots }: WalksListType) => {
       ) : (
         <>
           <div className="walks-list__content">
-            {slots
-              .sort(
-                (slot1, slot2) =>
-                  parseInt(slot1.time_from.slice(0, 2)) -
-                  parseInt(slot2.time_from.slice(0, 2))
-              )
-              .map(({ id, time_from, time_to, dog1, dog2, dog3 }) => (
-                <Walk
-                  key={id}
-                  id={id}
-                  dogAvatar1={dogs?.find(({ id }) => id === dog1)?.avatar}
-                  dogAvatar2={dogs?.find(({ id }) => id === dog2)?.avatar}
-                  dogAvatar3={dogs?.find(({ id }) => id === dog3)?.avatar}
-                  openRemoveSlotHandler={openRemoveSlotHandler}
-                  isOwner={isOwner && !isInThePast(date)}
-                  dateStart={time_from}
-                  dateEnd={time_to}
-                />
-              ))}
+            <EmptyList isVisible={isOwner}>
+              {slots
+                .sort(
+                  (slot1, slot2) =>
+                    parseInt(slot1.time_from.slice(0, 2)) -
+                    parseInt(slot2.time_from.slice(0, 2))
+                )
+                .map(({ id, time_from, time_to, dog1, dog2, dog3 }) => (
+                  <Walk
+                    key={id}
+                    id={id}
+                    dogAvatar1={dogs?.find(({ id }) => id === dog1)?.avatar}
+                    dogAvatar2={dogs?.find(({ id }) => id === dog2)?.avatar}
+                    dogAvatar3={dogs?.find(({ id }) => id === dog3)?.avatar}
+                    openRemoveSlotHandler={openRemoveSlotHandler}
+                    isOwner={isOwner && !isInThePast(date)}
+                    dateStart={time_from}
+                    dateEnd={time_to}
+                  />
+                ))}
+            </EmptyList>
           </div>
           {isOwner && slots.length < 5 && !isInThePast(date) && (
             <div

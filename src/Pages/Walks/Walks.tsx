@@ -13,6 +13,7 @@ import pl from "date-fns/locale/pl";
 import useWalksContext from "hooks/context/WalksContext";
 import "react-datepicker/dist/react-datepicker.css";
 import "./Walks.scss";
+import { EmptyList } from "Components";
 
 registerLocale("pl", pl);
 
@@ -44,33 +45,35 @@ export const Walks = () => {
         </div>
       </div>
       <div className="walks__list">
-        {slots
-          ?.filter(({ date: slotDate, time_from, dog1, dog2, dog3 }) => {
-            return (
-              slotDate === getFormattedDate(walkDate) &&
-              +getFormattedHour(time_from).split(":").join("") >=
-                +walkTime?.toString().split(":").join("") &&
-              (!dog1 || !dog2 || !dog3) &&
-              !isInThePast(new Date(slotDate)) &&
-              !isTodayInThePastTime(new Date(slotDate), time_from)
-            );
-          })
-          .sort(
-            (slot1, slot2) =>
-              parseInt(slot1.time_from.slice(0, 2)) -
-              parseInt(slot2.time_from.slice(0, 2))
-          )
-          .map(({ id, time_from, time_to, dog1, dog2, dog3 }) => (
-            <Walk
-              key={id}
-              id={id}
-              dogAvatar1={dogs?.find(({ id }) => id === dog1)?.avatar}
-              dogAvatar2={dogs?.find(({ id }) => id === dog2)?.avatar}
-              dogAvatar3={dogs?.find(({ id }) => id === dog3)?.avatar}
-              dateStart={time_from}
-              dateEnd={time_to}
-            />
-          ))}
+        <EmptyList>
+          {slots
+            ?.filter(({ date: slotDate, time_from, dog1, dog2, dog3 }) => {
+              return (
+                slotDate === getFormattedDate(walkDate) &&
+                +getFormattedHour(time_from).split(":").join("") >=
+                  +walkTime?.toString().split(":").join("") &&
+                (!dog1 || !dog2 || !dog3) &&
+                !isInThePast(new Date(slotDate)) &&
+                !isTodayInThePastTime(new Date(slotDate), time_from)
+              );
+            })
+            .sort(
+              (slot1, slot2) =>
+                parseInt(slot1.time_from.slice(0, 2)) -
+                parseInt(slot2.time_from.slice(0, 2))
+            )
+            .map(({ id, time_from, time_to, dog1, dog2, dog3 }) => (
+              <Walk
+                key={id}
+                id={id}
+                dogAvatar1={dogs?.find(({ id }) => id === dog1)?.avatar}
+                dogAvatar2={dogs?.find(({ id }) => id === dog2)?.avatar}
+                dogAvatar3={dogs?.find(({ id }) => id === dog3)?.avatar}
+                dateStart={time_from}
+                dateEnd={time_to}
+              />
+            ))}
+        </EmptyList>
       </div>
     </div>
   );
