@@ -11,7 +11,8 @@ export const useGetDog = (dogId?: string | null): UseGetDogType => {
   const getDog = () =>
     axios
       .get(`http://127.0.0.1:8000/api/dog/${dogId}/`)
-      .then((resp) => resp.data);
+      .then((resp) => resp.data)
+      .catch((error) => console.log(error));
 
   const { data, isLoading } = useQuery(["dog", `${dogId}`], getDog, {
     enabled: Boolean(dogId),

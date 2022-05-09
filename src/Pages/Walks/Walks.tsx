@@ -5,6 +5,7 @@ import {
   getFormattedDate,
   getFormattedHour,
   isInThePast,
+  isTodayInThePastTime,
 } from "helpers/helpers";
 import { useGetDogs } from "api/useGetDogs";
 import { useGetSlots } from "api/useGetSlots";
@@ -23,7 +24,7 @@ export const Walks = () => {
 
   return (
     <div className="walks">
-      <div className="walks__title">Spacery</div>{" "}
+      <div className="walks__title">Spacery</div>
       <div className="walks__inputs">
         <div style={{ flex: 0.5 }}>
           <span>Data:</span>
@@ -44,14 +45,16 @@ export const Walks = () => {
       </div>
       <div className="walks__list">
         {slots
-          ?.filter(
-            ({ date: slotDate, time_from, dog1, dog2, dog3 }) =>
+          ?.filter(({ date: slotDate, time_from, dog1, dog2, dog3 }) => {
+            return (
               slotDate === getFormattedDate(walkDate) &&
               +getFormattedHour(time_from).split(":").join("") >=
-                +walkTime.toString().split(":").join("") &&
+                +walkTime?.toString().split(":").join("") &&
               (!dog1 || !dog2 || !dog3) &&
-              !isInThePast(new Date(slotDate))
-          )
+              !isInThePast(new Date(slotDate)) &&
+              !isTodayInThePastTime(new Date(slotDate), time_from)
+            );
+          })
           .sort(
             (slot1, slot2) =>
               parseInt(slot1.time_from.slice(0, 2)) -

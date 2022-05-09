@@ -11,11 +11,13 @@ export const useRegister = (onError: () => void) => {
     userName: string;
     password: string;
   }) =>
-    axios.post("http://127.0.0.1:8000/api/auth/register/", {
-      username: userName,
-      email,
-      password,
-    });
+    axios
+      .post("http://127.0.0.1:8000/api/auth/register/", {
+        username: userName,
+        email,
+        password,
+      })
+      .catch((error) => console.log(error));
 
   const { mutateAsync, isLoading } = useMutation(register, { onError });
 

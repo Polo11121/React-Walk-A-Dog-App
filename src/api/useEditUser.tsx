@@ -23,7 +23,9 @@ export const useEditUser = (onSuccess: () => void) => {
     formData.append("email", email);
     phone_number && formData.append("phone_number", `${phone_number}`);
 
-    return axios.patch(`http://127.0.0.1:8000/api/user/${id}/`, formData);
+    return axios
+      .patch(`http://127.0.0.1:8000/api/user/${id}/`, formData)
+      .catch((error) => console.log(error));
   };
 
   const { mutate, isLoading } = useMutation(editUser, { onSuccess });

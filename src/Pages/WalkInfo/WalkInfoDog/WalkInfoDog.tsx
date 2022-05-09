@@ -10,13 +10,14 @@ import { useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAddDogToSlot } from "api/useAddDogToSlot";
 import { useCustomToast } from "hooks/useCustomToast";
-import { isInThePast } from "helpers/helpers";
+import { isInThePast, isTodayInThePastTime } from "helpers/helpers";
 import "./WalkInfoDog.scss";
 
 type WalkInfoDogType = {
   index: number;
   openRemoveDogHandler: (index: number, dogName: string) => void;
   date: Date;
+  time_from: string;
   isOwner: boolean;
   dogInfo: {
     id: string;
@@ -50,6 +51,7 @@ type WalkInfoDogType = {
 
 const WalkInfoDog = ({
   dogInfo,
+  time_from,
   dogs,
   isOwner,
   date,
@@ -79,9 +81,17 @@ const WalkInfoDog = ({
   const handleDogClick = (event: MouseEvent<HTMLDivElement>) => {
     if (dogInfo.isAdded) {
       return goToDogProfile();
-    } else if (dogInfo.id && !isInThePast(date)) {
+    } else if (
+      dogInfo.id &&
+      !isInThePast(date) &&
+      !isTodayInThePastTime(date, time_from)
+    ) {
       return handleClose();
-    } else if (isAddingBlocked || isInThePast(date)) {
+    } else if (
+      isAddingBlocked ||
+      isInThePast(date) ||
+      isTodayInThePastTime(date, time_from)
+    ) {
       return null;
     }
     return handleClick(event);
@@ -111,12 +121,16 @@ const WalkInfoDog = ({
         ) : (
           <button
             className={
-              isAddingBlocked || isInThePast(date)
+              isAddingBlocked ||
+              isInThePast(date) ||
+              isTodayInThePastTime(date, time_from)
                 ? "walk-info-dog__empty-slot"
                 : "walk-info-dog__add-button"
             }
           >
-            {isAddingBlocked || isInThePast(date) ? (
+            {isAddingBlocked ||
+            isInThePast(date) ||
+            isTodayInThePastTime(date, time_from) ? (
               "Wolne miejsce"
             ) : (
               <AddIcon />
@@ -124,7 +138,8 @@ const WalkInfoDog = ({
           </button>
         )}
         {(isAddingBlocked && !dogInfo.isAdded) ||
-        (isInThePast(date) && !dogInfo.id) ? (
+        ((isInThePast(date) || isTodayInThePastTime(date, time_from)) &&
+          !dogInfo.id) ? (
           "Wolne miejsce"
         ) : dogInfo.id ? (
           <>

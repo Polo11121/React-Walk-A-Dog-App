@@ -127,6 +127,7 @@ export const WalkInfo = () => {
         </div>
         {dogsInfo?.map((dogInfo, index) => (
           <WalkInfoDog
+            time_from={slot?.time_from}
             date={new Date(slot?.date)}
             openRemoveDogHandler={openRemoveDogHandler}
             isAddingBlocked={
