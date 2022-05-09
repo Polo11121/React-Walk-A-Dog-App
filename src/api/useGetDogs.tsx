@@ -9,7 +9,10 @@ type UseGetDogsType = {
 
 export const useGetDogs = (): UseGetDogsType => {
   const getDogs = () =>
-    axios.get(`http://127.0.0.1:8000/api/dog/`).then((resp) => resp.data);
+    axios
+      .get(`http://127.0.0.1:8000/api/dog/`)
+      .then((resp) => resp.data)
+      .catch((error) => console.log(error));
 
   const { data, isLoading } = useQuery("dogs", getDogs);
 

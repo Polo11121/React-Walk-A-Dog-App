@@ -11,7 +11,8 @@ export const useGetUser = (userId?: string | null): UseGetUserType => {
   const getUser = () =>
     axios
       .get(`http://127.0.0.1:8000/api/user/${userId}/`)
-      .then((resp) => resp.data);
+      .then((resp) => resp.data)
+      .catch((error) => console.log(error));
 
   const { data, isLoading } = useQuery(["user", `${userId}`], getUser, {
     enabled: Boolean(userId) && userId !== "undefined",

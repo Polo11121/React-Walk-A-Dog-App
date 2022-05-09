@@ -2,7 +2,7 @@ import PetsIcon from "@mui/icons-material/Pets";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { Breadcrumbs } from "@mui/material";
 import { Link, Route, Routes, useParams } from "react-router-dom";
-import { Card } from "Components";
+import { Card, EmptyList } from "Components";
 import { useGetUsers } from "api/useGetUsers";
 import "./UserProfiles.scss";
 
@@ -36,7 +36,7 @@ export const UserProfiles = () => {
           <Route
             path="trainers"
             element={
-              <>
+              <EmptyList>
                 {users?.map(
                   ({ username, is_trainer, avatar, id }) =>
                     is_trainer && (
@@ -50,13 +50,13 @@ export const UserProfiles = () => {
                       />
                     )
                 )}
-              </>
+              </EmptyList>
             }
           />
           <Route
             path="owners"
             element={
-              <>
+              <EmptyList>
                 {users?.map(
                   ({ username, is_trainer, avatar, id }) =>
                     !is_trainer && (
@@ -70,7 +70,7 @@ export const UserProfiles = () => {
                       />
                     )
                 )}
-              </>
+              </EmptyList>
             }
           />
         </Routes>

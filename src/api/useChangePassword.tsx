@@ -14,16 +14,18 @@ export const useChangePassword = (
     oldPassword: string;
     newPassword: string;
   }) =>
-    axios.patch(
-      "http://127.0.0.1:8000/api/auth/password",
-      {
-        old_password: oldPassword,
-        new_password: newPassword,
-      },
-      {
-        headers: { Authorization: `Bearer ${authTokens?.access}` },
-      }
-    );
+    axios
+      .patch(
+        "http://127.0.0.1:8000/api/auth/password",
+        {
+          old_password: oldPassword,
+          new_password: newPassword,
+        },
+        {
+          headers: { Authorization: `Bearer ${authTokens?.access}` },
+        }
+      )
+      .catch((error) => console.log(error));
 
   const { mutate, isLoading } = useMutation(changePassword, {
     onSuccess,

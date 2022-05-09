@@ -4,7 +4,7 @@ import { Breadcrumbs } from "@mui/material";
 import { TrainerWalks } from "Pages/TrainerInfo/TrainerWalks/TrainerWalks";
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "api/useGetUser";
-import { Button } from "Components";
+import { Button, EmptyList } from "Components";
 import useWalksContext from "hooks/context/WalksContext";
 import "./TrainerInfo.scss";
 
@@ -39,7 +39,14 @@ export const TrainerInfo = () => {
       </Breadcrumbs>
       <div className="trainer-info__content">
         <Routes>
-          <Route path="opinions" element={<div>opinions</div>} />
+          <Route
+            path="opinions"
+            element={
+              <EmptyList>
+                <></>
+              </EmptyList>
+            }
+          />
           <Route path="walks" element={<TrainerWalks />} />
         </Routes>
       </div>

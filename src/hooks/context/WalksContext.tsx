@@ -1,3 +1,4 @@
+import { padTo2Digits } from "helpers/helpers";
 import { createContext, ReactNode, useContext, useState } from "react";
 import { TimePickerValue } from "react-time-picker";
 
@@ -26,9 +27,7 @@ export const WalksProvider = ({ children }: { children: ReactNode }) => {
   const [walkTime, setWalkTime] = useState(
     (today.getHours() +
       ":" +
-      today.getMinutes() +
-      ":" +
-      today.getSeconds()) as TimePickerValue
+      padTo2Digits(today.getMinutes())) as TimePickerValue
   );
   const [walkListDate, setWalkListDate] = useState(new Date());
   const [showWalksList, setShowWalksList] = useState(false);

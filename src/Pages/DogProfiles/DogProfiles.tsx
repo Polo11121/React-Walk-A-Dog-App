@@ -1,5 +1,5 @@
 import EditIcon from "@mui/icons-material/Edit";
-import { Card, Button } from "Components";
+import { Card, Button, EmptyList } from "Components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetUserDogs } from "api/useGetUserDogs";
 import { useOwner } from "hooks/useOwner";
@@ -23,16 +23,18 @@ export const DogProfiles = () => {
         {isOwner ? "Moje Psie profile" : `Psie profile ${user.username}`}
       </div>
       <div className="dog-profiles__list">
-        {dogs?.map(({ name, breed, avatar, id, owner }) => (
-          <Card
-            ownerId={owner}
-            id={id}
-            key={id}
-            name={name}
-            subTitle={breed}
-            imageSrc={avatar}
-          />
-        ))}
+        <EmptyList>
+          {dogs?.map(({ name, breed, avatar, id, owner }) => (
+            <Card
+              ownerId={owner}
+              id={id}
+              key={id}
+              name={name}
+              subTitle={breed}
+              imageSrc={avatar}
+            />
+          ))}
+        </EmptyList>
       </div>
       <div className="dog-profiles__add-button">
         {isOwner ? (

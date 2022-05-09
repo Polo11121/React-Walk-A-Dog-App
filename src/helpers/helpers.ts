@@ -46,3 +46,15 @@ export const isInThePast = (date: Date) => {
 
   return date < today;
 };
+
+export const isTodayInThePastTime = (date: Date, time: string) => {
+  const today = new Date();
+
+  if (isToday(date)) {
+    return (
+      today.getHours() + "" + today.getMinutes() >
+      time.toString().slice(0, 5).split(":").join("")
+    );
+  }
+  return false;
+};

@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetDog } from "api/useGetDog";
-import { Button } from "Components";
+import { Button, EmptyList } from "Components";
 import { useGoBack } from "hooks/useGoBack";
 import "./DogWalks.scss";
 
@@ -12,7 +12,11 @@ export const DogWalks = () => {
   return (
     <div className="dog-walks">
       <div className="dog-walks__title">Spacery {dog.name}</div>
-      <div className="dog-walks__list"></div>
+      <div className="dog-walks__list">
+        <EmptyList>
+          <></>
+        </EmptyList>
+      </div>
       <Button
         styles={{
           marginLeft: "auto",
