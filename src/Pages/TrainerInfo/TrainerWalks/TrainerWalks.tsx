@@ -26,7 +26,7 @@ export const TrainerWalks = () => {
     <div>
       {showWalksList ? (
         <WalksList
-          slots={slots.filter(
+          slots={slots?.filter(
             ({ trainer, date: slotDate }) =>
               trainer === user.id && slotDate === getFormattedDate(walkListDate)
           )}

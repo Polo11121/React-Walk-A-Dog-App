@@ -6,7 +6,12 @@
   width: 90%;
 
   &__list {
-    flex: 1;
+    overflow-y: auto;
+    height: 75%;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__title {

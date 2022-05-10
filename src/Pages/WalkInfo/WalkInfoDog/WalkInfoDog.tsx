@@ -17,6 +17,7 @@ type WalkInfoDogType = {
   index: number;
   openRemoveDogHandler: (index: number, dogName: string) => void;
   date: Date;
+  status: string;
   time_from: string;
   isOwner: boolean;
   dogInfo: {
@@ -53,6 +54,7 @@ const WalkInfoDog = ({
   dogInfo,
   time_from,
   dogs,
+  status,
   isOwner,
   date,
   openRemoveDogHandler,
@@ -175,7 +177,7 @@ const WalkInfoDog = ({
           "Dodaj psa"
         )}
       </div>
-      {dogInfo.isAdded && isOwner && (
+      {dogInfo.isAdded && isOwner && status === "nie rozpoczęty" && (
         <CloseIcon
           onClick={removeDogHandler}
           fontSize="large"
