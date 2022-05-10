@@ -13,6 +13,7 @@ export type UserType = {
 };
 
 export type SlotType = {
+  status: string;
   id: number;
   trainer: number;
   date: string;

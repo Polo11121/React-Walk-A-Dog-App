@@ -14,6 +14,7 @@ import { DogWalks } from "Pages/DogWalks/DogWalks";
 import { TrainerInfo } from "Pages/TrainerInfo/TrainerInfo";
 import { Walks } from "Pages/Walks/Walks";
 import { WalkInfo } from "Pages/WalkInfo/WalkInfo";
+import { WalkLive } from "Pages/WalkLive/WalkLive";
 
 export const userRoutes = (userId: string | null) => [
   <Route key={uuid()} path="/user-profile/:id" element={<UserProfile />} />,
@@ -76,6 +77,7 @@ export const userRoutes = (userId: string | null) => [
     }
   />,
   <Route key={uuid()} path="/walk-info/:id" element={<WalkInfo />} />,
+  <Route key={uuid()} path="/walk-live/:id" element={<WalkLive />} />,
   <Route key={uuid()} path="/dog-walks/:id" element={<DogWalks />} />,
   <Route key={uuid()} path="/trainer-info/:id/*" element={<TrainerInfo />} />,
   <Route key={uuid()} path="/change-password" element={<ChangePassword />} />,

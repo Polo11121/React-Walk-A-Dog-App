@@ -4,7 +4,12 @@ import { Button, Modal } from "Components";
 import { useGoBack } from "hooks/useGoBack";
 import { useGetSlot } from "api/useGetSlot";
 import { useNavigate, useParams } from "react-router-dom";
-import { getFormattedHour, isInThePast } from "helpers/helpers";
+import {
+  getFormattedHour,
+  isInThePast,
+  getActualTime,
+  addOneHourToTime,
+} from "helpers/helpers";
 import { useGetUser } from "api/useGetUser";
 import { useGetDogs } from "api/useGetDogs";
 import { useRemoveDogFromSlot } from "api/useRemoveDogFromSlot";
@@ -13,16 +18,18 @@ import { useQueryClient } from "react-query";
 import useAuthContext from "hooks/context/AuthContext";
 import WalkInfoDog from "Pages/WalkInfo/WalkInfoDog/WalkInfoDog";
 import { DogType } from "types/Dog.types";
+import { useChangeSlotStatus } from "api/useChangeSlotStatus";
 import "./WalkInfo.scss";
 
 export const WalkInfo = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { id } = useParams();
-  const { userInfo } = useAuthContext();
+  const { userInfo, userId } = useAuthContext();
   const { slot } = useGetSlot(id);
   const { user } = useGetUser(`${slot?.trainer}`);
   const { dogs } = useGetDogs();
+  const [isStartWalkOpen, setIsStartWalkOpen] = useState(false);
   const [removeDogInfo, setRemoveDogInfo] = useState({
     isOpen: false,
     index: 0,
@@ -75,6 +82,8 @@ export const WalkInfo = () => {
 
   const goToTrainerProfile = () => navigate(`/user-profile/${slot?.trainer}`);
 
+  const goToWalkLive = () => navigate(`/walk-live/${slot?.id}`);
+
   const closeRemoveDogHandler = () =>
     setRemoveDogInfo({ isOpen: false, dogName: "", index: 0 });
 
@@ -88,10 +97,33 @@ export const WalkInfo = () => {
     closeRemoveDogHandler();
   };
 
+  const onSuccessChangeSlotStatus = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useCustomToast("Rozpoczęto spacer!");
+    queryClient.invalidateQueries(["slot", id]);
+    navigate(`/walk-live/${id}`);
+  };
+
   const { mutate } = useRemoveDogFromSlot(onSuccess);
+
+  const { mutate: changeSlotStatus } = useChangeSlotStatus(
+    onSuccessChangeSlotStatus
+  );
+
+  const startWalkHandler = () =>
+    changeSlotStatus({
+      status: "w trakcie",
+      id,
+      time_from: `${getActualTime(new Date(slot?.date))}`,
+      time_to: `${addOneHourToTime(`${getActualTime(new Date(slot?.date))}`)}`,
+    });
 
   const removeDogHandler = () =>
     mutate({ index: removeDogInfo.index, slotId: id });
+
+  const openStartWalkHandler = () => setIsStartWalkOpen(true);
+
+  const closeStartWalkHandler = () => setIsStartWalkOpen(false);
 
   return (
     <div className="walk-info">
@@ -117,7 +149,7 @@ export const WalkInfo = () => {
           {slot?.time_to && getFormattedHour(slot?.time_to)}
         </div>
         <div className="walk-info__box">
-          <div className="walk-info__subtitle">Status: </div> nie rozpoczęto
+          <div className="walk-info__subtitle">Status: </div> {slot?.status}
         </div>
         <div
           className="walk-info__title"
@@ -127,11 +159,14 @@ export const WalkInfo = () => {
         </div>
         {dogsInfo?.map((dogInfo, index) => (
           <WalkInfoDog
+            status={slot?.status}
             time_from={slot?.time_from}
             date={new Date(slot?.date)}
             openRemoveDogHandler={openRemoveDogHandler}
             isAddingBlocked={
-              userInfo?.is_trainer || userInfo?.id === slot?.trainer
+              userInfo?.is_trainer ||
+              userInfo?.id === slot?.trainer ||
+              slot?.status !== "nie rozpoczęty"
             }
             index={index}
             isOwner={
@@ -150,6 +185,29 @@ export const WalkInfo = () => {
             setDogsInfo={setDogsInfo}
           />
         ))}
+        {userId &&
+          +userId === slot?.trainer &&
+          slot?.status === "nie rozpoczęty" && (
+            <Button
+              styles={{ margin: "0 auto" }}
+              size="XL"
+              onClick={openStartWalkHandler}
+              title="Rozpocznij"
+              type="primary"
+            />
+          )}
+        {slot?.status === "w trakcie" &&
+          userId &&
+          (dogsInfo?.map(({ owner }) => owner).includes(`${userId}`) ||
+            +userId === slot?.trainer) && (
+            <Button
+              styles={{ margin: "0 auto" }}
+              size="XL"
+              onClick={goToWalkLive}
+              title="Podgląd"
+              type="primary"
+            />
+          )}
       </div>
       <div style={{ width: "90%" }}>
         <Button
@@ -160,22 +218,46 @@ export const WalkInfo = () => {
           type="default"
         />
       </div>
+      {isStartWalkOpen && (
+        <Modal>
+          <div className="walks-list__modal-content">
+            Chcesz rozpocząć spacer o godzinie{"      "}
+            {getActualTime(new Date(slot?.date))}
+            {" - "}
+            {addOneHourToTime(`${getActualTime(new Date(slot?.date))}`)}
+            <Button
+              styles={{ margin: "20px auto 0", width: "80%" }}
+              onClick={startWalkHandler}
+              title="Rozpocznij"
+              type="green"
+              size="L"
+            />
+            <Button
+              styles={{ margin: "20px auto 0", width: "80%" }}
+              title="Anuluj"
+              onClick={closeStartWalkHandler}
+              type="red"
+              size="L"
+            />
+          </div>
+        </Modal>
+      )}
       {removeDogInfo.isOpen && (
         <Modal>
           <div className="walks-list__modal-content">
             Na pewno chcesz wypisać psa "{removeDogInfo.dogName}" ze spaceru ?
             <Button
               styles={{ margin: "20px auto 0", width: "80%" }}
-              title="Wypisz"
-              onClick={removeDogHandler}
-              type="red"
+              onClick={closeRemoveDogHandler}
+              title="Anuluj"
+              type="green"
               size="L"
             />
             <Button
               styles={{ margin: "20px auto 0", width: "80%" }}
-              onClick={closeRemoveDogHandler}
-              title="Anuluj"
-              type="green"
+              title="Wypisz"
+              onClick={removeDogHandler}
+              type="red"
               size="L"
             />
           </div>

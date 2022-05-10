@@ -27,7 +27,9 @@ export const getFormattedHour = (time: string) => time.slice(0, 5);
 export const getActualTime = (date: Date) => {
   const today = new Date();
 
-  return date > today ? false : today.getHours() + ":" + today.getMinutes();
+  return date > today
+    ? false
+    : padTo2Digits(today.getHours()) + ":" + padTo2Digits(today.getMinutes());
 };
 
 export const isToday = (someDate: Date) => {

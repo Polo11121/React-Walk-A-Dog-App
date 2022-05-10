@@ -11,6 +11,8 @@ import {
   getFormattedDate,
   getFormattedHour,
   isInThePast,
+  isToday,
+  isTodayInThePastTime,
   isWeekend,
 } from "helpers/helpers";
 import { useAddSlot } from "api/userAddSlot";
@@ -162,7 +164,7 @@ export const WalksList = ({ goBackHandler, date, slots }: WalksListType) => {
       ) : (
         <>
           <div className="walks-list__content">
-            <EmptyList isVisible={isOwner}>
+            <EmptyList isVisible={isOwner && !isInThePast(date)}>
               {slots
                 .sort(
                   (slot1, slot2) =>
@@ -177,7 +179,11 @@ export const WalksList = ({ goBackHandler, date, slots }: WalksListType) => {
                     dogAvatar2={dogs?.find(({ id }) => id === dog2)?.avatar}
                     dogAvatar3={dogs?.find(({ id }) => id === dog3)?.avatar}
                     openRemoveSlotHandler={openRemoveSlotHandler}
-                    isOwner={isOwner && !isInThePast(date)}
+                    isOwner={
+                      isOwner && isToday(date)
+                        ? !isTodayInThePastTime(date, time_to)
+                        : !isInThePast(date)
+                    }
                     dateStart={time_from}
                     dateEnd={time_to}
                   />
