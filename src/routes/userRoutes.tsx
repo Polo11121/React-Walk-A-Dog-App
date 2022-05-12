@@ -15,6 +15,9 @@ import { TrainerInfo } from "Pages/TrainerInfo/TrainerInfo";
 import { Walks } from "Pages/Walks/Walks";
 import { WalkInfo } from "Pages/WalkInfo/WalkInfo";
 import { WalkLive } from "Pages/WalkLive/WalkLive";
+import AddOpinion from "Pages/TrainerInfo/AddOpinion/AddOpinion";
+import { EditOpinion } from "Pages/TrainerInfo/EditOpinion/EditOpinion";
+import { TrainerDetails } from "Pages/TrainerInfo/TrainerDetails/TrainerDetails";
 
 export const userRoutes = (userId: string | null) => [
   <Route key={uuid()} path="/user-profile/:id" element={<UserProfile />} />,
@@ -80,6 +83,9 @@ export const userRoutes = (userId: string | null) => [
   <Route key={uuid()} path="/walk-live/:id" element={<WalkLive />} />,
   <Route key={uuid()} path="/dog-walks/:id" element={<DogWalks />} />,
   <Route key={uuid()} path="/trainer-info/:id/*" element={<TrainerInfo />} />,
+  <Route key={uuid()} path="/trainer-opinion-add/:id" element={<AddOpinion/>}/>,
+  <Route key={uuid()} path="/trainer-opinion-edit/:id" element={<EditOpinion/>}/>,
+  <Route key={uuid()} path="/trainer-opinion/:id" element={<TrainerDetails/>}/>,
   <Route key={uuid()} path="/change-password" element={<ChangePassword />} />,
   <Route
     key={uuid()}

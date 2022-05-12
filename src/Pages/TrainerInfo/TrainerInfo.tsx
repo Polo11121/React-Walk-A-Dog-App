@@ -2,9 +2,10 @@ import StarIcon from "@mui/icons-material/Star";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import { Breadcrumbs } from "@mui/material";
 import { TrainerWalks } from "Pages/TrainerInfo/TrainerWalks/TrainerWalks";
+import { TrainerOpinions } from "Pages/TrainerInfo/TrainerOpinions/TrainerOpinions"
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "api/useGetUser";
-import { Button, EmptyList } from "Components";
+import { Button } from "Components";
 import useWalksContext from "hooks/context/WalksContext";
 import "./TrainerInfo.scss";
 
@@ -14,6 +15,8 @@ export const TrainerInfo = () => {
   const navigate = useNavigate();
   const { user } = useGetUser(params.id);
   const goBack = () => navigate(`/user-profile/${params.id}`);
+
+  const switchToAddOpinion = () => navigate(`/trainer-opinion-add/${params.id}`);
 
   return (
     <div className="trainer-info">
@@ -39,27 +42,22 @@ export const TrainerInfo = () => {
       </Breadcrumbs>
       <div className="trainer-info__content">
         <Routes>
-          <Route
-            path="opinions"
-            element={
-              <EmptyList>
-                <></>
-              </EmptyList>
-            }
-          />
+          <Route path="opinions" element={<TrainerOpinions name={user?.username} avatar={user?.avatar}/>} />
           <Route path="walks" element={<TrainerWalks />} />
         </Routes>
       </div>
-      <Button
-        styles={{
-          marginLeft: "auto",
-          marginBottom: "40px",
-        }}
-        onClick={goBack}
-        size="M"
-        title="Powrót"
-        type="default"
-      />
+      <div className="trainer-info__buttons">
+        <Button
+          onClick={switchToAddOpinion}
+          title="Dodaj opinie"
+          type="default"
+        />
+        <Button
+          onClick={goBack}
+          title="Powrót"
+          type="default"
+        />
+      </div>
     </div>
   );
 };
