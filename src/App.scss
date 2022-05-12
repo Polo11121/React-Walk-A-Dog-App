@@ -21,3 +21,8 @@ a {
   background: #006edc !important;
   color: white;
 }
+
+textarea:disabled{
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+}

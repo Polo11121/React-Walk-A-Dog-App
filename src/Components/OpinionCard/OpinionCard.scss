@@ -1,0 +1,47 @@
+.opinion-card{
+    border: 1px solid #000000;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-bottom: 1rem;
+    position: relative;
+
+    &__info {
+        display: flex;
+        align-items: center;
+    }
+
+    img {
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+        border-radius: 114px;
+    }
+
+    &__imageUser {
+        width: 72px;
+        height: 72px;
+    }
+
+    &__box {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &__imageDog {
+        align-self: flex-end;
+        margin-right: 10px;
+        width: 36px;
+        height: 36px;
+    }
+
+    &__opinion {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 90px;
+        padding: 0 10px;
+    }
+
+    &__rating {
+        padding: 0 5px;
+    }
+}

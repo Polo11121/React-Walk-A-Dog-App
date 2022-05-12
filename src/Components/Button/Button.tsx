@@ -5,7 +5,7 @@ type ButtonProps = {
   title: string;
   Icon?: ReactNode;
   type: "primary" | "secondary" | "default" | "green" | "red";
-  size: "XL" | "M" | "S" | "L";
+  size?: "XL" | "M" | "S" | "L";
   styles?: CSSProperties;
   onClick?: (
     e?: FormEvent<HTMLFormElement>

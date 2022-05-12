@@ -84,6 +84,8 @@ export const WalkInfo = () => {
 
   const goToWalkLive = () => navigate(`/walk-live/${slot?.id}`);
 
+  const goToTrainerOpinion = () => navigate(`/trainer-opinion-add/${slot?.trainer}`);
+
   const closeRemoveDogHandler = () =>
     setRemoveDogInfo({ isOpen: false, dogName: "", index: 0 });
 
@@ -205,6 +207,17 @@ export const WalkInfo = () => {
               size="XL"
               onClick={goToWalkLive}
               title="Podgląd"
+              type="primary"
+            />
+          )}
+        {slot?.status === "zakończony" &&
+          userId &&
+          (dogsInfo?.map(({ owner }) => owner).includes(`${userId}`)) && (
+            <Button
+              styles={{ margin: "0 auto" }}
+              size="XL"
+              onClick={goToTrainerOpinion}
+              title="Dodaj opinie"
               type="primary"
             />
           )}

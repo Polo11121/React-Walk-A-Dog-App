@@ -26,4 +26,18 @@
     align-items: center;
     font-size: 30px;
   }
+
+  &__buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    button {
+      padding: 10px 40px;
+      border-radius: 50px;
+      font-size: 20px;
+      font-weight: 500;
+    }
+  }
 }
