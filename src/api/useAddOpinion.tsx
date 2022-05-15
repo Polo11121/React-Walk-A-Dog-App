@@ -2,10 +2,10 @@ import axios from "axios";
 import { useMutation } from "react-query";
 
 type UseAddOpinionPayloadType = {
-    client: number;
-    trainer: number;
-    review: string;
-    points: number;
+  client: number;
+  trainer: number;
+  review: string;
+  points: number;
 };
 
 export const useAddOpinion = (onSuccess?: () => void) => {

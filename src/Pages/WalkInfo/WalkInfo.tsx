@@ -9,6 +9,7 @@ import {
   isInThePast,
   getActualTime,
   addOneHourToTime,
+  isToday,
 } from "helpers/helpers";
 import { useGetUser } from "api/useGetUser";
 import { useGetDogs } from "api/useGetDogs";
@@ -20,10 +21,12 @@ import WalkInfoDog from "Pages/WalkInfo/WalkInfoDog/WalkInfoDog";
 import { DogType } from "types/Dog.types";
 import { useChangeSlotStatus } from "api/useChangeSlotStatus";
 import "./WalkInfo.scss";
+import { UseAddWalkLocation } from "api/useAddWalkLocation";
 
 export const WalkInfo = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { startWalk, activeWalk } = useAuthContext();
   const { id } = useParams();
   const { userInfo, userId } = useAuthContext();
   const { slot } = useGetSlot(id);
@@ -84,7 +87,8 @@ export const WalkInfo = () => {
 
   const goToWalkLive = () => navigate(`/walk-live/${slot?.id}`);
 
-  const goToTrainerOpinion = () => navigate(`/trainer-opinion-add/${slot?.trainer}`);
+  const goToTrainerOpinion = () =>
+    navigate(`/trainer-opinion-add/${slot?.trainer}`);
 
   const closeRemoveDogHandler = () =>
     setRemoveDogInfo({ isOpen: false, dogName: "", index: 0 });
@@ -99,9 +103,18 @@ export const WalkInfo = () => {
     closeRemoveDogHandler();
   };
 
+  const { mutateAsync: addWalkLocation } = UseAddWalkLocation();
+
   const onSuccessChangeSlotStatus = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useCustomToast("Rozpoczęto spacer!");
+    navigator.geolocation.getCurrentPosition(({ coords }) =>
+      addWalkLocation({
+        lat: coords.latitude,
+        lng: coords.longitude,
+        slot: slot?.id,
+      }).then((response) => startWalk(`${response.data.id}`))
+    );
     queryClient.invalidateQueries(["slot", id]);
     navigate(`/walk-live/${id}`);
   };
@@ -112,13 +125,14 @@ export const WalkInfo = () => {
     onSuccessChangeSlotStatus
   );
 
-  const startWalkHandler = () =>
+  const startWalkHandler = () => {
     changeSlotStatus({
       status: "w trakcie",
       id,
       time_from: `${getActualTime(new Date(slot?.date))}`,
       time_to: `${addOneHourToTime(`${getActualTime(new Date(slot?.date))}`)}`,
     });
+  };
 
   const removeDogHandler = () =>
     mutate({ index: removeDogInfo.index, slotId: id });
@@ -188,8 +202,10 @@ export const WalkInfo = () => {
           />
         ))}
         {userId &&
+          !activeWalk &&
           +userId === slot?.trainer &&
-          slot?.status === "nie rozpoczęty" && (
+          slot?.status === "nie rozpoczęty" &&
+          isToday(new Date(slot?.date)) && (
             <Button
               styles={{ margin: "0 auto" }}
               size="XL"
@@ -212,7 +228,7 @@ export const WalkInfo = () => {
           )}
         {slot?.status === "zakończony" &&
           userId &&
-          (dogsInfo?.map(({ owner }) => owner).includes(`${userId}`)) && (
+          dogsInfo?.map(({ owner }) => owner).includes(`${userId}`) && (
             <Button
               styles={{ margin: "0 auto" }}
               size="XL"

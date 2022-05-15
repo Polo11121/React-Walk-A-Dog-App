@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useEditDogRecommendations } from "api/useEditDogRecommendations";
 import { useGetDog } from "api/useGetDog";
@@ -12,7 +12,7 @@ export const EditDogRecommendations = () => {
   const queryClient = useQueryClient();
   const goBack = useGoBack();
   const { subId: id } = useParams();
-  const { dog } = useGetDog(id);
+  const { dog, isFetched } = useGetDog(id);
   const { pathname } = useLocation();
   const titlePrefix = pathname.split("/")[1];
   const isRecommendations = titlePrefix === "edit-dog-recommendations";
@@ -48,8 +48,21 @@ export const EditDogRecommendations = () => {
 
   const isButtonDisabled = () =>
     isRecommendations
-      ? inputValue === dog?.recommendation
-      : inputValue === dog?.contraindications;
+      ? inputValue?.trim() === dog?.recommendation
+      : inputValue?.trim() === dog?.contraindications;
+
+  useEffect(() => {
+    if (isFetched) {
+      setInputValue(
+        isRecommendations ? dog?.recommendation : dog?.contraindications
+      );
+    }
+  }, [
+    isRecommendations,
+    dog?.recommendation,
+    dog?.contraindications,
+    isFetched,
+  ]);
 
   return (
     <div className="edit-dog-recommendations">

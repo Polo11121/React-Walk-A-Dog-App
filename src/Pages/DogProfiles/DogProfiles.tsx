@@ -24,16 +24,18 @@ export const DogProfiles = () => {
       </div>
       <div className="dog-profiles__list">
         <EmptyList>
-          {dogs?.map(({ name, breed, avatar, id, owner }) => (
-            <Card
-              ownerId={owner}
-              id={id}
-              key={id}
-              name={name}
-              subTitle={breed}
-              imageSrc={avatar}
-            />
-          ))}
+          {dogs
+            ?.sort((dog1, dog2) => dog1?.name.localeCompare(dog2?.name))
+            ?.map(({ name, breed, avatar, id, owner }) => (
+              <Card
+                ownerId={owner}
+                id={id}
+                key={id}
+                name={name}
+                subTitle={breed}
+                imageSrc={avatar}
+              />
+            ))}
         </EmptyList>
       </div>
       <div className="dog-profiles__add-button">

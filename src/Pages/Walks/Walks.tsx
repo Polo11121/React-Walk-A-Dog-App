@@ -62,8 +62,9 @@ export const Walks = () => {
                 parseInt(slot1.time_from.slice(0, 2)) -
                 parseInt(slot2.time_from.slice(0, 2))
             )
-            .map(({ id, time_from, time_to, dog1, dog2, dog3 }) => (
+            .map(({ id, time_from, time_to, dog1, dog2, dog3, status }) => (
               <Walk
+                status={status}
                 key={id}
                 id={id}
                 dogAvatar1={dogs?.find(({ id }) => id === dog1)?.avatar}

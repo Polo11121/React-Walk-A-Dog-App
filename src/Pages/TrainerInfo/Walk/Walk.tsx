@@ -9,6 +9,7 @@ type WalkType = {
   dateEnd: string;
   isOwner?: boolean;
   dogAvatar1?: string;
+  status: string;
   dogAvatar2?: string;
   dogAvatar3?: string;
   openRemoveSlotHandler?: (
@@ -20,6 +21,7 @@ type WalkType = {
 export const Walk = ({
   dateStart,
   id,
+  status,
   dateEnd,
   dogAvatar1,
   dogAvatar2,
@@ -36,7 +38,7 @@ export const Walk = ({
 
   return (
     <div className="walk">
-      {isOwner && (
+      {isOwner && status === "nie rozpoczęty" && (
         <ClearIcon onClick={removeSlotHandler} className="walk__delete-icon" />
       )}
       <div className="walk__content" onClick={goToWalkInfo}>

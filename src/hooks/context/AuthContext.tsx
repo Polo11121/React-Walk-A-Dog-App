@@ -24,6 +24,9 @@ type AuthContextType = {
   loginUser: ({ access, refresh }: AuthTokensType) => void;
   logoutUser: () => void;
   isAppLoading: boolean;
+  startWalk: (slotId: string) => void;
+  stopWalk: () => void;
+  activeWalk: string;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -39,7 +42,10 @@ const AuthContext = createContext<AuthContextType>({
   },
   loginUser: () => null,
   logoutUser: () => null,
+  startWalk: () => null,
+  stopWalk: () => null,
   isAppLoading: true,
+  activeWalk: "",
 });
 
 const useAuthContext = () => useContext(AuthContext);
@@ -47,6 +53,7 @@ const useAuthContext = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [authTokens, setAuthTokens] = useState<AuthTokensType | null>(null);
   const [userId, setUserId] = useState<null | string>(null);
+  const [activeWalk, setActiveWalk] = useState("");
   const [isAppLoading, setIsAppLoading] = useState(true);
   const { user } = useGetUser(userId);
   const navigate = useNavigate();
@@ -55,15 +62,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     if (sessionStorage.authTokens) {
       const sessionData = JSON.parse(sessionStorage.authTokens);
       setAuthTokens(sessionData);
+      setActiveWalk(sessionStorage.activeWalk);
       setUserId(jwt_decode<{ user_id: string }>(sessionData.access).user_id);
     }
+
     setIsAppLoading(false);
-  }, []);
+  }, [sessionStorage.activeWalk]);
 
   const loginUser = ({ access, refresh }: AuthTokensType) => {
     setUserId(jwt_decode<{ user_id: string }>(access).user_id);
     setAuthTokens({ access, refresh });
     sessionStorage.setItem("authTokens", JSON.stringify({ access, refresh }));
+  };
+
+  const startWalk = (slotId: string) => {
+    sessionStorage.setItem("activeWalk", slotId);
+    setActiveWalk(slotId);
+  };
+
+  const stopWalk = () => {
+    sessionStorage.removeItem("activeWalk");
+    setActiveWalk("");
   };
 
   const logoutUser = () => {
@@ -76,6 +95,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AuthContext.Provider
       value={{
+        activeWalk,
+        startWalk,
+        stopWalk,
         authTokens,
         userId,
         loginUser,

@@ -13,6 +13,7 @@ type CardWalkProps = {
   date: string;
   time_from: string;
   time_to: string;
+  status: string;
 };
 export const CardWalk = ({
   dogAvatarSrc,
@@ -23,6 +24,7 @@ export const CardWalk = ({
   time_from,
   time_to,
   trainerName,
+  status,
 }: CardWalkProps) => {
   return (
     <Link to={`/walk-info/${id}`}>
@@ -44,7 +46,7 @@ export const CardWalk = ({
           </div>
         </div>
         <div className="card-walk__info">
-          <span>Data:</span>
+          <span>{status}</span>
           <span> {date}</span>
           <span>
             {getFormattedHour(time_from)} - {getFormattedHour(time_to)}

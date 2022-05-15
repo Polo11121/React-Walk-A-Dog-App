@@ -2,21 +2,24 @@ import StarIcon from "@mui/icons-material/Star";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import { Breadcrumbs } from "@mui/material";
 import { TrainerWalks } from "Pages/TrainerInfo/TrainerWalks/TrainerWalks";
-import { TrainerOpinions } from "Pages/TrainerInfo/TrainerOpinions/TrainerOpinions"
+import { TrainerOpinions } from "Pages/TrainerInfo/TrainerOpinions/TrainerOpinions";
 import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "api/useGetUser";
 import { Button } from "Components";
 import useWalksContext from "hooks/context/WalksContext";
 import "./TrainerInfo.scss";
+import { useOwner } from "hooks/useOwner";
 
 export const TrainerInfo = () => {
+  const isOwner = useOwner();
   const { resetWalkList } = useWalksContext();
   const params = useParams();
   const navigate = useNavigate();
   const { user } = useGetUser(params.id);
   const goBack = () => navigate(`/user-profile/${params.id}`);
 
-  const switchToAddOpinion = () => navigate(`/trainer-opinion-add/${params.id}`);
+  const switchToAddOpinion = () =>
+    navigate(`/trainer-opinion-add/${params.id}`);
 
   return (
     <div className="trainer-info">
@@ -42,17 +45,25 @@ export const TrainerInfo = () => {
       </Breadcrumbs>
       <div className="trainer-info__content">
         <Routes>
-          <Route path="opinions" element={<TrainerOpinions name={user?.username} avatar={user?.avatar}/>} />
+          <Route
+            path="opinions"
+            element={
+              <TrainerOpinions name={user?.username} avatar={user?.avatar} />
+            }
+          />
           <Route path="walks" element={<TrainerWalks />} />
         </Routes>
       </div>
       <div className="trainer-info__buttons">
+        {!isOwner && (
+          <Button
+            onClick={switchToAddOpinion}
+            title="Dodaj opinie"
+            type="primary"
+          />
+        )}
         <Button
-          onClick={switchToAddOpinion}
-          title="Dodaj opinie"
-          type="default"
-        />
-        <Button
+          styles={isOwner ? { marginLeft: "auto" } : {}}
           onClick={goBack}
           title="Powrót"
           type="default"

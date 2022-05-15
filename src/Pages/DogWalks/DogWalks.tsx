@@ -23,8 +23,8 @@ export const DogWalks = () => {
             ?.sort((dog1, dog2) => {
               if (
                 !(
-                  new Date(dog1?.date).getTime() -
-                  new Date(dog2?.date).getTime()
+                  new Date(dog2?.date).getTime() -
+                  new Date(dog1?.date).getTime()
                 )
               ) {
                 return (
@@ -33,21 +33,22 @@ export const DogWalks = () => {
                 );
               }
               return (
-                new Date(dog1?.date).getTime() - new Date(dog2?.date).getTime()
+                new Date(dog2?.date).getTime() - new Date(dog1?.date).getTime()
               );
             })
             ?.filter(
               ({ dog1, dog2, dog3, status }) =>
                 id &&
                 (dog1 === +id || dog2 === +id || dog3 === +id) &&
-                status === "zakończony"
+                (status === "zakończony" || status === "w trakcie")
             )
-            .map(({ time_from, time_to, date, trainer, id }) => {
+            .map(({ time_from, time_to, date, trainer, id, status }) => {
               const walkTrianer = users?.find(({ id }) => id === trainer);
 
               return (
                 <CardWalk
                   id={id}
+                  status={status}
                   dogAvatarSrc={dog?.avatar}
                   dogName={dog?.name}
                   trainerName={walkTrianer?.username as string}

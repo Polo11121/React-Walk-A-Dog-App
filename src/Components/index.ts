@@ -6,3 +6,4 @@ export { Footer } from "./Footer/Footer";
 export { Header } from "./Header/Header";
 export { Input } from "./Input/Input";
 export { Modal } from "./Modal/Modal";
+export { MapAvatar } from "./MapAvatar/MapAvatar";

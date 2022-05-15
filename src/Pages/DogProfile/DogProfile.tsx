@@ -8,13 +8,22 @@ import { useGetDog } from "api/useGetDog";
 import { useOwner } from "hooks/useOwner";
 import { useGetUser } from "api/useGetUser";
 import "./DogProfile.scss";
+import { useGetSlots } from "api/useGetSlots";
 
 export const DogProfile = () => {
   const { id: ownerId, subId: id } = useParams();
   const { dog } = useGetDog(id);
   const { user } = useGetUser(ownerId);
+  const { slots } = useGetSlots();
   const isOwner = useOwner();
   const navigate = useNavigate();
+
+  const numberOfWalks = slots?.filter(
+    ({ dog1, dog2, dog3, status }) =>
+      id &&
+      (dog1 === +id || dog2 === +id || dog3 === +id) &&
+      status === "zakończony"
+  )?.length;
 
   const switchToManageDogProfile = () =>
     navigate(`/edit-dog/${dog.owner}/${dog.id}`);
@@ -87,17 +96,17 @@ export const DogProfile = () => {
             <div className="dog-profile__section-info-title">
               Liczba spacerów:
             </div>
-            <div>12</div>
+            <div>{numberOfWalks}</div>
           </div>
           <div className="dog-profile__section-info">
             <div className="dog-profile__section-info-title">
               Pokonana odległość:
             </div>
-            <div>69km</div>
+            <div>{numberOfWalks * 3}km</div>
           </div>
           <div className="dog-profile__section-info">
             <div className="dog-profile__section-info-title">Łączny czas:</div>
-            <div>69h</div>
+            <div>{numberOfWalks}h</div>
           </div>
         </div>
       </div>

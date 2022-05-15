@@ -127,14 +127,7 @@ export const WalksList = ({ goBackHandler, date, slots }: WalksListType) => {
           <span className="walks-list__subtitle">
             Godzina rozpoczęcia spaceru
           </span>
-          <TimePicker
-            minTime={
-              getActualTime(date) || (isWeekend(date) ? "09:00:00" : "08:00:00")
-            }
-            maxTime={isWeekend(date) ? "16:00:00" : "18:00:00"}
-            onChange={setStartWalk}
-            value={startWalk}
-          />
+          <TimePicker onChange={setStartWalk} value={startWalk} />
           <span className="walks-list__bold-text" style={{ marginTop: "1rem" }}>
             Czas Spaceru
           </span>
@@ -171,10 +164,11 @@ export const WalksList = ({ goBackHandler, date, slots }: WalksListType) => {
                     parseInt(slot1.time_from.slice(0, 2)) -
                     parseInt(slot2.time_from.slice(0, 2))
                 )
-                .map(({ id, time_from, time_to, dog1, dog2, dog3 }) => (
+                .map(({ id, time_from, time_to, dog1, dog2, dog3, status }) => (
                   <Walk
                     key={id}
                     id={id}
+                    status={status}
                     dogAvatar1={dogs?.find(({ id }) => id === dog1)?.avatar}
                     dogAvatar2={dogs?.find(({ id }) => id === dog2)?.avatar}
                     dogAvatar3={dogs?.find(({ id }) => id === dog3)?.avatar}

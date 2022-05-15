@@ -5,6 +5,7 @@ import { DogType } from "types/Dog.types";
 type UseGetDogType = {
   dog: DogType;
   isLoading: boolean;
+  isFetched: boolean;
 };
 
 export const useGetDog = (dogId?: string | null): UseGetDogType => {
@@ -14,9 +15,9 @@ export const useGetDog = (dogId?: string | null): UseGetDogType => {
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 
-  const { data, isLoading } = useQuery(["dog", `${dogId}`], getDog, {
+  const { data, isLoading, isFetched } = useQuery(["dog", `${dogId}`], getDog, {
     enabled: Boolean(dogId),
   });
 
-  return { dog: data, isLoading };
+  return { dog: data, isLoading, isFetched };
 };

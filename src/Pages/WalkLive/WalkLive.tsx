@@ -8,22 +8,27 @@ import dogAvatar from "assets/logo.png";
 import { useGetUser } from "api/useGetUser";
 import { useGetDogs } from "api/useGetDogs";
 import { useQueryClient } from "react-query";
+import GoogleMapReact from "google-map-react";
 import useAuthContext from "hooks/context/AuthContext";
 import { DogType } from "types/Dog.types";
 import { getFormattedHour } from "helpers/helpers";
-import { Button } from "Components";
+import { Button, MapAvatar } from "Components";
 import { useCustomToast } from "hooks/useCustomToast";
 import { useChangeSlotStatus } from "api/useChangeSlotStatus";
 import "./WalkLive.scss";
+import { useGetWalkLocation } from "api/useGetWalkLocation";
 
 export const WalkLive = () => {
   const navigate = useNavigate();
+  const { stopWalk } = useAuthContext();
   const { id } = useParams();
-  const queryClient = useQueryClient();
   const { userId } = useAuthContext();
   const { slot } = useGetSlot(id);
+  const { walkLocation } = useGetWalkLocation(slot?.id);
   const { user } = useGetUser(`${slot?.trainer}`);
   const { dogs } = useGetDogs();
+  const [isMapOpen, setIsMapOpen] = useState(false);
+
   const [dogsInfo, setDogsInfo] = useState<
     {
       id: string;
@@ -33,6 +38,10 @@ export const WalkLive = () => {
       owner: string;
     }[]
   >();
+
+  const queryClient = useQueryClient();
+
+  const openMapHandler = () => setIsMapOpen(true);
 
   const goBack = useGoBack();
 
@@ -69,6 +78,13 @@ export const WalkLive = () => {
     }
   }, [dogs, slot]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      queryClient.invalidateQueries("walks");
+    }, 6000);
+    return () => clearInterval(interval);
+  }, []);
+
   const onSuccessChangeSlotStatus = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useCustomToast("Zakończono spacer!");
@@ -80,8 +96,10 @@ export const WalkLive = () => {
     onSuccessChangeSlotStatus
   );
 
-  const endWalkHandler = () =>
+  const endWalkHandler = () => {
+    stopWalk();
     changeSlotStatus({ id: `${slot?.id}`, status: "zakończony" });
+  };
 
   const goToTrainer = () => navigate(`/user-profile/${slot?.trainer}`);
 
@@ -146,12 +164,31 @@ export const WalkLive = () => {
         W trakcie: {slot?.time_from && getFormattedHour(slot?.time_from)} -{" "}
         {slot?.time_to && getFormattedHour(slot?.time_to)}
       </div>
-      <div className="walk-live__map">
-        <div className="walk-live__map-content">
-          <img className="walk-live__map-icon" src={map} alt="" />
-          <h1 className="walk-live__map-text">Mapa</h1>
+      {isMapOpen && walkLocation ? (
+        <GoogleMapReact
+          bootstrapURLKeys={{ key: "AIzaSyALjeUJOIthg6G-Yk6dJnOjaWd5Y9CjkVg" }}
+          defaultCenter={{ lat: walkLocation.lat, lng: walkLocation.lng }}
+          defaultZoom={25}
+        >
+          <MapAvatar
+            lat={walkLocation.lat}
+            lng={walkLocation.lng}
+            avatarSrc={user?.avatar}
+          />
+        </GoogleMapReact>
+      ) : (
+        <div className="walk-live__map">
+          <div className="walk-live__map-content">
+            <img
+              onClick={openMapHandler}
+              className="walk-live__map-icon"
+              src={map}
+              alt=""
+            />
+            <h1 className="walk-live__map-text">Mapa</h1>
+          </div>
         </div>
-      </div>
+      )}
       {userId === (slot?.trainer as unknown as string) && (
         <Button
           styles={{ margin: " 0  auto 40px" }}
@@ -161,7 +198,6 @@ export const WalkLive = () => {
           type="primary"
         />
       )}
-
       <div style={{ width: "90%" }}>
         <Button
           styles={{ marginLeft: "auto", marginBottom: "40px" }}
