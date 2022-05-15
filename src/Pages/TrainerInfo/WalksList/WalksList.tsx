@@ -127,7 +127,14 @@ export const WalksList = ({ goBackHandler, date, slots }: WalksListType) => {
           <span className="walks-list__subtitle">
             Godzina rozpoczęcia spaceru
           </span>
-          <TimePicker onChange={setStartWalk} value={startWalk} />
+          <TimePicker
+            minTime={
+              getActualTime(date) || (isWeekend(date) ? "09:00:00" : "08:00:00")
+            }
+            maxTime={isWeekend(date) ? "16:00:00" : "18:00:00"}
+            onChange={setStartWalk}
+            value={startWalk}
+          />
           <span className="walks-list__bold-text" style={{ marginTop: "1rem" }}>
             Czas Spaceru
           </span>
@@ -159,7 +166,7 @@ export const WalksList = ({ goBackHandler, date, slots }: WalksListType) => {
           <div className="walks-list__content">
             <EmptyList isVisible={isOwner && !isInThePast(date)}>
               {slots
-                .sort(
+                ?.sort(
                   (slot1, slot2) =>
                     parseInt(slot1.time_from.slice(0, 2)) -
                     parseInt(slot2.time_from.slice(0, 2))

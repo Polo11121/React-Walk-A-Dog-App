@@ -5,8 +5,12 @@ import { useGetOpinions } from "api/useGetOpinions";
 import { useParams } from "react-router-dom";
 import { useGetUsers } from "api/useGetUsers";
 import { useGetSlots } from "api/useGetSlots";
-import { EmptyList } from "Components";
+import { Button, EmptyList, Modal } from "Components";
+import { useQueryClient } from "react-query";
 import "./TrainerOpinions.scss";
+import { useState } from "react";
+import { useDeleteOpinion } from "api/useDeleteOpinion";
+import { useCustomToast } from "hooks/useCustomToast";
 
 type TrainerOpinionsProps = {
   name: string;
@@ -14,7 +18,9 @@ type TrainerOpinionsProps = {
 };
 
 export const TrainerOpinions = ({ name, avatar }: TrainerOpinionsProps) => {
+  const queryClient = useQueryClient();
   const { opinions } = useGetOpinions();
+  const [deleteOpinionId, setDeleteOpinionId] = useState<number | null>(null);
   const { users } = useGetUsers();
   const { id } = useParams();
   const { slots } = useGetSlots();
@@ -35,6 +41,25 @@ export const TrainerOpinions = ({ name, avatar }: TrainerOpinionsProps) => {
         const result = prev + opinion;
         return result;
       });
+
+  const openDeleteOpinionModal = (opinionId: number) =>
+    setDeleteOpinionId(opinionId);
+
+  const closeDeleteOpinionModal = () => setDeleteOpinionId(null);
+
+  const onSuccess = () => {
+    queryClient.invalidateQueries("opinions"); // eslint-disable-next-line react-hooks/rules-of-hooks
+    useCustomToast("Usunięto opinie!");
+    closeDeleteOpinionModal();
+  };
+
+  const { mutate } = useDeleteOpinion(onSuccess);
+
+  const deleteOpinionHandler = () => {
+    if (deleteOpinionId) {
+      mutate(deleteOpinionId);
+    }
+  };
 
   return (
     <div className="trainer-opinion">
@@ -58,7 +83,7 @@ export const TrainerOpinions = ({ name, avatar }: TrainerOpinionsProps) => {
             />
           </div>
           <div style={{ fontSize: "25px", fontWeight: "500" }}>
-            {countWalk} spacer
+            spacery: {countWalk}
           </div>
         </div>
       </div>
@@ -69,6 +94,7 @@ export const TrainerOpinions = ({ name, avatar }: TrainerOpinionsProps) => {
 
             return (
               <OpinionCard
+                openDeleteOpinionModal={openDeleteOpinionModal}
                 key={opinionId}
                 review={review}
                 points={points}
@@ -81,6 +107,27 @@ export const TrainerOpinions = ({ name, avatar }: TrainerOpinionsProps) => {
           })}
         </EmptyList>
       </div>
+      {deleteOpinionId && (
+        <Modal>
+          <div className="trainer-opinion__modal-content">
+            Na pewno chcesz usunąć opinię?
+            <Button
+              styles={{ margin: "20px auto 0", width: "80%" }}
+              title="Usuń"
+              onClick={deleteOpinionHandler}
+              type="red"
+              size="L"
+            />
+            <Button
+              styles={{ margin: "20px auto 0", width: "80%" }}
+              title="Anuluj"
+              onClick={closeDeleteOpinionModal}
+              type="green"
+              size="L"
+            />
+          </div>
+        </Modal>
+      )}
     </div>
   );
 };

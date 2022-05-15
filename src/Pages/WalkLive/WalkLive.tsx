@@ -81,7 +81,7 @@ export const WalkLive = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       queryClient.invalidateQueries("walks");
-    }, 6000);
+    }, 12000);
     return () => clearInterval(interval);
   }, []);
 
@@ -160,7 +160,8 @@ export const WalkLive = () => {
           </div>
         )}
       </div>
-      <div className="walk-live__time">
+      <div className="walk-live__time">{slot?.date}</div>
+      <div className="walk-live__time" style={{ marginTop: "0" }}>
         W trakcie: {slot?.time_from && getFormattedHour(slot?.time_from)} -{" "}
         {slot?.time_to && getFormattedHour(slot?.time_to)}
       </div>

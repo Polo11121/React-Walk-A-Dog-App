@@ -141,6 +141,8 @@ export const WalkInfo = () => {
 
   const closeStartWalkHandler = () => setIsStartWalkOpen(false);
 
+  const haveAnyDog = slot?.dog1 || slot?.dog2 || slot?.dog3;
+
   return (
     <div className="walk-info">
       <div className="walk-info__title">Spacer</div>
@@ -203,6 +205,7 @@ export const WalkInfo = () => {
         ))}
         {userId &&
           !activeWalk &&
+          haveAnyDog &&
           +userId === slot?.trainer &&
           slot?.status === "nie rozpoczęty" &&
           isToday(new Date(slot?.date)) && (
@@ -215,6 +218,7 @@ export const WalkInfo = () => {
             />
           )}
         {slot?.status === "w trakcie" &&
+          isToday(new Date(slot?.date)) &&
           userId &&
           (dogsInfo?.map(({ owner }) => owner).includes(`${userId}`) ||
             +userId === slot?.trainer) && (
@@ -277,16 +281,16 @@ export const WalkInfo = () => {
             Na pewno chcesz wypisać psa "{removeDogInfo.dogName}" ze spaceru ?
             <Button
               styles={{ margin: "20px auto 0", width: "80%" }}
-              onClick={closeRemoveDogHandler}
-              title="Anuluj"
-              type="green"
-              size="L"
-            />
-            <Button
-              styles={{ margin: "20px auto 0", width: "80%" }}
               title="Wypisz"
               onClick={removeDogHandler}
               type="red"
+              size="L"
+            />{" "}
+            <Button
+              styles={{ margin: "20px auto 0", width: "80%" }}
+              onClick={closeRemoveDogHandler}
+              title="Anuluj"
+              type="green"
               size="L"
             />
           </div>

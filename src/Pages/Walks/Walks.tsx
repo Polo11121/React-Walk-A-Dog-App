@@ -30,6 +30,7 @@ export const Walks = () => {
         <div style={{ flex: 0.5 }}>
           <span>Data:</span>
           <DatePicker
+            minDate={new Date()}
             locale="pl"
             selected={walkDate}
             onChange={changeDateHandler}
@@ -47,16 +48,19 @@ export const Walks = () => {
       <div className="walks__list">
         <EmptyList>
           {slots
-            ?.filter(({ date: slotDate, time_from, dog1, dog2, dog3 }) => {
-              return (
-                slotDate === getFormattedDate(walkDate) &&
-                +getFormattedHour(time_from).split(":").join("") >=
-                  +walkTime?.toString().split(":").join("") &&
-                (!dog1 || !dog2 || !dog3) &&
-                !isInThePast(new Date(slotDate)) &&
-                !isTodayInThePastTime(new Date(slotDate), time_from)
-              );
-            })
+            ?.filter(
+              ({ date: slotDate, time_from, dog1, dog2, dog3, status }) => {
+                return (
+                  slotDate === getFormattedDate(walkDate) &&
+                  +getFormattedHour(time_from).split(":").join("") >=
+                    +walkTime?.toString().split(":").join("") &&
+                  (!dog1 || !dog2 || !dog3) &&
+                  !isInThePast(new Date(slotDate)) &&
+                  !isTodayInThePastTime(new Date(slotDate), time_from) &&
+                  status === "nie rozpoczęty"
+                );
+              }
+            )
             .sort(
               (slot1, slot2) =>
                 parseInt(slot1.time_from.slice(0, 2)) -

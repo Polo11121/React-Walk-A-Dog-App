@@ -45,7 +45,7 @@ export const TrainerDetails = () => {
           <div style={{ marginTop: "15px", marginBottom: "15px" }}>
             {user?.is_trainer ? "Trener" : "Użytkownik"}
           </div>
-          <div>{countWalk} spacerów</div>
+          <div>spacery: {countWalk}</div>
         </div>
       </div>
       <Rating className="trainer-details__rating" value={rating} readOnly />

@@ -5,6 +5,7 @@ import { UserType } from "types/User.types";
 type UseGetUserType = {
   user: UserType;
   isLoading: boolean;
+  isFetched: boolean;
 };
 
 export const useGetUser = (userId?: string | null): UseGetUserType => {
@@ -14,9 +15,13 @@ export const useGetUser = (userId?: string | null): UseGetUserType => {
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 
-  const { data, isLoading } = useQuery(["user", `${userId}`], getUser, {
-    enabled: Boolean(userId) && userId !== "undefined",
-  });
+  const { data, isLoading, isFetched } = useQuery(
+    ["user", `${userId}`],
+    getUser,
+    {
+      enabled: Boolean(userId) && userId !== "undefined",
+    }
+  );
 
-  return { user: data, isLoading };
+  return { user: data, isLoading, isFetched };
 };

@@ -1,5 +1,5 @@
 import { Button } from "Components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Rating, TextField } from "@mui/material";
 import { useAddOpinion } from "api/useAddOpinion";
 import { useQueryClient } from "react-query";
@@ -15,10 +15,11 @@ import "./AddOpinion.scss";
 export const AddOpinion = () => {
   const queryClient = useQueryClient();
   const [valueRating, setValueRating] = useState<number>(0);
+  const navigate = useNavigate();
   const params = useParams();
   const { user } = useGetUser(params.id);
   const { userId } = useAuthContext();
-  const goBack = useGoBack();
+  const goBack = () => navigate(`/trainer-info/${params.id}/opinions`);
   const { slots } = useGetSlots();
 
   const trainerWalks = slots?.filter(
@@ -63,7 +64,7 @@ export const AddOpinion = () => {
           <div style={{ marginTop: "15px", marginBottom: "15px" }}>
             {user?.is_trainer ? "Trener" : "Użytkownik"}
           </div>
-          <div>{countWalk} spacerów</div>
+          <div>spacery: {countWalk}</div>
         </div>
       </div>
       <Rating
@@ -84,7 +85,7 @@ export const AddOpinion = () => {
         {
           <Button
             onClick={addOpinion}
-            disabled={!value}
+            disabled={!value.trim()}
             title="Dodaj opinie"
             type="default"
           />

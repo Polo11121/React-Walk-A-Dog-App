@@ -1,9 +1,10 @@
 import * as yup from "yup";
 
 export const registerSchema = yup.object({
-  userName: yup.string().required("Podaj nazwe użytkownika"),
+  userName: yup.string().trim().required("Podaj nazwe użytkownika"),
   password: yup
     .string()
+    .trim()
     .required("Podaj hasło")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
@@ -11,10 +12,12 @@ export const registerSchema = yup.object({
     ),
   repeatPassword: yup
     .string()
+    .trim()
     .required("Powtórz hasło")
     .oneOf([yup.ref("password"), null], "Hasła muszą być jednakowe"),
   email: yup
     .string()
+    .trim()
     .required("Podaj adres email")
     .email("Nieprawidłowy adres email"),
 });

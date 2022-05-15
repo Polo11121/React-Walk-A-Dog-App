@@ -9,6 +9,7 @@ import jwt_decode from "jwt-decode";
 import { AuthTokensType } from "types/User.types";
 import { useGetUser } from "api/useGetUser";
 import { useNavigate } from "react-router-dom";
+import { useCustomToast } from "hooks/useCustomToast";
 
 type AuthContextType = {
   authTokens: null | AuthTokensType;
@@ -88,6 +89,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logoutUser = () => {
     setUserId(null);
     setAuthTokens(null);
+    setActiveWalk("");
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useCustomToast("Pomyślnie wylogowano!");
     sessionStorage.clear();
     navigate("/");
   };
