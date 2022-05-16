@@ -10,7 +10,7 @@ type UseGetSlotsType = {
 export const useGetSlots = (): UseGetSlotsType => {
   const getSlots = () =>
     axios
-      .get("http://127.0.0.1:8000/api/slot/")
+      .get("http://146.59.16.195:8000/api/slot/")
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 

@@ -12,7 +12,7 @@ export const useRegister = (onError: () => void) => {
     password: string;
   }) =>
     axios
-      .post("http://127.0.0.1:8000/api/auth/register/", {
+      .post("http://146.59.16.195:8000/api/auth/register/", {
         username: userName,
         email,
         password,

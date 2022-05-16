@@ -26,7 +26,7 @@ export const useEditDog = (onSuccess?: () => void) => {
     formData.append("weight", `${weight}`);
     formData.append("breed", `${breed}`);
 
-    return axios.patch(`http://127.0.0.1:8000/api/dog/${id}/`, formData);
+    return axios.patch(`http://146.59.16.195:8000/api/dog/${id}/`, formData);
   };
 
   const { mutate, isLoading } = useMutation(editDog, { onSuccess });

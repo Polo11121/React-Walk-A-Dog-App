@@ -15,7 +15,7 @@ export const useAddOpinion = (onSuccess?: () => void) => {
     review,
     points,
   }: UseAddOpinionPayloadType) =>
-    axios.post(`http://127.0.0.1:8000/api/clientopinion/`, {
+    axios.post(`http://146.59.16.195:8000/api/clientopinion/`, {
       trainer,
       client,
       review,

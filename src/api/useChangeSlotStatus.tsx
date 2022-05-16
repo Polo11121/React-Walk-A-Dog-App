@@ -14,7 +14,7 @@ export const useChangeSlotStatus = (onSuccess?: () => void) => {
     time_to?: string;
   }) =>
     axios.patch(
-      `http://127.0.0.1:8000/api/slot/${id}/`,
+      `http://146.59.16.195:8000/api/slot/${id}/`,
       time_from
         ? {
             status,

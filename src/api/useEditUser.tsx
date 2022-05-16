@@ -24,7 +24,7 @@ export const useEditUser = (onSuccess: () => void) => {
     phone_number && formData.append("phone_number", `${phone_number}`);
 
     return axios
-      .patch(`http://127.0.0.1:8000/api/user/${id}/`, formData)
+      .patch(`http://146.59.16.195:8000/api/user/${id}/`, formData)
       .catch((error) => console.log(error));
   };
 

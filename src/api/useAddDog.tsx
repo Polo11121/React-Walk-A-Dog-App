@@ -29,7 +29,7 @@ export const useAddDog = (onSuccess?: () => void) => {
     formData.append("contraindications", "");
     formData.append("recommendation", "");
 
-    return axios.post(`http://127.0.0.1:8000/api/dog/`, formData);
+    return axios.post(`http://146.59.16.195:8000/api/dog/`, formData);
   };
 
   const { mutate, isLoading } = useMutation(addDog, { onSuccess });

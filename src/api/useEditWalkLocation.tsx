@@ -13,7 +13,7 @@ export const UseEditWalkLocation = () => {
     lat,
     lng,
   }: UseEditWalkLocationPayloadType) =>
-    axios.patch(`http://127.0.0.1:8000/api/walk/${slot}/`, {
+    axios.patch(`http://146.59.16.195:8000/api/walk/${slot}/`, {
       lat,
       lng,
     });

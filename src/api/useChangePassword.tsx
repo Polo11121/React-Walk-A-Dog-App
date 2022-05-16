@@ -16,7 +16,7 @@ export const useChangePassword = (
   }) =>
     axios
       .patch(
-        "http://127.0.0.1:8000/api/auth/password",
+        "http://146.59.16.195:8000/api/auth/password",
         {
           old_password: oldPassword,
           new_password: newPassword,

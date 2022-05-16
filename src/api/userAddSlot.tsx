@@ -15,7 +15,7 @@ export const useAddSlot = (onSuccess?: () => void) => {
     time_from,
     time_to,
   }: UseAddSlotPayloadType) =>
-    axios.post(`http://127.0.0.1:8000/api/slot/`, {
+    axios.post(`http://146.59.16.195:8000/api/slot/`, {
       trainer,
       date,
       time_from,

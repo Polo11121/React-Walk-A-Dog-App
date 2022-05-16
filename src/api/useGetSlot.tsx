@@ -9,7 +9,7 @@ type UseGetSlotType = {
 export const useGetSlot = (id?: string): UseGetSlotType => {
   const getSlot = () =>
     axios
-      .get(`http://127.0.0.1:8000/api/slot/${id}/`)
+      .get(`http://146.59.16.195:8000/api/slot/${id}/`)
       .then((resp) => resp.data);
 
   const { data, isLoading } = useQuery(["slot", id], getSlot);

@@ -10,10 +10,10 @@ type UseGetOpinionsType = {
 export const useGetOpinions = (): UseGetOpinionsType => {
   const getOpinions = () =>
     axios
-      .get(`http://127.0.0.1:8000/api/clientopinion/`)
+      .get(`http://146.59.16.195:8000/api/clientopinion/`)
       .then((resp) => resp.data);
 
-  const { data, isLoading } = useQuery('opinions', getOpinions, );
+  const { data, isLoading } = useQuery("opinions", getOpinions);
 
   return { opinions: data, isLoading };
 };

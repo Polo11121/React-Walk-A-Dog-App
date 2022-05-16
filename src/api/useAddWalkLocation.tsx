@@ -9,7 +9,7 @@ type UseAddWalkLocationPayloadType = {
 
 export const UseAddWalkLocation = () => {
   const addWalkLocation = ({ slot, lat, lng }: UseAddWalkLocationPayloadType) =>
-    axios.post(`http://127.0.0.1:8000/api/walk/`, {
+    axios.post(`http://146.59.16.195:8000/api/walk/`, {
       slot,
       lat,
       lng,

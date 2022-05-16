@@ -23,7 +23,7 @@ export const useAddDogToSlot = (onSuccess?: () => void) => {
       return { dog3: id };
     };
     return axios.patch(
-      `http://127.0.0.1:8000/api/slot/${slotId}/`,
+      `http://146.59.16.195:8000/api/slot/${slotId}/`,
       getPayload(dogId)
     );
   };

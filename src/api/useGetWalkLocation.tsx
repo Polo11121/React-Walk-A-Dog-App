@@ -9,7 +9,7 @@ type UseGetWalkLocation = {
 export const useGetWalkLocation = (slotId?: number): UseGetWalkLocation => {
   const getWalkLocation = () =>
     axios
-      .get(`http://127.0.0.1:8000/api/walk/`)
+      .get(`http://146.59.16.195:8000/api/walk/`)
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 

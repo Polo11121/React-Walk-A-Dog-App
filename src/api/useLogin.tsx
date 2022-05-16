@@ -12,7 +12,7 @@ export const useLogin = (
     userName: string;
     password: string;
   }) =>
-    axios.post("http://127.0.0.1:8000/api/auth/login/", {
+    axios.post("http://146.59.16.195:8000/api/auth/login/", {
       username: userName,
       password,
     });

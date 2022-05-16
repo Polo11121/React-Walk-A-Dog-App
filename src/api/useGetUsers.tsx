@@ -9,7 +9,7 @@ type UseGetUsersType = {
 
 export const useGetUsers = (): UseGetUsersType => {
   const getUsers = () =>
-    axios.get(`http://127.0.0.1:8000/api/user/`).then((resp) => resp.data);
+    axios.get(`http://146.59.16.195:8000/api/user/`).then((resp) => resp.data);
 
   const { data, isLoading } = useQuery("users", getUsers);
 

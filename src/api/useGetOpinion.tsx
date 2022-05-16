@@ -10,13 +10,17 @@ type UseGetOpinionType = {
 export const useGetOpinion = (opinionId?: string | null): UseGetOpinionType => {
   const getOpinion = () =>
     axios
-      .get(`http://127.0.0.1:8000/api/clientopinion/${opinionId}/`)
+      .get(`http://146.59.16.195:8000/api/clientopinion/${opinionId}/`)
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 
-  const { data, isLoading } = useQuery(["opinion", `${opinionId}`], getOpinion, {
-    enabled: Boolean(opinionId),
-  });
+  const { data, isLoading } = useQuery(
+    ["opinion", `${opinionId}`],
+    getOpinion,
+    {
+      enabled: Boolean(opinionId),
+    }
+  );
 
   return { opinion: data, isLoading };
 };

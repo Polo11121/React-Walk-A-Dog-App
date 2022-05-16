@@ -10,7 +10,7 @@ type UseGetDogsType = {
 export const useGetDogs = (): UseGetDogsType => {
   const getDogs = () =>
     axios
-      .get(`http://127.0.0.1:8000/api/dog/`)
+      .get(`http://146.59.16.195:8000/api/dog/`)
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 
