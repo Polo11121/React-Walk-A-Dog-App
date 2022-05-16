@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/walk-a-dog-frontend/static/css/main.934df1f4.css",
-    "main.js": "/walk-a-dog-frontend/static/js/main.17d36aef.js",
+    "main.js": "/walk-a-dog-frontend/static/js/main.1bd65bce.js",
     "static/js/787.cc1eada3.chunk.js": "/walk-a-dog-frontend/static/js/787.cc1eada3.chunk.js",
     "static/media/empty-dog.png": "/walk-a-dog-frontend/static/media/empty-dog.b0dd39342f26906d6648.png",
     "static/media/user-avatar.png": "/walk-a-dog-frontend/static/media/user-avatar.6ca1b977de77027c074a.png",
@@ -9,11 +9,11 @@
     "static/media/logo.png": "/walk-a-dog-frontend/static/media/logo.9e23e07ca867e139d4df.png",
     "index.html": "/walk-a-dog-frontend/index.html",
     "main.934df1f4.css.map": "/walk-a-dog-frontend/static/css/main.934df1f4.css.map",
-    "main.17d36aef.js.map": "/walk-a-dog-frontend/static/js/main.17d36aef.js.map",
+    "main.1bd65bce.js.map": "/walk-a-dog-frontend/static/js/main.1bd65bce.js.map",
     "787.cc1eada3.chunk.js.map": "/walk-a-dog-frontend/static/js/787.cc1eada3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.934df1f4.css",
-    "static/js/main.17d36aef.js"
+    "static/js/main.1bd65bce.js"
   ]
 }
