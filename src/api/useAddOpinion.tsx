@@ -18,7 +18,7 @@ export const useAddOpinion = (onSuccess?: () => void) => {
     axios.post(`http://146.59.16.195:8000/api/clientopinion/`, {
       trainer,
       client,
-      review,
+      review: review.trim(),
       points,
     });
 

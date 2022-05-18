@@ -4,6 +4,7 @@
   height: calc(100vh - 55px);
   margin: 0 auto;
   width: 90%;
+  overflow-y: auto;
 
   &__title {
     font-weight: 700;

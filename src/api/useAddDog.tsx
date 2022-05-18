@@ -21,11 +21,11 @@ export const useAddDog = (onSuccess?: () => void) => {
   }: UseAddDogPayloadType) => {
     const formData = new FormData();
     avatar && formData.append("avatar", avatar);
-    formData.append("name", name);
+    formData.append("name", name.trim());
     formData.append("owner", `${owner}`);
     formData.append("age", `${age}`);
     formData.append("weight", `${weight}`);
-    formData.append("breed", `${breed}`);
+    formData.append("breed", `${breed.trim()}`);
     formData.append("contraindications", "");
     formData.append("recommendation", "");
 

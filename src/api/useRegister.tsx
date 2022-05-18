@@ -13,9 +13,9 @@ export const useRegister = (onError: () => void) => {
   }) =>
     axios
       .post("http://146.59.16.195:8000/api/auth/register/", {
-        username: userName,
-        email,
-        password,
+        username: userName.trim(),
+        email: email.trim(),
+        password: password.trim(),
       })
       .catch((error) => console.log(error));
 

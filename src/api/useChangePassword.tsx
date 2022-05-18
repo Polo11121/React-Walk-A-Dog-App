@@ -18,8 +18,8 @@ export const useChangePassword = (
       .patch(
         "http://146.59.16.195:8000/api/auth/password",
         {
-          old_password: oldPassword,
-          new_password: newPassword,
+          old_password: oldPassword.trim(),
+          new_password: newPassword.trim(),
         },
         {
           headers: { Authorization: `Bearer ${authTokens?.access}` },

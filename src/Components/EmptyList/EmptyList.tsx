@@ -9,7 +9,6 @@ export const EmptyList = ({
   children: ReactNode | string[];
   isVisible?: boolean;
 }) => {
-  console.log(children);
   if ((Array.isArray(children) && children.length) || isVisible) {
     return <>{children}</>;
   } else {

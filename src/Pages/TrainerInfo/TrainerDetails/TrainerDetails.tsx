@@ -1,7 +1,7 @@
 import { Button } from "Components";
 import userAvatar from "assets/user-avatar.png";
 import { Rating, TextField } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "api/useGetUser";
 import { useGoBack } from "hooks/useGoBack";
 import { useGetSlots } from "api/useGetSlots";
@@ -11,6 +11,7 @@ import "./TrainerDetails.scss";
 export const TrainerDetails = () => {
   const params = useParams();
   const { opinion } = useGetOpinion(params.id);
+  const navigate = useNavigate();
   const { user } = useGetUser(`${opinion?.trainer}`);
   const goBack = useGoBack();
 
@@ -31,11 +32,14 @@ export const TrainerDetails = () => {
     rating = opinion?.points;
   }
 
+  const goToTrainerProfile = () => navigate(`/user-profile${user?.id}`);
+
   return (
     <div className="trainer-details">
       <div className="trainer-details__title">Szczegóły opini</div>
       <div className="trainer-details__trainerInfo">
         <img
+          onClick={goToTrainerProfile}
           className="trainer-details__imageUser"
           src={user?.avatar || userAvatar}
           alt={user?.username}

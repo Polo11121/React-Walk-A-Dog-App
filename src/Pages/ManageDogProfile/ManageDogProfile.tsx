@@ -5,8 +5,8 @@ import { Formik } from "formik";
 import { manageDogProfileSchema } from "Pages/ManageDogProfile/manageDogProfilSchema";
 import { useManageDogProfile } from "Pages/ManageDogProfile/useManageDogProfile";
 import { useGoBack } from "hooks/useGoBack";
-import "./ManageDogProfile.scss";
 import { CircularProgress } from "@mui/material";
+import "./ManageDogProfile.scss";
 
 export const ManageDogProfile = () => {
   const {

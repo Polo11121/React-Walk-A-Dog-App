@@ -99,7 +99,7 @@ export const EditOpinion = () => {
           onClick={editOpinion}
           disabled={isButtonDisabled}
           title="Edytuj opinie"
-          type="default"
+          type="primary"
         />
         <Button onClick={goBack} title="Powrót" type="default" />
       </div>

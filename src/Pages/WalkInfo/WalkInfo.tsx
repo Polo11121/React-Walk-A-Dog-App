@@ -234,7 +234,7 @@ export const WalkInfo = () => {
           userId &&
           dogsInfo?.map(({ owner }) => owner).includes(`${userId}`) && (
             <Button
-              styles={{ margin: "0 auto" }}
+              styles={{ margin: "0  auto 20px" }}
               size="XL"
               onClick={goToTrainerOpinion}
               title="Dodaj opinie"

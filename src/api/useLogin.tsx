@@ -13,8 +13,8 @@ export const useLogin = (
     password: string;
   }) =>
     axios.post("http://146.59.16.195:8000/api/auth/login/", {
-      username: userName,
-      password,
+      username: userName.trim(),
+      password: password.trim(),
     });
 
   const { mutate, isLoading } = useMutation(login, {

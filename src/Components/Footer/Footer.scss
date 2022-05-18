@@ -6,6 +6,10 @@
   align-items: center;
   justify-content: space-around;
 
+  @media only screen and (max-height: 550px) {
+    display: none;
+  }
+
   &__icon {
     display: flex;
     flex-direction: column;

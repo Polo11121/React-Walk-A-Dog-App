@@ -87,7 +87,7 @@ export const AddOpinion = () => {
             onClick={addOpinion}
             disabled={!value.trim()}
             title="Dodaj opinie"
-            type="default"
+            type="primary"
           />
         }
         <Button onClick={goBack} title="Powrót" type="default" />

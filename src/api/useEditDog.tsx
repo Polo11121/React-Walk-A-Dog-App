@@ -21,10 +21,10 @@ export const useEditDog = (onSuccess?: () => void) => {
   }: UseAddDogPayloadType) => {
     const formData = new FormData();
     avatar && formData.append("avatar", avatar);
-    formData.append("name", name);
+    formData.append("name", name.trim());
     formData.append("age", `${age}`);
     formData.append("weight", `${weight}`);
-    formData.append("breed", `${breed}`);
+    formData.append("breed", `${breed.trim()}`);
 
     return axios.patch(`http://146.59.16.195:8000/api/dog/${id}/`, formData);
   };

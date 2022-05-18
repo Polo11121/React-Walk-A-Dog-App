@@ -7,8 +7,8 @@ import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "api/useGetUser";
 import { Button } from "Components";
 import useWalksContext from "hooks/context/WalksContext";
-import "./TrainerInfo.scss";
 import { useOwner } from "hooks/useOwner";
+import "./TrainerInfo.scss";
 
 export const TrainerInfo = () => {
   const isOwner = useOwner();
@@ -24,7 +24,7 @@ export const TrainerInfo = () => {
   return (
     <div className="trainer-info">
       <div className="trainer-info__title">Trener {user?.username}</div>
-      <Breadcrumbs style={{ fontSize: "30px", margin: "0 auto" }}>
+      <Breadcrumbs style={{ margin: "0 auto" }}>
         <Link
           style={params["*"] === "opinions" ? { color: "#8fe388" } : {}}
           to={`/trainer-info/${params.id}/opinions`}
@@ -55,7 +55,7 @@ export const TrainerInfo = () => {
         </Routes>
       </div>
       <div className="trainer-info__buttons">
-        {!isOwner && (
+        {!isOwner && params["*"] === "opinions" && (
           <Button
             onClick={switchToAddOpinion}
             title="Dodaj opinie"

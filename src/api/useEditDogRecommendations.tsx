@@ -17,9 +17,9 @@ export const useEditDogRecommendations = (onSuccess: () => void) => {
       `http://146.59.16.195:8000/api/dog/${id}/`,
       type === "recommendation"
         ? {
-            recommendation: value,
+            recommendation: value.trim(),
           }
-        : { contraindications: value }
+        : { contraindications: value.trim() }
     );
 
   const { mutate, isLoading } = useMutation(editDogRecommendations, {

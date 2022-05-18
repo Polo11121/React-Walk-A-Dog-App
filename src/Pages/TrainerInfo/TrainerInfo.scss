@@ -8,6 +8,7 @@
   height: calc(100vh - 55px);
   margin: 0 auto;
   width: 90%;
+  overflow-y: auto;
 
   &__content {
     flex: 1;
@@ -38,6 +39,7 @@
       border-radius: 50px;
       font-size: 20px;
       font-weight: 500;
+      margin-left: auto;
     }
   }
 }

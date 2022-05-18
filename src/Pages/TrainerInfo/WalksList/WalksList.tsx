@@ -181,9 +181,10 @@ export const WalksList = ({ goBackHandler, date, slots }: WalksListType) => {
                     dogAvatar3={dogs?.find(({ id }) => id === dog3)?.avatar}
                     openRemoveSlotHandler={openRemoveSlotHandler}
                     isOwner={
-                      isOwner && isToday(date)
+                      isOwner &&
+                      (isToday(date)
                         ? !isTodayInThePastTime(date, time_to)
-                        : !isInThePast(date)
+                        : !isInThePast(date))
                     }
                     dateStart={time_from}
                     dateEnd={time_to}

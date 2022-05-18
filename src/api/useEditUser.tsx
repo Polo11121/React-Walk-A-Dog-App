@@ -19,8 +19,8 @@ export const useEditUser = (onSuccess: () => void) => {
   }: UseEditUserPayload) => {
     const formData = new FormData();
     avatar && formData.append("avatar", avatar);
-    formData.append("username", username);
-    formData.append("email", email);
+    formData.append("username", username.trim());
+    formData.append("email", email.trim());
     phone_number && formData.append("phone_number", `${phone_number}`);
 
     return axios

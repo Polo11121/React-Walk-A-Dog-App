@@ -2,6 +2,7 @@
   height: calc(100vh - 95px);
   padding: 20px 0;
   display: flex;
+  overflow-y: auto;
   flex-direction: column;
 
   &__title {

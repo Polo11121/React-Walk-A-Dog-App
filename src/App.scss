@@ -1,5 +1,6 @@
 .App {
   height: 100vh;
+  overflow-y: auto;
 
   &--spinner {
     display: flex;
@@ -22,7 +23,7 @@ a {
   color: white;
 }
 
-textarea:disabled{
+textarea:disabled {
   color: #000 !important;
   -webkit-text-fill-color: #000 !important;
 }
