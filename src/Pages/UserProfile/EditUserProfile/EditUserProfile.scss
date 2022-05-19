@@ -5,6 +5,10 @@
   align-items: center;
   overflow-y: auto;
 
+  @media only screen and (max-height: 550px) {
+    height: 100vh;
+  }
+
   &__image {
     margin-top: 20px;
     height: 220px;
@@ -16,6 +20,11 @@
     @media only screen and (max-height: 750px) {
       height: 156px;
       width: 156px;
+    }
+
+    @media only screen and (max-height: 655px) {
+      height: 100px;
+      width: 100px;
     }
   }
 

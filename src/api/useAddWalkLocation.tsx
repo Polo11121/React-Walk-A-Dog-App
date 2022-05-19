@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 type UseAddWalkLocationPayloadType = {
   slot: number;
@@ -9,7 +10,7 @@ type UseAddWalkLocationPayloadType = {
 
 export const UseAddWalkLocation = () => {
   const addWalkLocation = ({ slot, lat, lng }: UseAddWalkLocationPayloadType) =>
-    axios.post(`http://146.59.16.195:8000/api/walk/`, {
+    axios.post(`${config.API_URL}/api/walk/`, {
       slot,
       lat,
       lng,

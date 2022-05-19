@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import { DogType } from "types/Dog.types";
+import config from "config.json";
 
 type UseGetUserDogsType = {
   dogs: DogType[];
@@ -9,7 +10,7 @@ type UseGetUserDogsType = {
 
 export const useGetUserDogs = (userId?: string): UseGetUserDogsType => {
   const getUserDogs = () =>
-    axios.get(`http://146.59.16.195:8000/api/dog/`).then((resp) => resp.data);
+    axios.get(`${config.API_URL}/api/dog/`).then((resp) => resp.data);
 
   const { data, isLoading } = useQuery<DogType[]>("dogs", getUserDogs);
 

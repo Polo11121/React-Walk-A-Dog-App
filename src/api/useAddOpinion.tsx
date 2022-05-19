@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 type UseAddOpinionPayloadType = {
   client: number;
@@ -15,7 +16,7 @@ export const useAddOpinion = (onSuccess?: () => void) => {
     review,
     points,
   }: UseAddOpinionPayloadType) =>
-    axios.post(`http://146.59.16.195:8000/api/clientopinion/`, {
+    axios.post(`${config.API_URL}/clientopinion/`, {
       trainer,
       client,
       review: review.trim(),

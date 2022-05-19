@@ -6,6 +6,10 @@
   overflow-y: auto;
   width: 100%;
 
+  @media only screen and (max-height: 550px) {
+    height: 100vh;
+  }
+
   &__title {
     font-weight: 700;
     font-size: 30px;

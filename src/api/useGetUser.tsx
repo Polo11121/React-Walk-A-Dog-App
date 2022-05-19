@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import { UserType } from "types/User.types";
+import config from "config.json";
 
 type UseGetUserType = {
   user: UserType;
@@ -11,7 +12,7 @@ type UseGetUserType = {
 export const useGetUser = (userId?: string | null): UseGetUserType => {
   const getUser = () =>
     axios
-      .get(`http://146.59.16.195:8000/api/user/${userId}/`)
+      .get(`${config.API_URL}/api/user/${userId}/`)
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 

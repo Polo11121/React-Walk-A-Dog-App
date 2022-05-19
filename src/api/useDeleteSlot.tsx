@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 export const useDeleteSlot = (onSuccess: () => void) => {
   const deleteSlot = ({ id }: { id: number }) =>
-    axios.delete(`http://146.59.16.195:8000/api/slot/${id}/`);
+    axios.delete(`${config.API_URL}/api/slot/${id}/`);
 
   const { mutate, isLoading } = useMutation(deleteSlot, { onSuccess });
 

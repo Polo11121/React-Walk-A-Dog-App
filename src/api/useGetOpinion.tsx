@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import { OpinionType } from "types/Opinion.types";
+import config from "config.json";
 
 type UseGetOpinionType = {
   opinion: OpinionType;
@@ -10,7 +11,7 @@ type UseGetOpinionType = {
 export const useGetOpinion = (opinionId?: string | null): UseGetOpinionType => {
   const getOpinion = () =>
     axios
-      .get(`http://146.59.16.195:8000/api/clientopinion/${opinionId}/`)
+      .get(`${config.API_URL}/api/clientopinion/${opinionId}/`)
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 

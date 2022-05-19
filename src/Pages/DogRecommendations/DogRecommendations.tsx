@@ -24,25 +24,6 @@ export const DogRecommendations = () => {
       <div className="dog-recommendations__subtitle">
         zalecenia i przeciwwskazania
       </div>
-      <div className="dog-recommendations__box dog-recommendations__box--red">
-        <div className="dog-recommendations__box-content">
-          {dog?.contraindications}
-        </div>
-        {isOwner && (
-          <div className="dog-recommendations__box-button">
-            <Button
-              onClick={goToEditDogContraindications}
-              styles={{
-                width: "100px",
-                fontWeight: "500",
-              }}
-              size="M"
-              title="Edytuj"
-              type="red"
-            />
-          </div>
-        )}
-      </div>
       <div className="dog-recommendations__box dog-recommendations__box--green">
         <div className="dog-recommendations__box-content">
           {dog?.recommendation}
@@ -58,6 +39,25 @@ export const DogRecommendations = () => {
               size="M"
               title="Edytuj"
               type="green"
+            />
+          </div>
+        )}
+      </div>{" "}
+      <div className="dog-recommendations__box dog-recommendations__box--red">
+        <div className="dog-recommendations__box-content">
+          {dog?.contraindications}
+        </div>
+        {isOwner && (
+          <div className="dog-recommendations__box-button">
+            <Button
+              onClick={goToEditDogContraindications}
+              styles={{
+                width: "100px",
+                fontWeight: "500",
+              }}
+              size="M"
+              title="Edytuj"
+              type="red"
             />
           </div>
         )}

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 type UseAddSlotPayloadType = {
   trainer: number;
@@ -15,7 +16,7 @@ export const useAddSlot = (onSuccess?: () => void) => {
     time_from,
     time_to,
   }: UseAddSlotPayloadType) =>
-    axios.post(`http://146.59.16.195:8000/api/slot/`, {
+    axios.post(`${config.API_URL}/api/slot/`, {
       trainer,
       date,
       time_from,

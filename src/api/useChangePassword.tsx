@@ -1,6 +1,7 @@
 import axios from "axios";
 import useAuthContext from "hooks/context/AuthContext";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 export const useChangePassword = (
   onSuccess: () => void,
@@ -16,7 +17,7 @@ export const useChangePassword = (
   }) =>
     axios
       .patch(
-        "http://146.59.16.195:8000/api/auth/password",
+        `${config.API_URL}/api/auth/password`,
         {
           old_password: oldPassword.trim(),
           new_password: newPassword.trim(),

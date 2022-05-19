@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 type UseEditUserPayload = {
   id: string;
@@ -24,7 +25,7 @@ export const useEditUser = (onSuccess: () => void) => {
     phone_number && formData.append("phone_number", `${phone_number}`);
 
     return axios
-      .patch(`http://146.59.16.195:8000/api/user/${id}/`, formData)
+      .patch(`${config.API_URL}/api/user/${id}/`, formData)
       .catch((error) => console.log(error));
   };
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import { OpinionType } from "types/Opinion.types";
+import config from "config.json";
 
 type UseGetOpinionsType = {
   opinions: OpinionType[];
@@ -9,9 +10,7 @@ type UseGetOpinionsType = {
 
 export const useGetOpinions = (): UseGetOpinionsType => {
   const getOpinions = () =>
-    axios
-      .get(`http://146.59.16.195:8000/api/clientopinion/`)
-      .then((resp) => resp.data);
+    axios.get(`${config.API_URL}/api/clientopinion/`).then((resp) => resp.data);
 
   const { data, isLoading } = useQuery("opinions", getOpinions);
 

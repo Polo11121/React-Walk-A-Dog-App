@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 type useEditOpinionPayload = {
   id: number;
@@ -10,7 +11,7 @@ type useEditOpinionPayload = {
 export const useEditOpinion = (onSuccess: () => void) => {
   const editOpinion = ({ id, review, points }: useEditOpinionPayload) => {
     return axios
-      .patch(`http://146.59.16.195:8000/api/clientopinion/${id}/`, {
+      .patch(`${config.API_URL}/api/clientopinion/${id}/`, {
         review: review && review.trim(),
         points,
       })

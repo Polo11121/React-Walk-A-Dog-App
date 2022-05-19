@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 type UseRemoveDogFromSlotPayloadType = {
   slotId?: string;
@@ -20,10 +21,7 @@ export const useRemoveDogFromSlot = (onSuccess?: () => void) => {
       return { dog3: null };
     };
 
-    return axios.patch(
-      `http://146.59.16.195:8000/api/slot/${slotId}/`,
-      getPayload()
-    );
+    return axios.patch(`${config.API_URL}/api/slot/${slotId}/`, getPayload());
   };
 
   const { mutate, isLoading } = useMutation(removeDogFromSlot, { onSuccess });

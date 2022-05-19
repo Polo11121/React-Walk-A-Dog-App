@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 type UseAddDogPayloadType = {
   id: string;
@@ -26,7 +27,7 @@ export const useEditDog = (onSuccess?: () => void) => {
     formData.append("weight", `${weight}`);
     formData.append("breed", `${breed.trim()}`);
 
-    return axios.patch(`http://146.59.16.195:8000/api/dog/${id}/`, formData);
+    return axios.patch(`${config.API_URL}/api/dog/${id}/`, formData);
   };
 
   const { mutate, isLoading } = useMutation(editDog, { onSuccess });

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 type UseEditDogRecommendationsPayload = {
   id: string;
@@ -14,7 +15,7 @@ export const useEditDogRecommendations = (onSuccess: () => void) => {
     value,
   }: UseEditDogRecommendationsPayload) =>
     axios.patch(
-      `http://146.59.16.195:8000/api/dog/${id}/`,
+      `${config.API_URL}/api/dog/${id}/`,
       type === "recommendation"
         ? {
             recommendation: value.trim(),

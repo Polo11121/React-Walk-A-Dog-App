@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import config from "config.json";
 
 type UseGetWalkLocation = {
   walkLocation: { slot: number; lat: number; lng: number };
@@ -9,7 +10,7 @@ type UseGetWalkLocation = {
 export const useGetWalkLocation = (slotId?: number): UseGetWalkLocation => {
   const getWalkLocation = () =>
     axios
-      .get(`http://146.59.16.195:8000/api/walk/`)
+      .get(`${config.API_URL}/api/walk/`)
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 

@@ -5,6 +5,10 @@
   margin: 0 auto;
   width: 90%;
 
+  @media only screen and (max-height: 550px) {
+    height: 100vh;
+  }
+
   &__link {
     display: flex;
     align-items: center;

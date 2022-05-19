@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useQuery } from "react-query";
 import { SlotType } from "types/User.types";
+import config from "config.json";
 
 type UseGetSlotsType = {
   slots: SlotType[];
@@ -10,7 +11,7 @@ type UseGetSlotsType = {
 export const useGetSlots = (): UseGetSlotsType => {
   const getSlots = () =>
     axios
-      .get("http://146.59.16.195:8000/api/slot/")
+      .get(`${config.API_URL}/api/slot/`)
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 

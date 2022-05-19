@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 export const useChangeSlotStatus = (onSuccess?: () => void) => {
   const changeSlotStatus = ({
@@ -14,7 +15,7 @@ export const useChangeSlotStatus = (onSuccess?: () => void) => {
     time_to?: string;
   }) =>
     axios.patch(
-      `http://146.59.16.195:8000/api/slot/${id}/`,
+      `${config.API_URL}/api/slot/${id}/`,
       time_from
         ? {
             status,

@@ -10,6 +10,10 @@
   width: 90%;
   overflow-y: auto;
 
+  @media only screen and (max-height: 550px) {
+    height: 100vh;
+  }
+
   &__content {
     flex: 1;
   }

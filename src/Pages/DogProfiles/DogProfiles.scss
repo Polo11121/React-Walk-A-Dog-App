@@ -5,6 +5,10 @@
   margin: 0 auto;
   width: 90%;
 
+  @media only screen and (max-height: 550px) {
+    height: 100vh;
+  }
+
   &__title {
     font-weight: 700;
     font-size: 30px;

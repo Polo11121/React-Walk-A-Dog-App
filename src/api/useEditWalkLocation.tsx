@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 type UseEditWalkLocationPayloadType = {
   slot: number;
@@ -13,7 +14,7 @@ export const UseEditWalkLocation = () => {
     lat,
     lng,
   }: UseEditWalkLocationPayloadType) =>
-    axios.patch(`http://146.59.16.195:8000/api/walk/${slot}/`, {
+    axios.patch(`${config.API_URL}/api/walk/${slot}/`, {
       lat,
       lng,
     });

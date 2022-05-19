@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useMutation } from "react-query";
+import config from "config.json";
 
 type UseAddDogToSlotPayloadType = {
   slotId?: string;
@@ -22,10 +23,7 @@ export const useAddDogToSlot = (onSuccess?: () => void) => {
 
       return { dog3: id };
     };
-    return axios.patch(
-      `http://146.59.16.195:8000/api/slot/${slotId}/`,
-      getPayload(dogId)
-    );
+    return axios.patch(`${config.API_URL}/slot/${slotId}/`, getPayload(dogId));
   };
 
   const { mutate, isLoading } = useMutation(addDogToSlot, { onSuccess });

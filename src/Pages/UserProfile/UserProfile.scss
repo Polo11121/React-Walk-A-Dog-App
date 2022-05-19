@@ -5,6 +5,10 @@
   align-items: center;
   overflow-y: auto;
 
+  @media only screen and (max-height: 550px) {
+    height: 100vh;
+  }
+
   &__image {
     height: 220px;
     width: 220px;
