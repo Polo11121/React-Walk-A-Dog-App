@@ -27,10 +27,11 @@ export const OpinionCard = ({
   openDeleteOpinionModal,
 }: OpinionCardProps) => {
   const { userId } = useAuthContext();
-
   const navigate = useNavigate();
+
   const switchToEditOpinion = () =>
     navigate(`/trainer-opinion-edit/${opinionId}`);
+
   const switchToOpinion = () => navigate(`/trainer-opinion/${opinionId}`);
 
   const deleteOpinionHandler = () => openDeleteOpinionModal(opinionId);

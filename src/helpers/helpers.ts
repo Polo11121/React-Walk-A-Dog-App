@@ -34,6 +34,7 @@ export const getActualTime = (date: Date) => {
 
 export const isToday = (someDate: Date) => {
   const today = new Date();
+
   return (
     someDate.getDate() === today.getDate() &&
     someDate.getMonth() === today.getMonth() &&
@@ -58,5 +59,6 @@ export const isTodayInThePastTime = (date: Date, time: string) => {
       time.toString().slice(0, 5).split(":").join("")
     );
   }
+
   return false;
 };
