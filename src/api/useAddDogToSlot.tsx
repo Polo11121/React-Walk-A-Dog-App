@@ -23,7 +23,7 @@ export const useAddDogToSlot = (onSuccess?: () => void) => {
 
       return { dog3: id };
     };
-    return axios.patch(`${config.API_URL}/slot/${slotId}/`, getPayload(dogId));
+    return axios.patch(`${config.API_URL}/api/slot/${slotId}/`, getPayload(dogId));
   };
 
   const { mutate, isLoading } = useMutation(addDogToSlot, { onSuccess });
