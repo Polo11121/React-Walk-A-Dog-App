@@ -30,7 +30,7 @@ export const useAddDog = (onSuccess?: () => void) => {
     formData.append("contraindications", "");
     formData.append("recommendation", "");
 
-    return axios.post(`${config.API_URL}/dog/`, formData);
+    return axios.post(`${config.API_URL}/api/dog/`, formData);
   };
 
   const { mutate, isLoading } = useMutation(addDog, { onSuccess });

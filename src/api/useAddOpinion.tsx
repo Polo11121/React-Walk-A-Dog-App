@@ -16,7 +16,7 @@ export const useAddOpinion = (onSuccess?: () => void) => {
     review,
     points,
   }: UseAddOpinionPayloadType) =>
-    axios.post(`${config.API_URL}/clientopinion/`, {
+    axios.post(`${config.API_URL}/api/clientopinion/`, {
       trainer,
       client,
       review: review.trim(),
