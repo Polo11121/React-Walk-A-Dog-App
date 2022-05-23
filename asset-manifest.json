@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.650bd81a.css",
-    "main.js": "/static/js/main.d90d0d1d.js",
-    "static/js/787.cc1eada3.chunk.js": "/static/js/787.cc1eada3.chunk.js",
-    "static/media/empty-dog.png": "/static/media/empty-dog.b0dd39342f26906d6648.png",
-    "static/media/user-avatar.png": "/static/media/user-avatar.6ca1b977de77027c074a.png",
-    "static/media/map.png": "/static/media/map.ae1ce11dce12498c0963.png",
-    "static/media/logo.png": "/static/media/logo.9e23e07ca867e139d4df.png",
-    "index.html": "/index.html",
-    "main.650bd81a.css.map": "/static/css/main.650bd81a.css.map",
-    "main.d90d0d1d.js.map": "/static/js/main.d90d0d1d.js.map",
-    "787.cc1eada3.chunk.js.map": "/static/js/787.cc1eada3.chunk.js.map"
+    "main.css": "/walk-a-dog-frontend/static/css/main.650bd81a.css",
+    "main.js": "/walk-a-dog-frontend/static/js/main.5acde75e.js",
+    "static/js/787.cc1eada3.chunk.js": "/walk-a-dog-frontend/static/js/787.cc1eada3.chunk.js",
+    "static/media/empty-dog.png": "/walk-a-dog-frontend/static/media/empty-dog.b0dd39342f26906d6648.png",
+    "static/media/user-avatar.png": "/walk-a-dog-frontend/static/media/user-avatar.6ca1b977de77027c074a.png",
+    "static/media/map.png": "/walk-a-dog-frontend/static/media/map.ae1ce11dce12498c0963.png",
+    "static/media/logo.png": "/walk-a-dog-frontend/static/media/logo.9e23e07ca867e139d4df.png",
+    "index.html": "/walk-a-dog-frontend/index.html",
+    "main.650bd81a.css.map": "/walk-a-dog-frontend/static/css/main.650bd81a.css.map",
+    "main.5acde75e.js.map": "/walk-a-dog-frontend/static/js/main.5acde75e.js.map",
+    "787.cc1eada3.chunk.js.map": "/walk-a-dog-frontend/static/js/787.cc1eada3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.650bd81a.css",
-    "static/js/main.d90d0d1d.js"
+    "static/js/main.5acde75e.js"
   ]
 }
