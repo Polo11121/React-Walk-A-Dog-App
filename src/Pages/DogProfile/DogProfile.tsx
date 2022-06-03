@@ -2,18 +2,18 @@ import EditIcon from "@mui/icons-material/Edit";
 import dogAvatar from "assets/logo.png";
 import userAvatar from "assets/user-avatar.png";
 import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
-import { Button } from "Components";
+import StarIcon from "@mui/icons-material/Star";
+import { Button, WithLoader } from "Components";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useGetDog } from "api/useGetDog";
 import { useOwner } from "hooks/useOwner";
 import { useGetUser } from "api/useGetUser";
 import { useGetSlots } from "api/useGetSlots";
-import { CircularProgress } from "@mui/material";
 import "./DogProfile.scss";
 
 export const DogProfile = () => {
   const { id: ownerId, subId: id } = useParams();
-  const { dog, isFetched } = useGetDog(id);
+  const { dog, isLoading } = useGetDog(id);
   const { user } = useGetUser(ownerId);
   const { slots } = useGetSlots();
   const isOwner = useOwner();
@@ -34,11 +34,12 @@ export const DogProfile = () => {
   const switchToManageDogRecommendations = () =>
     navigate(`/dog-recommendations/${dog.owner}/${dog.id}`);
 
+  const switchToDogProfiles = () => navigate(`/dog-opinions/${dog.id}`);
+
   return (
     <div className="dog-profile">
-      {isFetched ? (
+      <WithLoader isLoading={isLoading}>
         <>
-          {" "}
           <img
             className="dog-profile__image"
             src={dog?.avatar || dogAvatar}
@@ -124,7 +125,20 @@ export const DogProfile = () => {
               title="Zalecenia"
               type="default"
             />
-            {isOwner ? (
+            <Button
+              styles={{ width: "140px" }}
+              size="M"
+              Icon={<DirectionsWalkIcon />}
+              onClick={switchToDogWalks}
+              title="Spacery"
+              type="default"
+            />
+          </div>
+          <div
+            className="dog-profile__buttons"
+            style={{ marginBottom: "40px" }}
+          >
+            {isOwner && (
               <Button
                 styles={{ width: "140px" }}
                 Icon={<EditIcon />}
@@ -133,31 +147,18 @@ export const DogProfile = () => {
                 title="Edytuj profil"
                 type="default"
               />
-            ) : (
-              <Button
-                styles={{ width: "140px" }}
-                size="M"
-                Icon={<DirectionsWalkIcon />}
-                onClick={switchToDogWalks}
-                title="Spacery"
-                type="default"
-              />
             )}
-          </div>
-          {isOwner && (
             <Button
-              styles={{ width: "140px", marginBottom: "40px" }}
+              styles={{ width: "140px" }}
               size="M"
-              Icon={<DirectionsWalkIcon />}
-              onClick={switchToDogWalks}
-              title="Spacery"
-              type="default"
+              Icon={<StarIcon />}
+              onClick={switchToDogProfiles}
+              title="Opinie"
+              type="primary"
             />
-          )}
+          </div>
         </>
-      ) : (
-        <CircularProgress color="success" style={{ margin: "auto 0" }} />
-      )}
+      </WithLoader>
     </div>
   );
 };

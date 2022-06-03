@@ -12,10 +12,16 @@ export const useGetUserDogs = (userId?: string): UseGetUserDogsType => {
   const getUserDogs = () =>
     axios.get(`${config.API_URL}/api/dog/`).then((resp) => resp.data);
 
-  const { data, isLoading } = useQuery<DogType[]>("dogs", getUserDogs);
+  const { data, isFetching, isLoading } = useQuery<DogType[]>(
+    "dogs",
+    getUserDogs
+  );
 
   if (data && userId) {
-    return { dogs: data.filter(({ owner }) => owner === +userId), isLoading };
+    return {
+      dogs: data.filter(({ owner }) => owner === +userId),
+      isLoading: isFetching,
+    };
   }
-  return { dogs: [], isLoading };
+  return { dogs: [], isLoading: isLoading || isFetching };
 };

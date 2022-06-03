@@ -45,7 +45,21 @@
 
   &__review {
     width: 100%;
-    margin: 20px auto;
+    margin-top: 20px;
     flex: 1;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 40px;
+
+    button {
+      padding: 10px 40px;
+      border-radius: 50px;
+      font-size: 20px;
+      font-weight: 500;
+    }
   }
 }

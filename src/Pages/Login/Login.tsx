@@ -43,17 +43,19 @@ export const Login = () => {
           {(props) => (
             <>
               <Input
+                label="Nazwa użytkownika"
                 formikProps={props}
                 inputName="userName"
                 styles={{ marginBottom: "1.5rem" }}
-                placeholder="Nazwa użytkownika"
+                placeholder="Wpisz nazwe użytkownika..."
               />
               <Input
+                label="Hasło"
                 type="password"
                 inputName="password"
                 formikProps={props}
                 styles={{ marginBottom: "1.5rem" }}
-                placeholder="Hasło"
+                placeholder="Wpisz hasło..."
               />
               <ErrorText
                 styles={{ marginBottom: "0.5rem", textAlign: "center" }}

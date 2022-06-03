@@ -16,9 +16,13 @@ export const useGetDog = (dogId?: string | null): UseGetDogType => {
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 
-  const { data, isLoading, isFetched } = useQuery(["dog", `${dogId}`], getDog, {
-    enabled: Boolean(dogId),
-  });
+  const { data, isLoading, isFetching, isFetched } = useQuery(
+    ["dog", `${dogId}`],
+    getDog,
+    {
+      enabled: Boolean(dogId),
+    }
+  );
 
-  return { dog: data, isLoading, isFetched };
+  return { dog: data, isLoading: isLoading || isFetching, isFetched };
 };

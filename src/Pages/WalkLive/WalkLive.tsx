@@ -15,8 +15,8 @@ import { getFormattedHour } from "helpers/helpers";
 import { Button, MapAvatar } from "Components";
 import { useCustomToast } from "hooks/useCustomToast";
 import { useChangeSlotStatus } from "api/useChangeSlotStatus";
-import "./WalkLive.scss";
 import { useGetWalkLocation } from "api/useGetWalkLocation";
+import "./WalkLive.scss";
 
 export const WalkLive = () => {
   const navigate = useNavigate();
@@ -69,7 +69,15 @@ export const WalkLive = () => {
       const filteredDog2 = dogs.find(({ id }) => id === slot.dog2);
 
       const filteredDog3 = dogs.find(({ id }) => id === slot.dog3);
-
+      if (
+        userId &&
+        +userId !== slot?.trainer &&
+        +userId !== filteredDog1?.owner &&
+        +userId !== filteredDog2?.owner &&
+        +userId !== filteredDog3?.owner
+      ) {
+        navigate(`/user-profile/${userId}`);
+      }
       setDogsInfo([
         getFilteredDog(filteredDog1),
         getFilteredDog(filteredDog2),

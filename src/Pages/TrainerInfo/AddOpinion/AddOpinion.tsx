@@ -78,6 +78,7 @@ export const AddOpinion = () => {
         className="trainer-addOpinion__review"
         id="TextFieldOpinion"
         multiline
+        style={{ marginTop: "20px" }}
         rows={16}
         onChange={handleChange}
       />

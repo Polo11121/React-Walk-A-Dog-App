@@ -62,3 +62,6 @@ export const isTodayInThePastTime = (date: Date, time: string) => {
 
   return false;
 };
+
+export const capitalizeFirstLetter = (string: string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);

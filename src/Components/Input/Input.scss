@@ -6,6 +6,11 @@
   padding: 15px 10px;
   width: 100%;
 
+  &__label {
+    margin-right: auto;
+    color: #7a7a7a;
+  }
+
   &::placeholder {
     color: #a3a3a3;
   }

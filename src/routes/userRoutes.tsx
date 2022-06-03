@@ -18,10 +18,22 @@ import { WalkLive } from "Pages/WalkLive/WalkLive";
 import AddOpinion from "Pages/TrainerInfo/AddOpinion/AddOpinion";
 import { EditOpinion } from "Pages/TrainerInfo/EditOpinion/EditOpinion";
 import { TrainerDetails } from "Pages/TrainerInfo/TrainerDetails/TrainerDetails";
+import { DogOpinions } from "Pages/DogOpinions/DogOpinions";
+import { AddDogOpinion } from "Pages/DogOpinions/AddDogOpinion/AddDogOpinion";
+import DogOpinion from "Pages/DogOpinions/DogOpinion/DogOpinion";
 
 export const userRoutes = (userId: string | null) => [
   <Route key={uuid()} path="/user-profile/:id" element={<UserProfile />} />,
-  <Route key={uuid()} path="/user-profiles/*" element={<UserProfiles />} />,
+  <Route
+    key={uuid()}
+    path="/user-profiles/trainers"
+    element={<UserProfiles />}
+  />,
+  <Route
+    key={uuid()}
+    path="/user-profiles/owners"
+    element={<UserProfiles />}
+  />,
   <Route
     key={uuid()}
     path="/dog-profiles/:id"
@@ -52,14 +64,21 @@ export const userRoutes = (userId: string | null) => [
   />,
   <Route
     key={uuid()}
-    path="/edit-dog-contraindications/:id/:subId"
-    element={<EditDogRecommendations />}
+    path="/add-dog"
+    element={
+      <ProtectedRoute trainerBlock>
+        <ManageDogProfile />
+      </ProtectedRoute>
+    }
   />,
-  <Route key={uuid()} path="/add-dog" element={<ManageDogProfile />} />,
   <Route
     key={uuid()}
     path="/edit-dog/:id/:subId"
-    element={<ManageDogProfile />}
+    element={
+      <ProtectedRoute>
+        <ManageDogProfile />
+      </ProtectedRoute>
+    }
   />,
   <Route
     key={uuid()}
@@ -83,13 +102,32 @@ export const userRoutes = (userId: string | null) => [
   <Route key={uuid()} path="/walk-live/:id" element={<WalkLive />} />,
   <Route key={uuid()} path="/dog-walks/:id" element={<DogWalks />} />,
   <Route key={uuid()} path="/trainer-info/:id/*" element={<TrainerInfo />} />,
-  <Route key={uuid()} path="/trainer-opinion-add/:id" element={<AddOpinion/>}/>,
-  <Route key={uuid()} path="/trainer-opinion-edit/:id" element={<EditOpinion/>}/>,
-  <Route key={uuid()} path="/trainer-opinion/:id" element={<TrainerDetails/>}/>,
+  <Route
+    key={uuid()}
+    path="/trainer-opinion-add/:id"
+    element={<AddOpinion />}
+  />,
+  <Route
+    key={uuid()}
+    path="/trainer-opinion-edit/:id"
+    element={<EditOpinion />}
+  />,
+  <Route
+    key={uuid()}
+    path="/trainer-opinion/:id"
+    element={<TrainerDetails />}
+  />,
   <Route key={uuid()} path="/change-password" element={<ChangePassword />} />,
   <Route
     key={uuid()}
     path="*"
     element={<Navigate to={`/user-profile/${userId}`} replace />}
   />,
+  <Route key={uuid()} path="/dog-opinions/:id" element={<DogOpinions />} />,
+  <Route
+    key={uuid()}
+    path="/dog-opinion-add/:id"
+    element={<AddDogOpinion />}
+  />,
+  <Route key={uuid()} path="/dog-opinion/:id" element={<DogOpinion />} />,
 ];

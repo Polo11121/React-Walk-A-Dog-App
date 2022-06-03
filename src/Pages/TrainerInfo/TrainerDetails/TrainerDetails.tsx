@@ -7,12 +7,14 @@ import { useGoBack } from "hooks/useGoBack";
 import { useGetSlots } from "api/useGetSlots";
 import { useGetOpinion } from "api/useGetOpinion";
 import "./TrainerDetails.scss";
+import useAuthContext from "hooks/context/AuthContext";
 
 export const TrainerDetails = () => {
   const params = useParams();
   const { opinion } = useGetOpinion(params.id);
   const navigate = useNavigate();
   const { user } = useGetUser(`${opinion?.trainer}`);
+  const { userId } = useAuthContext();
   const goBack = useGoBack();
 
   const { slots } = useGetSlots();
@@ -33,6 +35,9 @@ export const TrainerDetails = () => {
   }
 
   const goToTrainerProfile = () => navigate(`/user-profile${user?.id}`);
+
+  const goToEditOpinion = () =>
+    navigate(`/trainer-opinion-edit/${opinion?.id}`);
 
   return (
     <div className="trainer-details">
@@ -63,15 +68,17 @@ export const TrainerDetails = () => {
           value={opinion?.review}
         />
       </div>
-      <div>
+      <div className="trainer-details__buttons">
+        {userId && opinion?.client === +userId && (
+          <Button
+            onClick={goToEditOpinion}
+            title="Edytuj opinie"
+            type="primary"
+          />
+        )}
         <Button
-          styles={{
-            marginBottom: "40px",
-            marginLeft: "auto",
-            marginRight: "auto",
-          }}
+          styles={{ marginLeft: "auto" }}
           onClick={goBack}
-          size="M"
           title="Powrót"
           type="default"
         />

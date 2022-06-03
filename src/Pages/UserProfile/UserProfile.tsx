@@ -1,16 +1,15 @@
 import EditIcon from "@mui/icons-material/Edit";
 import userAvatar from "assets/user-avatar.png";
 import StarIcon from "@mui/icons-material/Star";
-import { Button } from "Components";
+import { Button, WithLoader } from "Components";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "api/useGetUser";
 import { useOwner } from "hooks/useOwner";
-import { CircularProgress } from "@mui/material";
 import "./UserProfile.scss";
 
 export const UserProfile = () => {
   const { id } = useParams();
-  const { user, isFetched } = useGetUser(id);
+  const { user, isLoading } = useGetUser(id);
   const isOwner = useOwner();
   const navigate = useNavigate();
 
@@ -29,7 +28,7 @@ export const UserProfile = () => {
 
   return (
     <div className="user-profile">
-      {isFetched ? (
+      <WithLoader isLoading={isLoading}>
         <>
           <div className="user-profile__title">{getProfileTitle()}</div>
           <img
@@ -99,9 +98,7 @@ export const UserProfile = () => {
             />
           )}
         </>
-      ) : (
-        <CircularProgress color="success" style={{ margin: "auto 0" }} />
-      )}
+      </WithLoader>
     </div>
   );
 };

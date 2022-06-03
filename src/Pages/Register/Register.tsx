@@ -39,34 +39,38 @@ export const Register = () => {
           {(props) => (
             <>
               <Input
+                label="Nazwa użytkownika"
                 isError={inputError}
                 formikProps={props}
                 inputName="userName"
                 styles={{ marginBottom: "1.5rem" }}
-                placeholder="Nazwa użytkownika"
+                placeholder="Wpisz nazwe użytkownika..."
               />
               <Input
+                label="Hasło"
                 isError={inputError}
                 type="password"
                 inputName="password"
                 formikProps={props}
                 styles={{ marginBottom: "1.5rem" }}
-                placeholder="Hasło"
+                placeholder="Wpisz hasło..."
               />
               <Input
+                label="Powtórz hasło"
                 type="password"
                 isError={inputError}
                 formikProps={props}
                 inputName="repeatPassword"
                 styles={{ marginBottom: "1.5rem" }}
-                placeholder="Powtórz Hasło"
+                placeholder="Powtórz hasło..."
               />
               <Input
+                label="Email"
                 isError={inputError}
                 formikProps={props}
                 inputName="email"
                 styles={{ marginBottom: "1.5rem" }}
-                placeholder="Email"
+                placeholder="Wpisz email..."
               />
               <ErrorText
                 styles={{ marginBottom: "0.5rem", textAlign: "center" }}

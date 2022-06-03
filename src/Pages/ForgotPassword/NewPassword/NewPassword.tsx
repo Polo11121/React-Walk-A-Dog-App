@@ -31,28 +31,31 @@ export const NewPassword = () => {
             <>
               <div className="new-password__title">Zmiana hasła</div>
               <Input
+                label="Stare hasło"
                 type="password"
                 isError={error}
                 formikProps={props}
                 inputName="oldPassword"
                 styles={{ marginBottom: "1.5rem" }}
-                placeholder="Stare hasło"
+                placeholder="Wpisz Stare hasło..."
               />
               <Input
+                label="Nowe hasło"
                 isError={error}
                 type="password"
                 inputName="newPassword"
                 formikProps={props}
                 styles={{ marginBottom: "1.5rem" }}
-                placeholder="Nowe hasło"
+                placeholder="Wpisz nowe hasło..."
               />
               <Input
+                label="Powtórz nowe hasło"
                 type="password"
                 isError={error}
                 formikProps={props}
                 inputName="repeatNewPassword"
                 styles={{ marginBottom: "1.5rem" }}
-                placeholder="Powtórz nowe hasło"
+                placeholder="Powtórz nowe hasło..."
               />
               <Button
                 onClick={() => {

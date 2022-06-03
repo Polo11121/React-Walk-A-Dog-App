@@ -129,32 +129,36 @@ export const ManageDogProfile = () => {
                 </div>
                 <div className="manage-dog-profile__container">
                   <Input
+                    label="Nazwa psa"
                     isError={isEdit || error}
                     formikProps={props}
                     inputName="dogName"
                     styles={{ marginBottom: "1.5rem" }}
-                    placeholder="Nazwa psa"
+                    placeholder="Wpisz nazwa psa..."
                   />
                   <Input
+                    label="Rasa psa"
                     isError={isEdit || error}
                     formikProps={props}
                     inputName="race"
                     styles={{ marginBottom: "1.5rem" }}
-                    placeholder="Rasa"
+                    placeholder="Wpisz rase psa..."
                   />
                   <Input
+                    label="Wiek psa"
                     isError={isEdit || error}
                     inputName="age"
                     formikProps={props}
                     styles={{ marginBottom: "1.5rem" }}
-                    placeholder="Wiek (lata)"
+                    placeholder="Wpisz wiek (lata) psa..."
                   />
                   <Input
+                    label="Waga psa"
                     isError={isEdit || error}
                     formikProps={props}
                     inputName="weight"
                     styles={{ marginBottom: "1.5rem" }}
-                    placeholder="Waga (kg)"
+                    placeholder="Wpisz Wage (kg) psa..."
                   />
                 </div>
                 <div className="manage-dog-profile__buttons">

@@ -15,7 +15,7 @@ export const useGetDogs = (): UseGetDogsType => {
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 
-  const { data, isLoading } = useQuery("dogs", getDogs);
+  const { data, isLoading, isFetching } = useQuery("dogs", getDogs);
 
-  return { dogs: data, isLoading };
+  return { dogs: data, isLoading: isLoading || isFetching };
 };

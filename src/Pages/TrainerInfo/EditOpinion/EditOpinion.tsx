@@ -2,7 +2,7 @@ import { Button } from "Components";
 import { Rating, TextField } from "@mui/material";
 import { useQueryClient } from "react-query";
 import { useCustomToast } from "hooks/useCustomToast";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useGetUser } from "api/useGetUser";
 import { useGoBack } from "hooks/useGoBack";
 import { useGetSlots } from "api/useGetSlots";
@@ -10,12 +10,15 @@ import { useGetOpinion } from "api/useGetOpinion";
 import { useEffect, useState } from "react";
 import { useEditOpinion } from "api/useEditOpinion";
 import userAvatar from "assets/user-avatar.png";
+import useAuthContext from "hooks/context/AuthContext";
 import "./EditOpinion.scss";
 
 export const EditOpinion = () => {
   const queryClient = useQueryClient();
+  const { userId } = useAuthContext();
   const params = useParams();
-  const { opinion } = useGetOpinion(params.id);
+  const navigate = useNavigate();
+  const { opinion, isLoading } = useGetOpinion(params.id);
   const { user } = useGetUser(`${opinion?.trainer}`);
   const goBack = useGoBack();
   const { slots } = useGetSlots();
@@ -32,6 +35,11 @@ export const EditOpinion = () => {
   const [valueText, setValueText] = useState<string>("");
 
   useEffect(() => {
+    if (!isLoading && userId && opinion?.client !== +userId) {
+      navigate(`/user-profile/${userId}`);
+      console.log(opinion?.client);
+      console.log(userId);
+    }
     if (opinion?.points && opinion?.review) {
       setValueRating(opinion?.points);
       setValueText(opinion?.review);
@@ -89,6 +97,7 @@ export const EditOpinion = () => {
       <TextField
         className="trainer-editOpinion__review"
         id="TextFieldOpinion"
+        style={{ marginTop: "20px" }}
         multiline
         rows={16}
         defaultValue={opinion?.review}

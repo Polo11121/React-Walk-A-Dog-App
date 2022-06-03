@@ -110,25 +110,28 @@ export const EditUserProfile = () => {
                       )}
                     </ImageUploading>
                     <Input
+                      label="Nazwa użytkownika"
                       isError
                       inputName="userName"
                       formikProps={props}
                       styles={{ marginBottom: "1.5rem" }}
-                      placeholder="Nazwa użytkownika"
+                      placeholder=" Wpisz nazwe użytkownika..."
                     />
                     <Input
+                      label="Email"
                       isError
                       formikProps={props}
                       inputName="email"
                       styles={{ marginBottom: "1.5rem" }}
-                      placeholder="Email"
+                      placeholder="Wpisz email..."
                     />
                     <Input
+                      label="Numer Telefonu"
                       isError
                       formikProps={props}
                       inputName="phoneNumber"
                       styles={{ marginBottom: "1.5rem" }}
-                      placeholder="Numer telefonu"
+                      placeholder="Wpisz numer telefonu..."
                     />
                   </div>
                   <div className="edit-user-profile__buttons">

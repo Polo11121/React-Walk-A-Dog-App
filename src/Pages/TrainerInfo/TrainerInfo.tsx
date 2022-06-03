@@ -63,7 +63,7 @@ export const TrainerInfo = () => {
           />
         )}
         <Button
-          styles={isOwner ? { marginLeft: "auto" } : {}}
+          styles={{ marginLeft: "auto" }}
           onClick={goBack}
           title="Powrót"
           type="default"

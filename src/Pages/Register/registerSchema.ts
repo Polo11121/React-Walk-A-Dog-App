@@ -1,7 +1,11 @@
 import * as yup from "yup";
 
 export const registerSchema = yup.object({
-  userName: yup.string().trim().required("Podaj nazwe użytkownika"),
+  userName: yup
+    .string()
+    .trim()
+    .required("Podaj nazwe użytkownika")
+    .max(12, "Maksymalnie 12 znaków"),
   password: yup
     .string()
     .trim()

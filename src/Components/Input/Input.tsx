@@ -15,12 +15,14 @@ type InputProps = {
   isError?: boolean;
   type?: HTMLInputTypeAttribute;
   formikProps: FormikProps<any>;
+  label?: string;
 };
 
 export const Input = ({
   placeholder,
   styles,
   inputName,
+  label = "elo",
   isError,
   type,
   formikProps,
@@ -31,6 +33,7 @@ export const Input = ({
         isError={isError && Boolean(formikProps.errors[inputName])}
         text={formikProps.errors[inputName] as string}
       />
+      <label className="input__label">{label}</label>
       <input
         style={
           styles as DetailedHTMLProps<

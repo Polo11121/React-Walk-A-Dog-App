@@ -12,7 +12,7 @@ export const useGetUsers = (): UseGetUsersType => {
   const getUsers = () =>
     axios.get(`${config.API_URL}/api/user/`).then((resp) => resp.data);
 
-  const { data, isLoading } = useQuery("users", getUsers);
+  const { data, isLoading, isFetching } = useQuery("users", getUsers);
 
-  return { users: data, isLoading };
+  return { users: data, isLoading: isLoading || isFetching };
 };
