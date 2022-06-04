@@ -14,7 +14,11 @@ export const useGetDogOpinions = (): UseGetOpinionsType => {
       .get(`${config.API_URL}/api/traineropinion/`)
       .then((resp) => resp.data);
 
-  const { data, isLoading, isFetching } = useQuery("dog-opinions", getOpinions);
+  const { data, isLoading, isFetching } = useQuery(
+    "dog-opinions",
+    getOpinions,
+    { retry: 1, useErrorBoundary: true }
+  );
 
   return { opinions: data, isLoading: isLoading || isFetching };
 };

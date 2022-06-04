@@ -20,7 +20,7 @@ export const useGetDog = (dogId?: string | null): UseGetDogType => {
     ["dog", `${dogId}`],
     getDog,
     {
-      enabled: Boolean(dogId),
+      enabled: dogId === "undefined" ? false : Boolean(dogId),
     }
   );
 

@@ -15,7 +15,10 @@ export const useGetDogs = (): UseGetDogsType => {
       .then((resp) => resp.data)
       .catch((error) => console.log(error));
 
-  const { data, isLoading, isFetching } = useQuery("dogs", getDogs);
+  const { data, isLoading, isFetching } = useQuery("dogs", getDogs, {
+    retry: 1,
+    useErrorBoundary: true,
+  });
 
   return { dogs: data, isLoading: isLoading || isFetching };
 };

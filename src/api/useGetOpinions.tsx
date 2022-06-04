@@ -12,7 +12,10 @@ export const useGetOpinions = (): UseGetOpinionsType => {
   const getOpinions = () =>
     axios.get(`${config.API_URL}/api/clientopinion/`).then((resp) => resp.data);
 
-  const { data, isLoading, isFetching } = useQuery("opinions", getOpinions);
+  const { data, isLoading, isFetching } = useQuery("opinions", getOpinions, {
+    retry: 1,
+    useErrorBoundary: true,
+  });
 
   return { opinions: data, isLoading: isLoading || isFetching };
 };

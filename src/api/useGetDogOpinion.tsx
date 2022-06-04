@@ -20,9 +20,7 @@ export const useGetDogOpinion = (
   const { data, isLoading } = useQuery(
     ["dog-opinion", `${opinionId}`],
     getOpinion,
-    {
-      enabled: Boolean(opinionId),
-    }
+    { retry: 1, useErrorBoundary: true, enabled: Boolean(opinionId) }
   );
 
   return { opinion: data, isLoading };

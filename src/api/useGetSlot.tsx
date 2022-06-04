@@ -11,7 +11,10 @@ export const useGetSlot = (id?: string): UseGetSlotType => {
   const getSlot = () =>
     axios.get(`${config.API_URL}/api/slot/${id}/`).then((resp) => resp.data);
 
-  const { data, isLoading } = useQuery(["slot", id], getSlot);
+  const { data, isLoading } = useQuery(["slot", id], getSlot, {
+    retry: 1,
+    useErrorBoundary: true,
+  });
 
   return { slot: data, isLoading };
 };

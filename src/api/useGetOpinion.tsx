@@ -18,9 +18,7 @@ export const useGetOpinion = (opinionId?: string | null): UseGetOpinionType => {
   const { data, isLoading } = useQuery(
     ["opinion", `${opinionId}`],
     getOpinion,
-    {
-      enabled: Boolean(opinionId),
-    }
+    { retry: 1, useErrorBoundary: true, enabled: Boolean(opinionId) }
   );
 
   return { opinion: data, isLoading };

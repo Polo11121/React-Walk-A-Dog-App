@@ -14,7 +14,8 @@ export const useGetUserDogs = (userId?: string): UseGetUserDogsType => {
 
   const { data, isFetching, isLoading } = useQuery<DogType[]>(
     "dogs",
-    getUserDogs
+    getUserDogs,
+    { retry: 1, useErrorBoundary: true }
   );
 
   if (data && userId) {

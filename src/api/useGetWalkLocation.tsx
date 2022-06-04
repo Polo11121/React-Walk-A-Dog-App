@@ -15,6 +15,8 @@ export const useGetWalkLocation = (slotId?: number): UseGetWalkLocation => {
       .catch((error) => console.log(error));
 
   const { data, isLoading } = useQuery("walks", getWalkLocation, {
+    retry: 1,
+    useErrorBoundary: true,
     enabled: Boolean(slotId),
   });
 

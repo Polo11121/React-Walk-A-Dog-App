@@ -15,8 +15,10 @@ import { useGetDog } from "api/useGetDog";
 import { useGetDogOpinions } from "api/useGetDogOpinions";
 import { useDeleteDogOpinion } from "api/useDeleteDogOpinion";
 import "./DogOpinions.scss";
+import useAuthContext from "hooks/context/AuthContext";
 
 export const DogOpinions = () => {
+  const { userId } = useAuthContext();
   const [deleteOpinionId, setDeleteOpinionId] = useState<number | null>(null);
   const queryClient = useQueryClient();
   const { id } = useParams();
@@ -144,12 +146,19 @@ export const DogOpinions = () => {
             </EmptyList>
           </div>
           <div className="dogs-opinion__buttons">
+            {userId && dog?.owner !== +userId && (
+              <Button
+                onClick={switchToAddDogOpinion}
+                title="Dodaj opinie"
+                type="primary"
+              />
+            )}
             <Button
-              onClick={switchToAddDogOpinion}
-              title="Dodaj opinie"
-              type="primary"
+              styles={{ marginLeft: "auto" }}
+              onClick={goBack}
+              title="Powrót"
+              type="default"
             />
-            <Button onClick={goBack} title="Powrót" type="default" />
           </div>
           {deleteOpinionId && (
             <Modal>
