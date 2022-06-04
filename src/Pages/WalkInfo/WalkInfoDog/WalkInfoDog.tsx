@@ -12,6 +12,7 @@ import { useAddDogToSlot } from "api/useAddDogToSlot";
 import { useCustomToast } from "hooks/useCustomToast";
 import { isInThePast, isTodayInThePastTime } from "helpers/helpers";
 import "./WalkInfoDog.scss";
+import { Button } from "Components";
 
 type WalkInfoDogType = {
   index: number;
@@ -36,6 +37,7 @@ type WalkInfoDogType = {
   }[];
   isAddingBlocked: boolean;
   dogs: DogType[];
+  isTrainer: boolean;
   setDogsInfo: Dispatch<
     SetStateAction<
       | {
@@ -53,6 +55,7 @@ type WalkInfoDogType = {
 const WalkInfoDog = ({
   dogInfo,
   time_from,
+  isTrainer,
   dogs,
   status,
   isOwner,
@@ -79,6 +82,8 @@ const WalkInfoDog = ({
 
   const goToDogProfile = () =>
     navigate(`/dog-profile/${dogInfo.owner}/${dogInfo.id}`);
+
+  const goToAddDogOpinion = () => navigate(`/dog-opinion-add/${dogInfo.id}`);
 
   const handleDogClick = (event: MouseEvent<HTMLDivElement>) => {
     if (dogInfo.isAdded) {
@@ -177,6 +182,15 @@ const WalkInfoDog = ({
           "Dodaj psa"
         )}
       </div>
+      {status === "zakończony" && isTrainer && dogInfo.id && (
+        <Button
+          onClick={goToAddDogOpinion}
+          styles={{ width: "100px", marginLeft: "10px" }}
+          size="M"
+          type="primary"
+          title="Raport"
+        />
+      )}
       {dogInfo.isAdded && isOwner && status === "nie rozpoczęty" && (
         <CloseIcon
           onClick={removeDogHandler}

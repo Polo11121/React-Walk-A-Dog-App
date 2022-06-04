@@ -21,6 +21,7 @@ import { TrainerDetails } from "Pages/TrainerInfo/TrainerDetails/TrainerDetails"
 import { DogOpinions } from "Pages/DogOpinions/DogOpinions";
 import { AddDogOpinion } from "Pages/DogOpinions/AddDogOpinion/AddDogOpinion";
 import DogOpinion from "Pages/DogOpinions/DogOpinion/DogOpinion";
+import EditDogOpinion from "Pages/DogOpinions/EditDogOpinion/EditDogOpinion";
 
 export const userRoutes = (userId: string | null) => [
   <Route key={uuid()} path="/user-profile/:id" element={<UserProfile />} />,
@@ -130,4 +131,9 @@ export const userRoutes = (userId: string | null) => [
     element={<AddDogOpinion />}
   />,
   <Route key={uuid()} path="/dog-opinion/:id" element={<DogOpinion />} />,
+  <Route
+    key={uuid()}
+    path="/dog-opinion-edit/:id"
+    element={<EditDogOpinion />}
+  />,
 ];

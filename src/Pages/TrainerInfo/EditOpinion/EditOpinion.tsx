@@ -1,4 +1,4 @@
-import { Button } from "Components";
+import { Button, WithLoader } from "Components";
 import { Rating, TextField } from "@mui/material";
 import { useQueryClient } from "react-query";
 import { useCustomToast } from "hooks/useCustomToast";
@@ -18,10 +18,10 @@ export const EditOpinion = () => {
   const { userId } = useAuthContext();
   const params = useParams();
   const navigate = useNavigate();
-  const { opinion, isLoading } = useGetOpinion(params.id);
-  const { user } = useGetUser(`${opinion?.trainer}`);
+  const { opinion, isLoading: isOpinionLoading } = useGetOpinion(params.id);
+  const { user, isLoading: isUserLoading } = useGetUser(`${opinion?.trainer}`);
   const goBack = useGoBack();
-  const { slots } = useGetSlots();
+  const { slots, isLoading: isSlotsLoading } = useGetSlots();
 
   const trainerWalks = slots?.filter(
     ({ trainer, status }) =>
@@ -34,17 +34,18 @@ export const EditOpinion = () => {
   const [valueRating, setValueRating] = useState<number>(0);
   const [valueText, setValueText] = useState<string>("");
 
+  const isLoading = isOpinionLoading || isSlotsLoading || isUserLoading;
+
   useEffect(() => {
     if (!isLoading && userId && opinion?.client !== +userId) {
       navigate(`/user-profile/${userId}`);
-      console.log(opinion?.client);
-      console.log(userId);
     }
+
     if (opinion?.points && opinion?.review) {
       setValueRating(opinion?.points);
       setValueText(opinion?.review);
     }
-  }, [opinion]);
+  }, [opinion, isLoading]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValueText(event.target.value);
@@ -53,7 +54,7 @@ export const EditOpinion = () => {
   const onSuccess = () => {
     queryClient
       .invalidateQueries(["opinion", `${params.id}`])
-      .then(() => goBack()); // eslint-disable-next-line react-hooks/rules-of-hooks
+      .then(() => navigate(`/trainer-info/${opinion?.trainer}/opinions`)); // eslint-disable-next-line react-hooks/rules-of-hooks
     useCustomToast("Zedytowano opinie!");
   };
 
@@ -72,46 +73,50 @@ export const EditOpinion = () => {
 
   return (
     <div className="trainer-editOpinion">
-      <div className="trainer-editOpinion__title">Edytuj opinie</div>
-      <div className="trainer-editOpinion__trainerInfo">
-        <img
-          className="trainer-editOpinion__imageUser"
-          src={user?.avatar || userAvatar}
-          alt={user?.username}
-        />
-        <div className="trainer-editOpinion__info">
-          <div>{user?.username}</div>
-          <div style={{ marginTop: "15px", marginBottom: "15px" }}>
-            {user?.is_trainer ? "Trener" : "Użytkownik"}
+      <WithLoader isLoading={isLoading}>
+        <>
+          <div className="trainer-editOpinion__title">Edytuj opinie</div>
+          <div className="trainer-editOpinion__trainerInfo">
+            <img
+              className="trainer-editOpinion__imageUser"
+              src={user?.avatar || userAvatar}
+              alt={user?.username}
+            />
+            <div className="trainer-editOpinion__info">
+              <div>{user?.username}</div>
+              <div style={{ marginTop: "15px", marginBottom: "15px" }}>
+                {user?.is_trainer ? "Trener" : "Użytkownik"}
+              </div>
+              <div>spacery: {countWalk}</div>
+            </div>
           </div>
-          <div>spacery: {countWalk}</div>
-        </div>
-      </div>
-      <Rating
-        className="trainer-editOpinion__rating"
-        value={valueRating}
-        onChange={(event, newValue) => {
-          setValueRating(+`${newValue}`);
-        }}
-      />
-      <TextField
-        className="trainer-editOpinion__review"
-        id="TextFieldOpinion"
-        style={{ marginTop: "20px" }}
-        multiline
-        rows={16}
-        defaultValue={opinion?.review}
-        onChange={handleChange}
-      />
-      <div className="trainer-editOpinion__buttons">
-        <Button
-          onClick={editOpinion}
-          disabled={isButtonDisabled}
-          title="Edytuj opinie"
-          type="primary"
-        />
-        <Button onClick={goBack} title="Powrót" type="default" />
-      </div>
+          <Rating
+            className="trainer-editOpinion__rating"
+            value={valueRating}
+            onChange={(event, newValue) => {
+              setValueRating(+`${newValue}`);
+            }}
+          />
+          <TextField
+            className="trainer-editOpinion__review"
+            id="TextFieldOpinion"
+            style={{ marginTop: "20px" }}
+            multiline
+            rows={16}
+            defaultValue={opinion?.review}
+            onChange={handleChange}
+          />
+          <div className="trainer-editOpinion__buttons">
+            <Button
+              onClick={editOpinion}
+              disabled={isButtonDisabled}
+              title="Edytuj opinie"
+              type="primary"
+            />
+            <Button onClick={goBack} title="Powrót" type="default" />
+          </div>
+        </>
+      </WithLoader>
     </div>
   );
 };

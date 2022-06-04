@@ -5,7 +5,6 @@ import { useAddOpinion } from "api/useAddOpinion";
 import { useQueryClient } from "react-query";
 import { useCustomToast } from "hooks/useCustomToast";
 import { useGetSlots } from "api/useGetSlots";
-import { useGoBack } from "hooks/useGoBack";
 import { useGetUser } from "api/useGetUser";
 import { useState } from "react";
 import useAuthContext from "hooks/context/AuthContext";

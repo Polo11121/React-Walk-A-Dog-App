@@ -37,7 +37,9 @@ export const OpinionCard = ({
   const navigate = useNavigate();
 
   const switchToEditOpinion = () =>
-    navigate(`/trainer-opinion-edit/${opinionId}`);
+    type
+      ? navigate(`/dog-opinion-edit/${opinionId}`)
+      : navigate(`/trainer-opinion-edit/${opinionId}`);
 
   const switchToOpinion = () =>
     type

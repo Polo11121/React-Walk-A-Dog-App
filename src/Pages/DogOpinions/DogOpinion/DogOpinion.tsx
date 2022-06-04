@@ -3,7 +3,7 @@ import normalDog from "assets/normal.png";
 import angryDog from "assets/angry.png";
 import lovelyDog from "assets/lovely.png";
 import { Button } from "Components";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
 import { useGetSlots } from "api/useGetSlots";
 import { useGoBack } from "hooks/useGoBack";
@@ -15,17 +15,20 @@ import "./DogOpinion.scss";
 
 export const DogOpinion = () => {
   const { userId } = useAuthContext();
+  const navigate = useNavigate();
   const { id } = useParams();
   const { opinion } = useGetDogOpinion(id);
   const { dog } = useGetDog(`${opinion?.dog}`);
   const goBack = useGoBack();
   const { slots } = useGetSlots();
 
-  const trainerWalks = slots?.filter(
+  const switchToEditDogOpinion = () => navigate(`/dog-opinion-edit/${id}`);
+
+  const dogWalks = slots?.filter(
     ({ trainer, status }) =>
       opinion?.dog && trainer === +opinion?.dog && status === "zakończony"
   );
-  const countWalk = trainerWalks?.length;
+  const countWalk = dogWalks?.length;
 
   return (
     <div className="dog-opinion">
@@ -83,7 +86,11 @@ export const DogOpinion = () => {
       <div className="dog-opinion__buttons">
         {userId &&
           (opinion?.client === +userId || opinion?.trainer === +userId) && (
-            <Button onClick={() => {}} title="Edytuj opinie" type="primary" />
+            <Button
+              onClick={switchToEditDogOpinion}
+              title="Edytuj opinie"
+              type="primary"
+            />
           )}
         <Button
           styles={{ marginLeft: "auto" }}

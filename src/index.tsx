@@ -4,11 +4,7 @@ import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./hooks/context/AuthContext";
 import { WalksProvider } from "hooks/context/WalksContext";
 import { BrowserRouter } from "react-router-dom";
-import {
-  QueryClient,
-  QueryClientProvider,
-  QueryErrorResetBoundary,
-} from "react-query";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ErrorBoundary } from "react-error-boundary";
 import App from "./App";

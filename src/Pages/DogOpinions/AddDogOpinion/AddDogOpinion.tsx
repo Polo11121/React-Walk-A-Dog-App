@@ -3,12 +3,11 @@ import normalDog from "assets/normal.png";
 import angryDog from "assets/angry.png";
 import lovelyDog from "assets/lovely.png";
 import { Button } from "Components";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { TextField } from "@mui/material";
 import { useQueryClient } from "react-query";
 import { useCustomToast } from "hooks/useCustomToast";
 import { useGetSlots } from "api/useGetSlots";
-import { useGoBack } from "hooks/useGoBack";
 import { useState } from "react";
 import useAuthContext from "hooks/context/AuthContext";
 import userAvatar from "assets/user-avatar.png";
@@ -23,7 +22,7 @@ export const AddDogOpinion = () => {
   const { userInfo } = useAuthContext();
   const { userId } = useAuthContext();
   const { dog } = useGetDog(id);
-  const goBack = useGoBack();
+  const navigate = useNavigate();
   const { slots } = useGetSlots();
 
   const trainerWalks = slots?.filter(
@@ -53,6 +52,8 @@ export const AddDogOpinion = () => {
       trainer: userInfo.is_trainer ? +`${id}` : null,
       client: !userInfo.is_trainer ? +`${userId}` : null,
     });
+
+  const goBack = () => navigate(`/dog-opinions/${id}`);
 
   return (
     <div className="dog-add-opinion">

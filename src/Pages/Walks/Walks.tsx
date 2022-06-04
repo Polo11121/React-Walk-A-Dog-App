@@ -31,7 +31,7 @@ export const Walks = () => {
         <div style={{ flex: 0.5 }}>
           <span>Data:</span>
           <DatePicker
-            dateFormat="d MMMM, yyyy "
+            dateFormat="d MMMM yyyy "
             minDate={new Date()}
             locale="pl"
             selected={walkDate}

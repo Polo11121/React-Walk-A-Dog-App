@@ -15,7 +15,6 @@ import { useGetDog } from "api/useGetDog";
 import { useGetDogOpinions } from "api/useGetDogOpinions";
 import { useDeleteDogOpinion } from "api/useDeleteDogOpinion";
 import "./DogOpinions.scss";
-import { useGoBack } from "hooks/useGoBack";
 
 export const DogOpinions = () => {
   const [deleteOpinionId, setDeleteOpinionId] = useState<number | null>(null);
@@ -24,7 +23,7 @@ export const DogOpinions = () => {
   const navigate = useNavigate();
   const { opinions, isLoading: isOpinionsLoading } = useGetDogOpinions();
   const { users, isLoading: isUsersLoading } = useGetUsers();
-  const goBack = useGoBack();
+
   const { dog } = useGetDog(id);
   const { slots, isLoading: isSlotsLoading } = useGetSlots();
 
@@ -35,7 +34,7 @@ export const DogOpinions = () => {
       status === "zakończony"
   );
   const countWalk = dogWalks?.length;
-
+  const goBack = () => navigate(`/dog-profile/${dog?.owner}/${id}`);
   const dogOpinions = opinions?.filter(({ dog }) => id && dog === +id);
 
   const openDeleteOpinionModal = (opinionId: number) =>

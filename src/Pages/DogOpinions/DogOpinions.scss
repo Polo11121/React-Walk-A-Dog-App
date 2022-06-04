@@ -53,9 +53,10 @@
 
   &__opinionList {
     width: 80%;
+
     overflow: hidden;
     overflow-y: auto;
-    height: 56.5vh;
+    height: 55vh;
   }
 
   &__buttons {
@@ -64,12 +65,15 @@
     justify-content: space-between;
     margin-bottom: 40px;
     width: 90%;
+    flex: 1;
 
     button {
+      margin-top: auto;
       padding: 10px 40px;
       border-radius: 50px;
       font-size: 20px;
       font-weight: 500;
+      height: fit-content;
     }
   }
 
