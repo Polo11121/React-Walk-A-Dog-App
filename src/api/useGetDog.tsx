@@ -20,6 +20,8 @@ export const useGetDog = (dogId?: string | null): UseGetDogType => {
     ["dog", `${dogId}`],
     getDog,
     {
+      retry: 1,
+      useErrorBoundary: true,
       enabled: dogId === "undefined" ? false : Boolean(dogId),
     }
   );
