@@ -188,7 +188,7 @@ const WalkInfoDog = ({
           styles={{ width: "100px", marginLeft: "10px" }}
           size="M"
           type="primary"
-          title="Raport"
+          title="Opinia"
         />
       )}
       {dogInfo.isAdded && isOwner && status === "nie rozpoczęty" && (
