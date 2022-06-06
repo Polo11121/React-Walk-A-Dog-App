@@ -21,14 +21,16 @@ import WalkInfoDog from "Pages/WalkInfo/WalkInfoDog/WalkInfoDog";
 import { DogType } from "types/Dog.types";
 import { useChangeSlotStatus } from "api/useChangeSlotStatus";
 import { UseAddWalkLocation } from "api/useAddWalkLocation";
+import { useGetSlots } from "api/useGetSlots";
 import "./WalkInfo.scss";
 
 export const WalkInfo = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { startWalk, activeWalk } = useAuthContext();
+  const { startWalk } = useAuthContext();
   const { id } = useParams();
   const { userInfo, userId } = useAuthContext();
+  const { slots, isLoading: isSlotsLoading } = useGetSlots();
   const { slot, isLoading: isSlotLoading } = useGetSlot(id);
   const { user, isLoading: isUserLoading } = useGetUser(`${slot?.trainer}`);
   const { dogs, isLoading: isDogsLoading } = useGetDogs();
@@ -48,7 +50,7 @@ export const WalkInfo = () => {
     }[]
   >();
 
-  const goBack = useGoBack();
+  const goBack = () => navigate(`/trainer-info/${slot?.trainer}/walks`);
 
   const getFilteredDog = (filteredDog: DogType | undefined) =>
     filteredDog
@@ -143,7 +145,15 @@ export const WalkInfo = () => {
 
   const haveAnyDog = slot?.dog1 || slot?.dog2 || slot?.dog3;
 
-  const isLoading = isSlotLoading || isDogsLoading || isUserLoading;
+  const isLoading =
+    isSlotLoading || isDogsLoading || isUserLoading || isSlotsLoading;
+
+  const haveTrainerActiveWalk = !Boolean(
+    slots?.find(
+      ({ trainer, status }) =>
+        trainer === slot?.trainer && status === "w trakcie"
+    )
+  );
 
   return (
     <div className="walk-info">
@@ -209,18 +219,38 @@ export const WalkInfo = () => {
               />
             ))}
             {userId &&
-              !activeWalk &&
               haveAnyDog &&
               +userId === slot?.trainer &&
               slot?.status === "nie rozpoczęty" &&
               isToday(new Date(slot?.date)) && (
-                <Button
-                  styles={{ margin: "0 auto" }}
-                  size="XL"
-                  onClick={openStartWalkHandler}
-                  title="Rozpocznij"
-                  type="primary"
-                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Button
+                    styles={{ margin: "0 auto" }}
+                    size="XL"
+                    onClick={openStartWalkHandler}
+                    disabled={haveTrainerActiveWalk}
+                    title="Rozpocznij"
+                    type="primary"
+                  />
+                  {haveTrainerActiveWalk && (
+                    <span
+                      style={{
+                        marginTop: "5px",
+                        textAlign: "center",
+                        color: "gray",
+                        fontSize: "14px",
+                      }}
+                    >
+                      *Jesteś aktualnie w trakcie spaceru !
+                    </span>
+                  )}
+                </div>
               )}
             {slot?.status === "w trakcie" &&
               isToday(new Date(slot?.date)) &&
