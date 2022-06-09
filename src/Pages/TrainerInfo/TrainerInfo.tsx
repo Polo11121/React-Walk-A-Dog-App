@@ -55,7 +55,7 @@ export const TrainerInfo = () => {
         </Routes>
       </div>
       <div className="trainer-info__buttons">
-        {!isOwner && params["*"] === "opinions" && user?.is_trainer && (
+        {!isOwner && params["*"] === "opinions" && !user?.is_trainer && (
           <Button
             onClick={switchToAddOpinion}
             title="Dodaj opinie"
