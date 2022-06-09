@@ -15,29 +15,18 @@ function App() {
   const { mutate: editWalkLocation } = UseEditWalkLocation();
 
   useEffect(() => {
-    activeWalk &&
-      navigator.geolocation.getCurrentPosition(({ coords }) =>
-        editWalkLocation({
-          lat: coords.latitude,
-          lng: coords.longitude,
-          slot: +activeWalk,
-        })
-      );
-
-    const interval = setInterval(() => {
-      navigator.geolocation.getCurrentPosition(({ coords }) =>
-        editWalkLocation({
-          lat: coords.latitude,
-          lng: coords.longitude,
-          slot: +activeWalk,
-        })
-      );
-    }, 10000);
-
-    if (!activeWalk) {
-      clearInterval(interval as NodeJS.Timer);
-    }
-    return () => clearInterval(interval as NodeJS.Timer);
+    navigator.geolocation.watchPosition(
+      ({ coords }) => {
+        activeWalk &&
+          editWalkLocation({
+            lat: coords.latitude,
+            lng: coords.longitude,
+            slot: +activeWalk,
+          });
+      },
+      () => {},
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    );
   }, [activeWalk]);
 
   if (isAppLoading) {
