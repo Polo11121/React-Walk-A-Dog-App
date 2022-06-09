@@ -106,12 +106,20 @@ export const userRoutes = (userId: string | null) => [
   <Route
     key={uuid()}
     path="/trainer-opinion-add/:id"
-    element={<AddOpinion />}
+    element={
+      <ProtectedRoute trainerBlock>
+        <AddOpinion />
+      </ProtectedRoute>
+    }
   />,
   <Route
     key={uuid()}
     path="/trainer-opinion-edit/:id"
-    element={<EditOpinion />}
+    element={
+      <ProtectedRoute trainerBlock>
+        <EditOpinion />
+      </ProtectedRoute>
+    }
   />,
   <Route
     key={uuid()}

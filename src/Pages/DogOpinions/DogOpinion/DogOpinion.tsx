@@ -32,7 +32,7 @@ export const DogOpinion = () => {
 
   return (
     <div className="dog-opinion">
-      <div className="dog-opinion__title">Opinia</div>
+      <div className="dog-opinion__title">Szczegóły opinii</div>
       <div className="dog-opinion__trainerInfo">
         <img
           className="dog-opinion__imageUser"

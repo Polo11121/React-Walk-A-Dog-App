@@ -73,7 +73,7 @@ export const DogOpinions = () => {
     <div className="dogs-opinion">
       <WithLoader isLoading={isLoading}>
         <>
-          <div className="dogs-opinion__title">Opine {dog?.name}</div>
+          <div className="dogs-opinion__title">Opinie {dog?.name}</div>
 
           <div className="dogs-opinion__ownerInfo">
             <img

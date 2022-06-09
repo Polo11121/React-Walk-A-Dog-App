@@ -41,7 +41,7 @@ export const TrainerDetails = () => {
 
   return (
     <div className="trainer-details">
-      <div className="trainer-details__title">Szczegóły opini</div>
+      <div className="trainer-details__title">Szczegóły opinii</div>
       <div className="trainer-details__trainerInfo">
         <img
           onClick={goToTrainerProfile}

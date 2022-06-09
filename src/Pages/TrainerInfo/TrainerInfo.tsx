@@ -8,10 +8,12 @@ import { useGetUser } from "api/useGetUser";
 import { Button } from "Components";
 import useWalksContext from "hooks/context/WalksContext";
 import { useOwner } from "hooks/useOwner";
+import useAuthContext from "hooks/context/AuthContext";
 import "./TrainerInfo.scss";
 
 export const TrainerInfo = () => {
   const isOwner = useOwner();
+  const { userInfo } = useAuthContext();
   const { resetWalkList } = useWalksContext();
   const params = useParams();
   const navigate = useNavigate();
@@ -55,7 +57,7 @@ export const TrainerInfo = () => {
         </Routes>
       </div>
       <div className="trainer-info__buttons">
-        {!isOwner && params["*"] === "opinions" && !user?.is_trainer && (
+        {!isOwner && params["*"] === "opinions" && !userInfo.is_trainer && (
           <Button
             onClick={switchToAddOpinion}
             title="Dodaj opinie"
