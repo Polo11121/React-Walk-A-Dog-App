@@ -42,7 +42,6 @@ export const Login = () => {
         >
           {(props) => (
             <>
-              <div>siema siema siema siema</div>
               <Input
                 label="Nazwa użytkownika"
                 formikProps={props}
