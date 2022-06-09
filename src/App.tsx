@@ -32,7 +32,7 @@ function App() {
           slot: +activeWalk,
         })
       );
-    }, 10);
+    }, 10000);
 
     if (!activeWalk) {
       clearInterval(interval as NodeJS.Timer);
