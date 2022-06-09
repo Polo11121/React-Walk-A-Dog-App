@@ -18,8 +18,15 @@ export const DogWalks = () => {
 
   return (
     <div className="dog-walks">
-      <div className="dog-walks__title">Spacery {dog?.name}</div>
-      <div className="dog-walks__list">
+      <div className="dog-walks__title" style={{ marginBottom: 0 }}>
+        Spacery {dog?.name}
+      </div>
+      {!dog?.is_active && (
+        <div className="dog-walks__title" style={{ color: "red", margin: 0 }}>
+          (Nieaktywny)
+        </div>
+      )}
+      <div className="dog-walks__list" style={{ marginTop: "20px" }}>
         <WithLoader isLoading={isLoading}>
           <EmptyList>
             {slots

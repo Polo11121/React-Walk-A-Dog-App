@@ -29,6 +29,7 @@ export const useAddDog = (onSuccess?: () => void) => {
     formData.append("breed", `${breed.trim()}`);
     formData.append("contraindications", "");
     formData.append("recommendation", "");
+    formData.append("is_active", true as unknown as string);
 
     return axios.post(`${config.API_URL}/api/dog/`, formData);
   };

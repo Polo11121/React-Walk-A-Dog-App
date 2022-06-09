@@ -8,4 +8,5 @@ export type DogType = {
   recommendation: string;
   contraindications: string;
   avatar: string;
+  is_active: boolean;
 };

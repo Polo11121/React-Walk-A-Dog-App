@@ -19,6 +19,7 @@ type OpinionCardProps = {
   userAvatarAlt?: string;
   client?: number;
   type?: string;
+  isActive?: boolean;
   userAvatar?: string;
   openDeleteOpinionModal: (opinionId: number) => void;
 };
@@ -28,6 +29,7 @@ export const OpinionCard = ({
   points,
   review,
   type,
+  isActive,
   client,
   userAvatarAlt,
   userAvatar,
@@ -65,7 +67,7 @@ export const OpinionCard = ({
 
   return (
     <div className="opinion-card">
-      {client === +`${userId}` && (
+      {client === +`${userId}` && isActive && (
         <ClearIcon
           onClick={deleteOpinionHandler}
           className="opinion-card__delete-icon"
@@ -99,7 +101,7 @@ export const OpinionCard = ({
           <div className="opinion-card__opinion">{review}</div>
         </div>
       </div>
-      {client === +`${userId}` && (
+      {client === +`${userId}` && isActive && (
         <Button
           styles={{
             width: "auto",

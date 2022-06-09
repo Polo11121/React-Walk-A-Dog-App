@@ -57,7 +57,7 @@ export const AddDogOpinion = () => {
   const isLoading = isDogLoading || isSlotsLoading;
 
   useEffect(() => {
-    if (userId && +userId === dog?.owner && !isLoading) {
+    if ((userId && +userId === dog?.owner && !isLoading) || !dog?.is_active) {
       navigate(`/user-profile/${userId}`);
     }
   }, [isLoading]);

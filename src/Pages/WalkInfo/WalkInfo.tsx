@@ -47,6 +47,7 @@ export const WalkInfo = () => {
       avatar: string;
       isAdded: boolean;
       owner: string;
+      is_active: boolean;
     }[]
   >();
 
@@ -60,6 +61,7 @@ export const WalkInfo = () => {
           name: filteredDog.name,
           isAdded: true,
           owner: `${filteredDog.owner}`,
+          is_active: filteredDog.is_active,
         }
       : {
           id: "",
@@ -67,6 +69,7 @@ export const WalkInfo = () => {
           name: "",
           isAdded: false,
           owner: "",
+          is_active: false,
         };
 
   useEffect(() => {

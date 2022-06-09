@@ -14,8 +14,8 @@ import { useCustomToast } from "hooks/useCustomToast";
 import { useGetDog } from "api/useGetDog";
 import { useGetDogOpinions } from "api/useGetDogOpinions";
 import { useDeleteDogOpinion } from "api/useDeleteDogOpinion";
-import "./DogOpinions.scss";
 import useAuthContext from "hooks/context/AuthContext";
+import "./DogOpinions.scss";
 
 export const DogOpinions = () => {
   const { userId } = useAuthContext();
@@ -69,13 +69,34 @@ export const DogOpinions = () => {
   const hardCount = dogOpinions?.filter(({ type }) => type === "trudny");
   const calmCount = dogOpinions?.filter(({ type }) => type === "spokojny");
 
+  const isGood = Boolean(
+    slots?.find(
+      ({ trainer, dog1, dog2, dog3 }) =>
+        userId &&
+        trainer === +userId &&
+        (`${dog1}` === id || `${dog2}` === id || `${dog3}` === id)
+    )
+  );
+
   return (
     <div className="dogs-opinion">
       <WithLoader isLoading={isLoading}>
         <>
-          <div className="dogs-opinion__title">Opinie {dog?.name}</div>
-
-          <div className="dogs-opinion__ownerInfo">
+          <div className="dogs-opinion__title" style={{ marginBottom: 0 }}>
+            Opinie {dog?.name}
+          </div>
+          {!dog?.is_active && (
+            <div
+              className="dog-walks__title"
+              style={{ color: "red", margin: 0 }}
+            >
+              (Nieaktywny)
+            </div>
+          )}
+          <div
+            className="dogs-opinion__ownerInfo"
+            style={{ marginTop: "40px" }}
+          >
             <img
               onClick={goToDogProfile}
               className="dogs-opinion__imageUser"
@@ -130,6 +151,7 @@ export const DogOpinions = () => {
 
                   return (
                     <OpinionCard
+                      isActive={dog?.is_active}
                       openDeleteOpinionModal={openDeleteOpinionModal}
                       key={opinionId}
                       review={raport}
@@ -146,7 +168,7 @@ export const DogOpinions = () => {
             </EmptyList>
           </div>
           <div className="dogs-opinion__buttons">
-            {userId && dog?.owner !== +userId && (
+            {isGood && dog?.is_active && (
               <Button
                 onClick={switchToAddDogOpinion}
                 title="Dodaj opinie"

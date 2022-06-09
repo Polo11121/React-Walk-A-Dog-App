@@ -10,12 +10,14 @@ type CardProps = {
   id: number;
   ownerId?: number;
   isUser?: boolean;
+  isActive?: boolean;
 };
 export const Card = ({
   imageSrc,
   name,
   subTitle,
   id,
+  isActive=true,
   ownerId,
   isUser = false,
 }: CardProps) => {
@@ -28,7 +30,16 @@ export const Card = ({
           alt={name}
         />
         <div className="dog-card__info">
-          <span className="dog-card__name">{name}</span>
+          <span className="dog-card__name">
+            {name}
+            {!isActive && (
+              <span
+                style={{ color: "red", fontSize: "12px", marginLeft: "5px" }}
+              >
+                (Nieaktywny)
+              </span>
+            )}
+          </span>
           <span className="dog-card__race">{subTitle}</span>
         </div>
       </div>

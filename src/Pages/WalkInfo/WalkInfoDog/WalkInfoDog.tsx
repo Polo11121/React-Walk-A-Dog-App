@@ -11,8 +11,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAddDogToSlot } from "api/useAddDogToSlot";
 import { useCustomToast } from "hooks/useCustomToast";
 import { isInThePast, isTodayInThePastTime } from "helpers/helpers";
-import "./WalkInfoDog.scss";
+
 import { Button } from "Components";
+import "./WalkInfoDog.scss";
 
 type WalkInfoDogType = {
   index: number;
@@ -27,6 +28,7 @@ type WalkInfoDogType = {
     avatar: string;
     isAdded: boolean;
     owner: string;
+    is_active: boolean;
   };
   dogsInfo: {
     id: string;
@@ -34,6 +36,7 @@ type WalkInfoDogType = {
     avatar: string;
     isAdded: boolean;
     owner: string;
+    is_active: boolean;
   }[];
   isAddingBlocked: boolean;
   dogs: DogType[];
@@ -42,6 +45,7 @@ type WalkInfoDogType = {
     SetStateAction<
       | {
           id: string;
+          is_active: boolean;
           name: string;
           avatar: string;
           isAdded: boolean;
@@ -168,6 +172,7 @@ const WalkInfoDog = ({
                         avatar: "",
                         isAdded: false,
                         owner: "",
+                        is_active: false,
                       },
                       ...dogsInfo.slice(index + 1),
                     ])
@@ -182,15 +187,18 @@ const WalkInfoDog = ({
           "Dodaj psa"
         )}
       </div>
-      {status === "zakończony" && isTrainer && dogInfo.id && (
-        <Button
-          onClick={goToAddDogOpinion}
-          styles={{ width: "100px", marginLeft: "10px" }}
-          size="M"
-          type="primary"
-          title="Opinia"
-        />
-      )}
+      {status === "zakończony" &&
+        isTrainer &&
+        dogInfo.id &&
+        dogInfo.is_active && (
+          <Button
+            onClick={goToAddDogOpinion}
+            styles={{ width: "100px", marginLeft: "10px" }}
+            size="M"
+            type="primary"
+            title="Opinia"
+          />
+        )}
       {dogInfo.isAdded && isOwner && status === "nie rozpoczęty" && (
         <CloseIcon
           onClick={removeDogHandler}
@@ -205,31 +213,40 @@ const WalkInfoDog = ({
         open={open}
         onClose={handleClose}
       >
-        {dogs.map(({ name, avatar, id, owner }) => {
-          const handleClick = () => {
-            setDogsInfo([
-              ...dogsInfo.slice(0, index),
-              { id: `${id}`, name, avatar, isAdded: false, owner: `${owner}` },
-              ...dogsInfo.slice(index + 1),
-            ]);
-            handleClose();
-          };
+        {dogs
+          ?.filter(({ is_active }) => is_active)
+          ?.map(({ name, avatar, id, owner, is_active }) => {
+            const handleClick = () => {
+              setDogsInfo([
+                ...dogsInfo.slice(0, index),
+                {
+                  id: `${id}`,
+                  name,
+                  avatar,
+                  isAdded: false,
+                  owner: `${owner}`,
+                  is_active: is_active,
+                },
+                ...dogsInfo.slice(index + 1),
+              ]);
+              handleClose();
+            };
 
-          return (
-            <MenuItem
-              key={id}
-              style={{ fontSize: "1.5rem" }}
-              onClick={handleClick}
-            >
-              <img
-                className="walk-info__menu-avatar"
-                src={avatar || dogAvatar}
-                alt={name}
-              />
-              {name}
-            </MenuItem>
-          );
-        })}
+            return (
+              <MenuItem
+                key={id}
+                style={{ fontSize: "1.5rem" }}
+                onClick={handleClick}
+              >
+                <img
+                  className="walk-info__menu-avatar"
+                  src={avatar || dogAvatar}
+                  alt={name}
+                />
+                {name}
+              </MenuItem>
+            );
+          })}
       </Menu>
     </div>
   );

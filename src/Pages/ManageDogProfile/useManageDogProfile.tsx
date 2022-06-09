@@ -38,7 +38,9 @@ export const useManageDogProfile = () => {
 
   const onSuccessDeleteDog = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useCustomToast(`Pomyślnie usunięto profil psa!`);
+    useCustomToast(
+      `Pomyślnie ${dog?.is_active ? "dezaktywowano" : "aktywowano"} profil psa!`
+    );
     queryClient.invalidateQueries("dogs");
     navigate(`/dog-profiles/${userId}`);
   };
@@ -51,7 +53,7 @@ export const useManageDogProfile = () => {
 
   const deleteDogHandler = () => {
     if (id) {
-      mutateDeleteDog({ id });
+      mutateDeleteDog({ id, isActive: dog?.is_active });
     }
   };
 

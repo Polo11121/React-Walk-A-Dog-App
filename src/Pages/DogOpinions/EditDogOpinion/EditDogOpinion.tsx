@@ -42,10 +42,11 @@ export const EditDogOpinion = () => {
 
   useEffect(() => {
     if (
-      !isLoading &&
-      userId &&
-      opinion?.client !== +userId &&
-      opinion?.trainer !== +userId
+      (!isLoading &&
+        userId &&
+        opinion?.client !== +userId &&
+        opinion?.trainer !== +userId) ||
+      !dog?.is_active
     ) {
       navigate(`/user-profile/${userId}`);
     }

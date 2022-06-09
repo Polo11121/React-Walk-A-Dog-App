@@ -46,6 +46,11 @@ export const DogProfile = () => {
             alt=""
           />
           <div className="dog-profile__name">{dog?.name}</div>
+          {!dog?.is_active && (
+            <div className="dog-profile__name" style={{ color: "red" }}>
+              (Nieaktywny)
+            </div>
+          )}
           <div className="dog-profile__section">
             <div className="dog-profile__section-title">
               <div className="dog-profile__line"></div>

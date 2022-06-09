@@ -92,10 +92,28 @@ export const ManageDogProfile = () => {
 
             return (
               <>
-                <div className="manage-dog-profile__title">
+                <div
+                  style={{ marginBottom: 0 }}
+                  className="manage-dog-profile__title"
+                >
                   {isEdit ? "Edytuj" : "Stwórz"} profil psa
                 </div>
-                <div className="manage-dog-profile__choose-photo">
+                {dog?.is_active === false && (
+                  <div
+                    className="manage-dog-profile__title"
+                    style={{ color: "red", margin: 0 }}
+                  >
+                    (Nieaktywny)
+                  </div>
+                )}
+                <div
+                  className="manage-dog-profile__choose-photo"
+                  style={
+                    dog?.is_active
+                      ? { marginTop: "20px" }
+                      : { pointerEvents: "none", marginTop: "20px" }
+                  }
+                >
                   <ImageUploading
                     value={[image as ImageType]}
                     onChange={changeImageHandler}
@@ -129,6 +147,7 @@ export const ManageDogProfile = () => {
                 </div>
                 <div className="manage-dog-profile__container">
                   <Input
+                    isDisabled={dog?.is_active === false}
                     label="Nazwa psa"
                     isError={isEdit || error}
                     formikProps={props}
@@ -137,6 +156,7 @@ export const ManageDogProfile = () => {
                     placeholder="Wpisz nazwa psa..."
                   />
                   <Input
+                    isDisabled={dog?.is_active === false}
                     label="Rasa psa"
                     isError={isEdit || error}
                     formikProps={props}
@@ -145,6 +165,7 @@ export const ManageDogProfile = () => {
                     placeholder="Wpisz rase psa..."
                   />
                   <Input
+                    isDisabled={dog?.is_active === false}
                     label="Wiek psa"
                     isError={isEdit || error}
                     inputName="age"
@@ -153,6 +174,7 @@ export const ManageDogProfile = () => {
                     placeholder="Wpisz wiek (lata) psa..."
                   />
                   <Input
+                    isDisabled={dog?.is_active === false}
                     label="Waga psa"
                     isError={isEdit || error}
                     formikProps={props}
@@ -203,27 +225,28 @@ export const ManageDogProfile = () => {
             styles={{ width: "140px" }}
             onClick={openDeleteModalHandler}
             size="M"
-            title="Usuń"
-            type="red"
+            title={dog?.is_active ? "Dezaktywuj" : "Aktywuj"}
+            type={dog?.is_active ? "red" : "green"}
           />
         </div>
       )}
       {isOpen && (
         <Modal>
           <div className="manage-dog-profile__modal-content">
-            Na pewno chcesz usunąć profil psa "{dog.name}"?
+            Na pewno chcesz {dog?.is_active ? "dezaktywować " : "aktywować "}
+            profil psa "{dog.name}"?
             <Button
               onClick={deleteDogHandler}
               styles={{ margin: "20px auto 0", width: "80%" }}
-              title="Usuń"
-              type="red"
+              title={dog?.is_active ? "Dezaktywuj" : "Aktywuj"}
+              type={dog?.is_active ? "red" : "green"}
               size="L"
             />
             <Button
               onClick={closeDeleteModalHandler}
               styles={{ margin: "20px auto 0", width: "80%" }}
               title="Anuluj"
-              type="green"
+              type={dog?.is_active ? "green" : "secondary"}
               size="L"
             />
           </div>

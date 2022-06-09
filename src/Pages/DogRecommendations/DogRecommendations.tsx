@@ -21,6 +21,14 @@ export const DogRecommendations = () => {
   return (
     <div className="dog-recommendations">
       <div className="dog-recommendations__name">{dog?.name}</div>
+      {!dog?.is_active && (
+        <div
+          className="dog-recommendations__name"
+          style={{ color: "red", margin: 0 }}
+        >
+          (Nieaktywny)
+        </div>
+      )}
       <div className="dog-recommendations__subtitle">
         zalecenia i przeciwwskazania
       </div>
@@ -28,7 +36,7 @@ export const DogRecommendations = () => {
         <div className="dog-recommendations__box-content">
           {dog?.recommendation}
         </div>
-        {isOwner && (
+        {isOwner && dog?.is_active && (
           <div className="dog-recommendations__box-button">
             <Button
               onClick={goToEditDogRecommendations}
@@ -42,12 +50,12 @@ export const DogRecommendations = () => {
             />
           </div>
         )}
-      </div>{" "}
+      </div>
       <div className="dog-recommendations__box dog-recommendations__box--red">
         <div className="dog-recommendations__box-content">
           {dog?.contraindications}
         </div>
-        {isOwner && (
+        {isOwner && dog?.is_active && (
           <div className="dog-recommendations__box-button">
             <Button
               onClick={goToEditDogContraindications}

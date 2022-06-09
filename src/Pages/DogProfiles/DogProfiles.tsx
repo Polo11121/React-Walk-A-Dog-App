@@ -28,9 +28,11 @@ export const DogProfiles = () => {
         <WithLoader isLoading={isLoading}>
           <EmptyList>
             {dogs
+              ?.filter(({ is_active }) => is_active)
               ?.sort((dog1, dog2) => dog1?.name.localeCompare(dog2?.name))
               ?.map(({ name, breed, avatar, id, owner }) => (
                 <Card
+                  isActive
                   ownerId={owner}
                   id={id}
                   key={id}
@@ -39,6 +41,21 @@ export const DogProfiles = () => {
                   imageSrc={avatar}
                 />
               ))}
+            {isOwner &&
+              dogs
+                ?.filter(({ is_active }) => !is_active)
+                ?.sort((dog1, dog2) => dog1?.name.localeCompare(dog2?.name))
+                ?.map(({ name, breed, avatar, id, owner, is_active }) => (
+                  <Card
+                    isActive={is_active}
+                    ownerId={owner}
+                    id={id}
+                    key={id}
+                    name={name}
+                    subTitle={breed}
+                    imageSrc={avatar}
+                  />
+                ))}
           </EmptyList>
         </WithLoader>
       </div>

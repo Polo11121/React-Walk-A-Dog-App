@@ -13,6 +13,7 @@ type InputProps = {
   styles?: CSSProperties;
   inputName: string;
   isError?: boolean;
+  isDisabled?: boolean;
   type?: HTMLInputTypeAttribute;
   formikProps: FormikProps<any>;
   label?: string;
@@ -24,6 +25,7 @@ export const Input = ({
   inputName,
   label = "elo",
   isError,
+  isDisabled = false,
   type,
   formikProps,
 }: InputProps) => {
@@ -35,6 +37,7 @@ export const Input = ({
       />
       <label className="input__label">{label}</label>
       <input
+        disabled={isDisabled}
         style={
           styles as DetailedHTMLProps<
             InputHTMLAttributes<HTMLInputElement>,
