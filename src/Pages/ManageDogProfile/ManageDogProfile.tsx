@@ -109,9 +109,9 @@ export const ManageDogProfile = () => {
                 <div
                   className="manage-dog-profile__choose-photo"
                   style={
-                    dog?.is_active
-                      ? { marginTop: "20px" }
-                      : { pointerEvents: "none", marginTop: "20px" }
+                    dog?.is_active === false && isEdit
+                      ? { pointerEvents: "none", marginTop: "20px" }
+                      : { marginTop: "20px" }
                   }
                 >
                   <ImageUploading
