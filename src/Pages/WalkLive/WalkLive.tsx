@@ -89,7 +89,7 @@ export const WalkLive = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       queryClient.invalidateQueries("walks");
-    }, 12000);
+    }, 10);
     return () => clearInterval(interval);
   }, []);
 
