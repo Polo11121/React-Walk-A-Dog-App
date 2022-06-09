@@ -148,7 +148,7 @@ export const WalkInfo = () => {
   const isLoading =
     isSlotLoading || isDogsLoading || isUserLoading || isSlotsLoading;
 
-  const haveTrainerActiveWalk = !Boolean(
+  const haveTrainerActiveWalk = Boolean(
     slots?.find(
       ({ trainer, status }) =>
         trainer === slot?.trainer && status === "w trakcie"
