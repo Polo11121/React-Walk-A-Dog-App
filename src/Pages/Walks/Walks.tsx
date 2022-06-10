@@ -64,11 +64,12 @@ export const Walks = () => {
                   );
                 }
               )
-              .sort(
+              ?.sort(
                 (slot1, slot2) =>
                   parseInt(slot1.time_from.slice(0, 2)) -
                   parseInt(slot2.time_from.slice(0, 2))
               )
+              ?.reverse()
               .map(({ id, time_from, time_to, dog1, dog2, dog3, status }) => (
                 <Walk
                   status={status}

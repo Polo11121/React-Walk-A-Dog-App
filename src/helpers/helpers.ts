@@ -55,8 +55,8 @@ export const isTodayInThePastTime = (date: Date, time: string) => {
 
   if (isToday(date)) {
     return (
-      today.getHours() + "" + today.getMinutes() >
-      time.toString().slice(0, 5).split(":").join("")
+      time.toString().slice(0, 5).split(":").join("") >
+      today.getHours() + "" + today.getMinutes()
     );
   }
 
