@@ -83,12 +83,6 @@ export const Login = () => {
             </>
           )}
         </Formik>
-        <span
-          onClick={switchToForgotPassword}
-          className="login__forgot-password"
-        >
-          Zapomniałem hasła
-        </span>
       </div>
     </div>
   );
